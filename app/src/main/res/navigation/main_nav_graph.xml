@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment">
+  <fragment
+      android:id="@+id/exploreFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.explore.ExploreFragment"
+      android:label="ExploreFragment" />
+  <fragment
+      android:id="@+id/favouriteFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.favourites.FavouritesFragment"
+      android:label="FavouritesFragment" />
+  <fragment
+      android:id="@+id/profileFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.profile.ProfileFragment"
+      android:label="ProfileFragment" />
+  <fragment
+      android:id="@+id/homeFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.home.HomeFragment"
+      android:label="HomeFragment" />
+</navigation>
