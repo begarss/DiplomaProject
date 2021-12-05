@@ -2,6 +2,7 @@ package kz.kbtu.diplomaproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.FragmentContainerView
 import kz.kbtu.diplomaproject.presentation.MainFragment
 
@@ -10,9 +11,9 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    installSplashScreen()
     setContentView(R.layout.activity_main)
     container = findViewById(R.id.container_fragment)
-    setContentView(R.layout.activity_main)
     openMainContainer()
   }
 
