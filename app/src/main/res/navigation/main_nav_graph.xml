@@ -19,4 +19,8 @@
       android:id="@+id/homeFragment"
       android:name="kz.kbtu.diplomaproject.presentation.home.HomeFragment"
       android:label="HomeFragment" />
+  <fragment
+      android:id="@+id/loginFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.auth.LoginFragment"
+      android:label="LoginFragment" />
 </navigation>
