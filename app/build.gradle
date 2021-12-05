@@ -28,6 +28,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "endpoint"
+    productFlavors {
+        prod {
+            dimension "endpoint"
+            buildConfigField "String", 'BASE_URL', "\"http://yerassyl.pythonanywhere.com/api/\""
+        }
+        stage {
+            dimension "endpoint"
+            buildConfigField "String", 'BASE_URL', "\"http://yerassyl.pythonanywhere.com/api/\""
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
