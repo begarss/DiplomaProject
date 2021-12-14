@@ -6,6 +6,7 @@ import kz.kbtu.diplomaproject.di.interceptorModule
 import kz.kbtu.diplomaproject.di.okHttpModule
 import kz.kbtu.diplomaproject.di.presentationModule
 import kz.kbtu.diplomaproject.di.retrofitModule
+import kz.kbtu.diplomaproject.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -20,7 +21,8 @@ class App : Application() {
         okHttpModule,
         retrofitModule,
         baseModule,
-        interceptorModule
+        interceptorModule,
+        viewModelModule
       )
     }
   }
