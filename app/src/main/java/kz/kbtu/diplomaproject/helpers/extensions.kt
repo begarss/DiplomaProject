@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -146,3 +147,6 @@ fun FragmentActivity.onBackPresses(
 
     })
 }
+
+fun String.isValidEmail() =
+  !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()

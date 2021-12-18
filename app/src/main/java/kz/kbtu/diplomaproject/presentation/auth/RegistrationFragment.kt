@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.hide
+import kz.airba.infrastructure.helpers.isValidEmail
 import kz.airba.infrastructure.helpers.makeLinks
 import kz.airba.infrastructure.helpers.navigateSafely
 import kz.kbtu.diplomaproject.MainActivity
@@ -101,6 +102,5 @@ class RegistrationFragment : BaseFragment() {
     (activity as? MainActivity)?.openMainContainer()
   }
 
-  private fun String.isValidEmail() =
-    !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
 }

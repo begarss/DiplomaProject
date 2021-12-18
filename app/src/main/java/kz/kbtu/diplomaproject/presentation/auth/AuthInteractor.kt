@@ -9,6 +9,7 @@ import kz.kbtu.diplomaproject.domain.services.AuthService
 
 interface AuthInteractor {
   fun createUser(body: RegistrationBody): Async<DataResult<Boolean>>
+  fun login(email: String, password: String): Async<DataResult<Boolean>>
 }
 
 class AuthInteractorImpl(
@@ -16,5 +17,9 @@ class AuthInteractorImpl(
 ) : AuthInteractor, CoroutineInteractor {
   override fun createUser(body: RegistrationBody) = async {
     authService.register(request = body)
+  }
+
+  override fun login(email: String, password: String) = async {
+    authService.login(email = email, password = password)
   }
 }

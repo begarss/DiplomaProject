@@ -106,6 +106,6 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
     //dots loader
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
-
+    //toasty
 
 }

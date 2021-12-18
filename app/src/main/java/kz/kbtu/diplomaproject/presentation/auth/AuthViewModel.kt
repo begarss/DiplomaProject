@@ -10,6 +10,7 @@ import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion
 import kz.kbtu.diplomaproject.domain.helpers.operators.onConsume
 import kz.kbtu.diplomaproject.domain.helpers.operators.onError
 import kz.kbtu.diplomaproject.domain.helpers.operators.onResult
+import kz.kbtu.diplomaproject.domain.model.ErrorCode
 import kz.kbtu.diplomaproject.presentation.base.BaseViewModel
 
 class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel() {
@@ -35,6 +36,28 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
     }.onError {
       _authState.emit(AuthState.INVALID)
     }.launchIn(viewModelScope)
+  }
+
+  fun login(email: String, password: String) {
+    authInteractor.login(email = email, password = password)
+      .onResult {
+        if (it.isSuccess()) {
+          if (it.dataValue() == true)
+            _authState.emit(AuthState.VALID)
+          else {
+            _authState.emit(AuthState.INVALID)
+          }
+        } else {
+          if (it.errorValue() == ErrorCode.USER_NOT_FOUND.code) {
+            _authState.emit(AuthState.USER_NOT_EXIST)
+          }
+          _authState.emit(AuthState.INVALID)
+        }
+      }
+      .onError {
+        Log.d("TAGA", "login: $it")
+        _authState.emit(AuthState.INVALID)
+      }.launchIn(viewModelScope)
   }
 
   fun clearState() {
