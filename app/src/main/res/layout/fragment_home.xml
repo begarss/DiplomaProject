@@ -35,27 +35,31 @@
       <androidx.constraintlayout.widget.ConstraintLayout
           android:id="@+id/mainContainerHome"
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="match_parent"
+          >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btnGoToCatalog"
+            android:paddingHorizontal="16dp"
             android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/btnGoToCatalog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_post"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGoToCatalog"
-            style="@style/MainButtonStyle"
-            android:text="Перейти в поиск"
-            app:layout_constraintTop_toBottomOf="@id/mainRV"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Перейти в поиск"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mainRV"
+            app:layout_constraintVertical_bias="1"
+            style="@style/MainButtonStyle"
+            />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
