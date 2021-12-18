@@ -13,7 +13,7 @@ import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegistrationFragment : BaseFragment() {
-  override val viewModel: LoginViewModel by viewModel()
+  override val viewModel: AuthViewModel by viewModel()
   private lateinit var binding: FragmentSignUpBinding
 
   override fun onCreateView(
