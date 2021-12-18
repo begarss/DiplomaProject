@@ -8,6 +8,7 @@ import kz.kbtu.diplomaproject.data.backend.auth.RegistrationBody
 import kz.kbtu.diplomaproject.domain.helpers.operators.launchIn
 import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion
 import kz.kbtu.diplomaproject.domain.helpers.operators.onConsume
+import kz.kbtu.diplomaproject.domain.helpers.operators.onError
 import kz.kbtu.diplomaproject.domain.helpers.operators.onResult
 import kz.kbtu.diplomaproject.presentation.base.BaseViewModel
 
@@ -24,17 +25,19 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
         password = password,
         password2 = password2
       )
-    ).onConsume {
-      showLoader()
-    }.onCompletion {
-      hideLoader()
-    }.onResult {
+    ).onResult {
       Log.d("TAGA", "createUser: $it")
       if (it.isSuccess()) {
         _authState.emit(AuthState.VALID)
       } else {
         _authState.emit(AuthState.INVALID)
       }
+    }.onError {
+      _authState.emit(AuthState.INVALID)
     }.launchIn(viewModelScope)
+  }
+
+  fun clearState() {
+    _authState.value = AuthState.EMPTY
   }
 }

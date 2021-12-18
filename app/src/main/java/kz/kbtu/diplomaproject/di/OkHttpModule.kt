@@ -23,7 +23,6 @@ val okHttpModule = module {
       .writeTimeout(120, TimeUnit.SECONDS)
       .readTimeout(120, TimeUnit.SECONDS)
       .addNetworkInterceptor(StethoInterceptor())
-      .authenticator(get())
       .addInterceptor(get<MainInterceptor>())
       .addInterceptor(provideLoggingInterceptor())
       .cache(get())
