@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -58,7 +59,7 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     val clickableSpan = object : ClickableSpan() {
       override fun updateDrawState(textPaint: TextPaint) {
         // use this to change the link color
-        textPaint.color = ContextCompat.getColor(this@makeLinks.context, R.color.black)
+        textPaint.color = ContextCompat.getColor(this@makeLinks.context, R.color.primary)
         // toggle below value to enable/disable
         // the underline shown below the clickable text
         textPaint.isUnderlineText = false
@@ -146,3 +147,6 @@ fun FragmentActivity.onBackPresses(
 
     })
 }
+
+fun String.isValidEmail() =
+  !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()

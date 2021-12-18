@@ -26,4 +26,23 @@
         // Set the theme of the Activity that directly follows your splash screen.
         <item name="postSplashScreenTheme">@style/Theme.DiplomaProject</item>  # Required.
     </style>
+
+    <style name="RoundedTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+        <item name="boxBackgroundColor">@color/mid_gray</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeErrorColor">#E31E1E</item>
+    </style>
+
+    <style name="MainButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:height">48dp</item>
+        <item name="android:background">@drawable/button_main_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>
