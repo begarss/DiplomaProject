@@ -39,6 +39,8 @@ class MainFragment : BaseFragment() {
         }
       }
     }
+    binding.bottomNavigationView.itemIconTintList = null
+
     backPress()
   }
 
