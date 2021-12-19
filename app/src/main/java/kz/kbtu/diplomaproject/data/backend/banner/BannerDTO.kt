@@ -7,7 +7,7 @@ data class BannerDTO(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("image")
-    val image: String?,
+    var image: String?,
     @SerializedName("title")
     val title: String?,
     @SerializedName("url")

@@ -1,5 +1,6 @@
 package kz.kbtu.diplomaproject.presentation.home.promotion
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,7 @@ class PromotionAdapter(
 
   inner class AdsViewHolder(val binding: ItemAdBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: BannerDTO) {
+      Log.d("TAGA", "bind: ${item.image}")
       if (adapterPosition == items.size - 2) {
         viewPager2.post(runnable)
       }

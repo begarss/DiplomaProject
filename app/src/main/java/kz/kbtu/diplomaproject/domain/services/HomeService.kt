@@ -13,6 +13,9 @@ class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
   override suspend fun getBanners(): DataResult<List<BannerDTO>?> = safeCall {
     val response = homeApi.getBanners()
     val body = response.body()
+    body?.forEach {
+      it.image = "https://yerassyl.pythonanywhere.com/${it.image}"
+    }
     body
   }
 
