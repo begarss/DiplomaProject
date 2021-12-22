@@ -14,9 +14,13 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.dp
+import kz.airba.infrastructure.helpers.initRecyclerView
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.SharedViewModel
 import kz.kbtu.diplomaproject.R
+import kz.kbtu.diplomaproject.data.backend.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.opportunity.JobCategory
+import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTOItem
 import kz.kbtu.diplomaproject.databinding.FragmentHomeBinding
 import kz.kbtu.diplomaproject.databinding.FragmentHomeBindingImpl
 import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter
@@ -32,6 +36,9 @@ class HomeFragment : BaseFragment() {
 
   private val sliderHandler: Handler = Handler()
   private val sliderRunnable = Runnable { viewPager2.currentItem += 1 }
+  private val postAdapter by lazy {
+    PostAdapter(arrayListOf())
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -69,6 +76,9 @@ class HomeFragment : BaseFragment() {
       viewPager2
     )
     setBanner()
+    binding.mainRV.initRecyclerView()
+    binding.mainRV.adapter = postAdapter
+    postAdapter.addAll(getTestPosts())
   }
 
   private fun setBanner() {
@@ -117,5 +127,73 @@ class HomeFragment : BaseFragment() {
         }
       }
     }
+  }
+
+  private fun getTestPosts(): ArrayList<OpportunityDTOItem> {
+    val post = OpportunityDTOItem(
+      Company("DAR", ""),
+      "20.12.2020",
+      0,
+      false,
+      JobCategory(0, "Android"),
+      "internship",
+      "Middle Android developer"
+    )
+    val list = arrayListOf(
+      OpportunityDTOItem(
+        Company("DAR", ""),
+        "20.12.2020",
+        0,
+        false,
+        JobCategory(0, "Android"),
+        "internship",
+        "Middle Android developer"
+      ), OpportunityDTOItem(
+        Company("KOLESA", ""),
+        "20.12.2020",
+        0,
+        false,
+        JobCategory(0, "IOS"),
+        "vacancy",
+        "Middle IOS developer"
+      ),
+      OpportunityDTOItem(
+        Company("OneLAb", ""),
+        "20.12.2020",
+        0,
+        false,
+        JobCategory(0, "Backend"),
+        "vacancy",
+        "Middle Backend developer"
+      ),
+      OpportunityDTOItem(
+        Company("KOLESA", ""),
+        "20.12.2020",
+        0,
+        false,
+        JobCategory(0, "Android"),
+        "vacancy",
+        "Senior Android developer"
+      ),
+      OpportunityDTOItem(
+        Company("KOLESA", ""),
+        "20.12.2020",
+        0,
+        false,
+        JobCategory(0, "IOS"),
+        "vacancy",
+        "Middle IOS developer"
+      ),
+      OpportunityDTOItem(
+        Company("KOLESA", ""),
+        "20.12.2020",
+        0,
+        false,
+        JobCategory(0, "IOS"),
+        "vacancy",
+        "Middle IOS developer"
+      )
+    )
+    return list
   }
 }
