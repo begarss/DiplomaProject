@@ -5,19 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.airba.infrastructure.helpers.load
 import kz.kbtu.diplomaproject.R
-import kz.kbtu.diplomaproject.data.backend.banner.BannerDTO
-import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTOItem
-import kz.kbtu.diplomaproject.databinding.ItemAdBinding
+import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.databinding.ItemPostBinding
 import kz.kbtu.diplomaproject.presentation.home.PostAdapter.PostViewHolder
 
 class PostAdapter(
-  private val items: ArrayList<OpportunityDTOItem>,
+  private val items: ArrayList<OpportunityDTO>,
 ) : RecyclerView.Adapter<PostViewHolder>() {
 
   inner class PostViewHolder(val itemBinding: ItemPostBinding) :
     RecyclerView.ViewHolder(itemBinding.root) {
-    fun bind(item: OpportunityDTOItem) {
+    fun bind(item: OpportunityDTO) {
       with(itemBinding) {
         ivCompany.load(item.company?.picture, placeholder = R.drawable.test_company_iv)
         tvTitle.text = item.title
@@ -28,7 +26,7 @@ class PostAdapter(
     }
   }
 
-  fun addAll(list: List<OpportunityDTOItem>) {
+  fun addAll(list: List<OpportunityDTO>) {
     items.clear()
     items.addAll(list)
     notifyDataSetChanged()

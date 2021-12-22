@@ -87,6 +87,7 @@ class LoginFragment : BaseFragment() {
             openMainContainer()
           }
           INVALID -> {
+            Toast.makeText(requireContext(), "Please check your email or password", Toast.LENGTH_SHORT).show()
             viewModel.clearState()
           }
           USER_EXIST -> {

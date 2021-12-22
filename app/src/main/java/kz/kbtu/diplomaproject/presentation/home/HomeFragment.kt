@@ -20,9 +20,8 @@ import kz.kbtu.diplomaproject.presentation.explore.SharedViewModel
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.data.backend.opportunity.Company
 import kz.kbtu.diplomaproject.data.backend.opportunity.JobCategory
-import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTOItem
+import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.databinding.FragmentHomeBinding
-import kz.kbtu.diplomaproject.databinding.FragmentHomeBindingImpl
 import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,8 +52,10 @@ class HomeFragment : BaseFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getBanners()
+    viewModel.getSubscribedOpperts()
     bindViews()
     observeBanners()
+    observeOpports()
   }
 
   override fun onPause() {
@@ -78,7 +79,7 @@ class HomeFragment : BaseFragment() {
     setBanner()
     binding.mainRV.initRecyclerView()
     binding.mainRV.adapter = postAdapter
-    postAdapter.addAll(getTestPosts())
+//    postAdapter.addAll(getTestPosts())
   }
 
   private fun setBanner() {
@@ -129,8 +130,18 @@ class HomeFragment : BaseFragment() {
     }
   }
 
-  private fun getTestPosts(): ArrayList<OpportunityDTOItem> {
-    val post = OpportunityDTOItem(
+  private fun observeOpports() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.postState.collect {
+        if (it != null) {
+          postAdapter.addAll(it)
+        }
+      }
+    }
+  }
+
+  private fun getTestPosts(): ArrayList<OpportunityDTO> {
+    val post = OpportunityDTO(
       Company("DAR", ""),
       "20.12.2020",
       0,
@@ -140,7 +151,7 @@ class HomeFragment : BaseFragment() {
       "Middle Android developer"
     )
     val list = arrayListOf(
-      OpportunityDTOItem(
+      OpportunityDTO(
         Company("DAR", ""),
         "20.12.2020",
         0,
@@ -148,7 +159,7 @@ class HomeFragment : BaseFragment() {
         JobCategory(0, "Android"),
         "internship",
         "Middle Android developer"
-      ), OpportunityDTOItem(
+      ), OpportunityDTO(
         Company("KOLESA", ""),
         "20.12.2020",
         0,
@@ -157,7 +168,7 @@ class HomeFragment : BaseFragment() {
         "vacancy",
         "Middle IOS developer"
       ),
-      OpportunityDTOItem(
+      OpportunityDTO(
         Company("OneLAb", ""),
         "20.12.2020",
         0,
@@ -166,7 +177,7 @@ class HomeFragment : BaseFragment() {
         "vacancy",
         "Middle Backend developer"
       ),
-      OpportunityDTOItem(
+      OpportunityDTO(
         Company("KOLESA", ""),
         "20.12.2020",
         0,
@@ -175,7 +186,7 @@ class HomeFragment : BaseFragment() {
         "vacancy",
         "Senior Android developer"
       ),
-      OpportunityDTOItem(
+      OpportunityDTO(
         Company("KOLESA", ""),
         "20.12.2020",
         0,
@@ -184,7 +195,7 @@ class HomeFragment : BaseFragment() {
         "vacancy",
         "Middle IOS developer"
       ),
-      OpportunityDTOItem(
+      OpportunityDTO(
         Company("KOLESA", ""),
         "20.12.2020",
         0,
