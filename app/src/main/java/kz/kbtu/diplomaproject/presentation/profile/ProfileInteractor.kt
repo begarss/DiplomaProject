@@ -10,7 +10,12 @@ import okhttp3.MultipartBody.Part
 
 interface ProfileInteractor {
   fun getUserInfo(): Async<DataResult<UserInfo?>>
-  fun setUserImage(file: MultipartBody.Part): Async<DataResult<UserInfo?>>
+  fun setUserImage(file: Part): Async<DataResult<UserInfo?>>
+  fun setUserInfo(
+    userName: String?,
+    birthDay: String?,
+    phone: String?
+  ): Async<DataResult<UserInfo?>>
 }
 
 class ProfileInteractorImpl(private val profileService: ProfileService) : ProfileInteractor,
@@ -21,6 +26,14 @@ class ProfileInteractorImpl(private val profileService: ProfileService) : Profil
 
   override fun setUserImage(file: Part) = async {
     profileService.setUserImage(file)
+  }
+
+  override fun setUserInfo(
+    userName: String?,
+    birthDay: String?,
+    phone: String?
+  ) = async {
+    profileService.setUserInfo(userName = userName, birthDay = birthDay, phone = phone)
   }
 
 }

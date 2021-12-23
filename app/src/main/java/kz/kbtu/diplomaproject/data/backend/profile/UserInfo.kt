@@ -1,7 +1,10 @@
 package kz.kbtu.diplomaproject.data.backend.profile
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserInfo(
   @SerializedName("birthday")
   val birthday: String?,
@@ -21,4 +24,4 @@ data class UserInfo(
   var profImage: String?,
   @SerializedName("zipcode")
   val zipcode: String?
-)
+) : Parcelable

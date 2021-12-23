@@ -21,7 +21,9 @@ import com.canhub.cropper.CropImageView.CropShape.OVAL
 import com.canhub.cropper.options
 import kotlinx.coroutines.flow.collect
 import kz.airba.infrastructure.helpers.load
+import kz.airba.infrastructure.helpers.navigateSafely
 import kz.kbtu.diplomaproject.R
+import kz.kbtu.diplomaproject.data.backend.profile.UserInfo
 import kz.kbtu.diplomaproject.databinding.FragmentProfileBinding
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import okhttp3.MediaType.Companion.toMediaType
@@ -38,6 +40,7 @@ class ProfileFragment : BaseFragment() {
   override val viewModel: ProfileViewModel by viewModel()
   private lateinit var binding: FragmentProfileBinding
   private var outputUri: Uri? = null
+  private lateinit var userInfo: UserInfo
 
   val permission = registerForActivityResult(RequestPermission()) { granted ->
     when {
@@ -111,6 +114,10 @@ class ProfileFragment : BaseFragment() {
     viewModel.getUserInfo()
     observeUser()
 
+    binding.cardProfile.setOnClickListener {
+      Log.d("TAGQ", "onViewCreated: $userInfo")
+      navigateSafely(ProfileFragmentDirections.actionProfileFragmentToEditUserFragment(userInfo))
+    }
     binding.btnSetAva.setOnClickListener {
       if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
         // explain to the user why the permission is needed
@@ -123,6 +130,9 @@ class ProfileFragment : BaseFragment() {
   private fun observeUser() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.profileState.collect {
+        if (it != null) {
+          userInfo = it
+        }
         it?.profImage = "http://ithunt.pythonanywhere.com/${it?.profImage}"
 
         binding.tvName.text = it?.email
