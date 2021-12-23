@@ -40,11 +40,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
+
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
@@ -107,5 +108,12 @@ dependencies {
     //dots loader
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
     //toasty
+
+    //cirle imageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //image cropper
+    implementation 'com.github.CanHub:Android-Image-Cropper:4.0.0'
+    implementation 'com.redmadrobot:input-mask-android:6.0.0'
 
 }

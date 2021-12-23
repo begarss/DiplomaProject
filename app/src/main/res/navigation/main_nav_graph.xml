@@ -16,9 +16,22 @@
   <fragment
       android:id="@+id/profileFragment"
       android:name="kz.kbtu.diplomaproject.presentation.profile.ProfileFragment"
-      android:label="ProfileFragment" />
+      android:label="ProfileFragment" >
+    <action
+        android:id="@+id/action_profileFragment_to_editUserFragment"
+        app:destination="@id/editUserFragment" />
+  </fragment>
   <fragment
       android:id="@+id/homeFragment"
       android:name="kz.kbtu.diplomaproject.presentation.home.HomeFragment"
       android:label="HomeFragment" />
+  <fragment
+      android:id="@+id/editUserFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.profile.userInfo.EditUserFragment"
+      android:label="EditUserFragment" >
+    <argument
+        android:name="userInfo"
+        app:argType="kz.kbtu.diplomaproject.data.backend.profile.UserInfo"
+        app:nullable="true" />
+  </fragment>
 </navigation>

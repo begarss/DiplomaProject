@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import kz.kbtu.diplomaproject.BuildConfig
 import kz.kbtu.diplomaproject.data.backend.auth.AuthApi
 import kz.kbtu.diplomaproject.data.backend.banner.HomeApi
+import kz.kbtu.diplomaproject.data.backend.profile.ProfileApi
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -15,7 +16,7 @@ val retrofitModule = module {
 
   single { get<Retrofit>().create(AuthApi::class.java) }
   single { get<Retrofit>().create(HomeApi::class.java) }
-
+  single { get<Retrofit>().create(ProfileApi::class.java) }
   single {
     Retrofit.Builder()
       .client(get())

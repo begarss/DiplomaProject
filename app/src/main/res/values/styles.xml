@@ -31,4 +31,10 @@
     <item name="android:textColor">@android:color/white</item>
     <item name="android:textSize">16sp</item>
   </style>
+
+
+  <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorOnPrimary">@color/white</item>
+  </style>
 </resources>

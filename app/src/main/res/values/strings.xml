@@ -4,4 +4,7 @@
   <string name="login_link_sign_up">Sign up</string>
   <string name="login_have_account">Already have account? Sign in</string>
   <string name="login_link_sign_in">Sign in</string>
+  <string name="date_pciker_title">выберите дату</string>
+  <string name="snack_sucess_edited">Изменения успешно сохранены</string>
+
 </resources>
