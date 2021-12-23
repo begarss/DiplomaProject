@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -103,6 +104,111 @@
           app:layout_constraintStart_toEndOf="@+id/tvCompanyName"
           app:layout_constraintTop_toBottomOf="@id/tvPostTitle"
           app:drawableStartCompat="@drawable/ic_location"
+          />
+      <TextView
+          android:id="@+id/tvJobType"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/background_rounded_text"
+          android:paddingHorizontal="32dp"
+          android:paddingVertical="2dp"
+          android:textAlignment="center"
+          android:textAppearance="@style/Caption"
+          android:textColor="@color/primary"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tvCompanyName"
+          tools:text="Vacancy"
+          />
+      <TextView
+          android:id="@+id/tvJobCategory"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/background_rounded_text_blue"
+          android:paddingHorizontal="32dp"
+          android:paddingVertical="2dp"
+          android:textAlignment="center"
+          android:textAppearance="@style/Caption"
+          android:textColor="#691EB5"
+          app:layout_constraintStart_toEndOf="@id/tvJobType"
+          app:layout_constraintTop_toBottomOf="@id/tvCompanyName"
+          tools:text="Android"
+          />
+      <ImageView
+          android:id="@+id/ivDeadline"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="8dp"
+          android:src="@drawable/ic_deadline"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tvJobType"
+          />
+      <TextView
+          android:id="@+id/labelDeadline"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="6dp"
+          android:text="Deadline"
+          android:textAppearance="@style/Body1"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="@id/ivDeadline"
+          app:layout_constraintStart_toEndOf="@id/ivDeadline"
+          app:layout_constraintTop_toTopOf="@id/ivDeadline"
+          />
+      <TextView
+          android:id="@+id/tvDeadline"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="6dp"
+          android:textAppearance="@style/Caption"
+          android:textColor="@color/primary"
+          app:layout_constraintBottom_toBottomOf="@id/labelDeadline"
+          app:layout_constraintStart_toEndOf="@id/labelDeadline"
+          app:layout_constraintTop_toTopOf="@id/labelDeadline"
+          />
+      <TextView
+          android:id="@+id/labelDescription"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="Description:"
+          android:textAppearance="@style/Body1"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="@id/ivDeadline"
+          app:layout_constraintTop_toBottomOf="@id/labelDeadline"
+          />
+      <TextView
+          android:id="@+id/tvDescription"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="16dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/labelDescription"
+          />
+      <TextView
+          android:id="@+id/labelRequirements"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="Requirements:"
+          android:textAppearance="@style/Body1"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="@id/ivDeadline"
+          app:layout_constraintTop_toBottomOf="@id/tvDescription"
+          />
+      <TextView
+          android:id="@+id/tvRequirements"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="16dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/labelRequirements"
           />
     </androidx.constraintlayout.widget.ConstraintLayout>
   </ScrollView>
