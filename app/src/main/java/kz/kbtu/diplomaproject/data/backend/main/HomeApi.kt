@@ -1,4 +1,4 @@
-package kz.kbtu.diplomaproject.data.backend.banner
+package kz.kbtu.diplomaproject.data.backend.main
 
 import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.opportunity.PostDetail
@@ -16,4 +16,8 @@ interface HomeApi {
 
   @GET("opportunities/{id}")
   suspend fun getOpportunityDetail(@Path("id") id: Int): Response<BaseResponse<PostDetail>>
+
+  @GET("opportunities")
+  suspend fun getOpportunities(): Response<BaseResponse<List<OpportunityDTO>>>
+
 }
