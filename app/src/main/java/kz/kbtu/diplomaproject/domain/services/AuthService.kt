@@ -53,12 +53,17 @@ class AuthServiceImpl(
       }
       val response = authApi.login(body = jsonBody)
       if (response.isSuccessful) {
-        val data = response.body()
-        preferences.saveTokenInfo(TokenInfo(accessToken = data?.token))
-        DataResult.Success(true)
+        val body = response.body()
+        if (body?.isError() == false) {
+          preferences.saveTokenInfo(TokenInfo(accessToken = body.data.token))
+          DataResult.Success(true)
+        } else {
+          DataResult.Error(body?.error)
+        }
       } else {
-        val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
-        DataResult.Error(jsonObj.getString("error"))
+//        val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+//        DataResult.Error(jsonObj.getString("error"))
+        DataResult.Error(response.body()?.error)
       }
     } catch (e: Throwable) {
       DataResult.Error(e.localizedMessage)

@@ -41,6 +41,7 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
   fun login(email: String, password: String) {
     authInteractor.login(email = email, password = password)
       .onResult {
+        Log.d("TAGA", "login: $it")
         if (it.isSuccess()) {
           if (it.dataValue() == true)
             _authState.emit(AuthState.VALID)

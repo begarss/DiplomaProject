@@ -32,11 +32,11 @@ android {
     productFlavors {
         prod {
             dimension "endpoint"
-            buildConfigField "String", 'BASE_URL', "\"http://yerassyl.pythonanywhere.com/api/\""
+            buildConfigField "String", 'BASE_URL', "\"http://ithunt.pythonanywhere.com/api/\""
         }
         stage {
             dimension "endpoint"
-            buildConfigField "String", 'BASE_URL', "\"http://yerassyl.pythonanywhere.com/api/\""
+            buildConfigField "String", 'BASE_URL', "\"http://http://ithunt.pythonanywhere.com/api/\""
         }
     }
     compileOptions {

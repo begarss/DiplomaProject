@@ -15,7 +15,7 @@ class MainInterceptor(private val preferences: Preferences) : Interceptor {
     val tokenInfo = preferences.getTokenInfo()
     val builder = request.newBuilder().apply {
       if (!tokenInfo.accessToken.isNullOrEmpty()) {
-        header(Headers.AUTHORIZATION, "JWT ${tokenInfo.accessToken}")
+        header(Headers.AUTHORIZATION, "Token ${tokenInfo.accessToken}")
       }
       header(
         Headers.USER_AGENT,
