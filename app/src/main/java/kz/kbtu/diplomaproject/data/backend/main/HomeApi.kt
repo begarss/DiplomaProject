@@ -1,5 +1,6 @@
 package kz.kbtu.diplomaproject.data.backend.main
 
+import kz.kbtu.diplomaproject.data.backend.opportunity.Company
 import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.opportunity.PostDetail
 import kz.kbtu.diplomaproject.data.common.BaseResponse
@@ -19,5 +20,8 @@ interface HomeApi {
 
   @GET("opportunities")
   suspend fun getOpportunities(): Response<BaseResponse<List<OpportunityDTO>>>
+
+  @GET("companies")
+  suspend fun getAllCompanies(): Response<List<Company>?>
 
 }

@@ -1,4 +1,4 @@
-package kz.kbtu.diplomaproject.presentation.explore
+package kz.kbtu.diplomaproject.presentation.company
 
 import android.os.Bundle
 import android.util.Log
@@ -13,38 +13,37 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kz.airba.infrastructure.helpers.focusAndShowKeyboard
-import kz.airba.infrastructure.helpers.initRecyclerView
 import kz.kbtu.diplomaproject.R
-import kz.kbtu.diplomaproject.databinding.FragmentExploreBinding
+import kz.kbtu.diplomaproject.databinding.FragmentCompanyBinding
 import kz.kbtu.diplomaproject.domain.helpers.operators.debounce
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
-import kz.kbtu.diplomaproject.presentation.home.PostAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ExploreFragment : BaseFragment() {
-  override val viewModel: SearchViewModel by viewModel()
-  private lateinit var binding: FragmentExploreBinding
+class CompanyFragment : BaseFragment() {
+  override val viewModel: CompanyViewModel by viewModel()
+  private lateinit var binding: FragmentCompanyBinding
 
   private val adapter by lazy {
-    PostAdapter(arrayListOf())
+    CompanyAdapter()
   }
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
+  ): View {
+    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_company, container, false)
 
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    viewModel.getOpportunities()
+    viewModel.getCompanies()
     bindViews()
-    observePosts()
+//    observePosts()
     setUpSearchView()
+    observeCompanies()
   }
 
   private fun bindViews() {
@@ -52,7 +51,6 @@ class ExploreFragment : BaseFragment() {
       searchFragmentToolbar.inflateMenu(R.menu.search_menu)
       searchFragmentToolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
 
-      rvSearchResult.initRecyclerView()
       rvSearchResult.adapter = adapter
     }
   }
@@ -74,7 +72,7 @@ class ExploreFragment : BaseFragment() {
         searchView.findViewById(R.id.search_mag_icon)
       searchIcon.setImageDrawable(null)
       val v: View = searchView.findViewById(R.id.search_plate)
-      searchView.queryHint = "Search Opportunity"
+      searchView.queryHint = "Search Company"
       v.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
       setOnQueryTextListener(object : OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?) = false
@@ -82,7 +80,7 @@ class ExploreFragment : BaseFragment() {
         override fun onQueryTextChange(newText: String?): Boolean {
           newText?.let(onQueryChanged)
           if (query.isEmpty()) {
-            observePosts()
+            observeCompanies()
           }
           if (query.length < 3) {
 //            viewModel.clearResults()
@@ -103,9 +101,9 @@ class ExploreFragment : BaseFragment() {
 //    handleLoadStates(true)
   }
 
-  private fun observePosts() {
+  private fun observeCompanies() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-      viewModel.postState.collect {
+      viewModel.companyState.collect {
         Log.d("TAGA", "observePosts: $it")
         if (it != null) {
           adapter.addAll(it)
@@ -113,4 +111,5 @@ class ExploreFragment : BaseFragment() {
       }
     }
   }
+
 }

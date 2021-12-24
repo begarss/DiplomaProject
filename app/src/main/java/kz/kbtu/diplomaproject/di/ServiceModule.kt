@@ -2,6 +2,8 @@ package kz.kbtu.diplomaproject.di
 
 import kz.kbtu.diplomaproject.domain.services.AuthService
 import kz.kbtu.diplomaproject.domain.services.AuthServiceImpl
+import kz.kbtu.diplomaproject.domain.services.CompanyService
+import kz.kbtu.diplomaproject.domain.services.CompanyServiceImpl
 import kz.kbtu.diplomaproject.domain.services.HomeService
 import kz.kbtu.diplomaproject.domain.services.HomeServiceImpl
 import kz.kbtu.diplomaproject.domain.services.ProfileService
@@ -15,4 +17,5 @@ val serviceModule = module {
   single<UserService> { UserServiceImpl(preferences = get()) }
   single<HomeService> { HomeServiceImpl(homeApi = get()) }
   single<ProfileService> { ProfileServiceImpl(profileApi = get()) }
+  single<CompanyService> { CompanyServiceImpl(homeApi = get()) }
 }
