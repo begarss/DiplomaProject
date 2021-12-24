@@ -7,6 +7,7 @@ import kz.kbtu.diplomaproject.data.common.BaseResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface HomeApi {
   @GET("addbanner/adds/")
@@ -24,4 +25,6 @@ interface HomeApi {
   @GET("companies")
   suspend fun getAllCompanies(): Response<List<Company>?>
 
+  @GET("companies/")
+  suspend fun searchCompany(@Query("search") name: String?): Response<List<Company>?>
 }

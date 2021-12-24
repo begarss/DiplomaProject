@@ -7,11 +7,18 @@ import kz.kbtu.diplomaproject.domain.model.DataResult
 
 interface CompanyService {
   suspend fun getCompanies(): DataResult<List<Company>?>
+  suspend fun searchCompany(name: String?): DataResult<List<Company>?>
 }
 
 class CompanyServiceImpl(private val homeApi: HomeApi) : CompanyService {
   override suspend fun getCompanies(): DataResult<List<Company>?> = safeCall {
     val response = homeApi.getAllCompanies()
+    val body = response.body()
+    body
+  }
+
+  override suspend fun searchCompany(name: String?): DataResult<List<Company>?> = safeCall {
+    val response = homeApi.searchCompany(name)
     val body = response.body()
     body
   }

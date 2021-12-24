@@ -41,9 +41,8 @@ class CompanyFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getCompanies()
     bindViews()
-//    observePosts()
     setUpSearchView()
-    observeCompanies()
+    observeAllCompanies()
   }
 
   private fun bindViews() {
@@ -58,7 +57,7 @@ class CompanyFragment : BaseFragment() {
   private fun setUpSearchView() {
     val onQueryChanged = lifecycleScope.debounce<String> {
       if (it.length >= 3) {
-//        viewModel.setQuery(it)
+        viewModel.searchCompany(it)
       }
     }
 
@@ -80,11 +79,11 @@ class CompanyFragment : BaseFragment() {
         override fun onQueryTextChange(newText: String?): Boolean {
           newText?.let(onQueryChanged)
           if (query.isEmpty()) {
-            observeCompanies()
+            observeAllCompanies()
           }
-          if (query.length < 3) {
-//            viewModel.clearResults()
-          }
+//          if (query.length < 3) {
+//
+//          }
           return false
         }
       })
@@ -97,11 +96,21 @@ class CompanyFragment : BaseFragment() {
       }
       requestFocus()
     }
-//    observeSearchResult()
+    observeSearchCompanies()
 //    handleLoadStates(true)
   }
 
-  private fun observeCompanies() {
+  private fun observeAllCompanies() {
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+      viewModel.allCompanyState.collect {
+        Log.d("TAGA", "observePosts: $it")
+        if (it != null) {
+          adapter.addAll(it)
+        }
+      }
+    }
+  }
+  private fun observeSearchCompanies() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.companyState.collect {
         Log.d("TAGA", "observePosts: $it")

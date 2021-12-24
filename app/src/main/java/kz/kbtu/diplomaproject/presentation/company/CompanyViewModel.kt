@@ -17,6 +17,9 @@ class CompanyViewModel(private val companyInteractor: CompanyInteractor) : BaseV
   private val _companyState = MutableStateFlow<List<Company>?>(null)
   val companyState: StateFlow<List<Company>?> = _companyState
 
+  private val _allCompanyState = MutableStateFlow<List<Company>?>(null)
+  val allCompanyState: StateFlow<List<Company>?> = _allCompanyState
+
   fun getCompanies() {
     companyInteractor.getCompanies()
       .onConsume { showLoader() }
@@ -25,9 +28,23 @@ class CompanyViewModel(private val companyInteractor: CompanyInteractor) : BaseV
       }
       .onResult {
         if (it.isSuccess()) {
+          _allCompanyState.emit(it.dataValue())
+        }
+      }
+      .launchIn(viewModelScope)
+  }
+
+  fun searchCompany(name: String?) {
+    companyInteractor.searchCompany(name)
+      .onConsume { showLoader() }
+      .onCompletion { hideLoader() }
+      .onResult {
+        if (it.isSuccess()) {
           _companyState.emit(it.dataValue())
         }
       }
       .launchIn(viewModelScope)
   }
+
+
 }
