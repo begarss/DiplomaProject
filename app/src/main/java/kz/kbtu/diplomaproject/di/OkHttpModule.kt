@@ -1,6 +1,9 @@
 package kz.kbtu.diplomaproject.di
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import kz.kbtu.diplomaproject.BuildConfig
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -22,6 +25,12 @@ val okHttpModule = module {
       .connectTimeout(120, TimeUnit.SECONDS)
       .writeTimeout(120, TimeUnit.SECONDS)
       .readTimeout(120, TimeUnit.SECONDS)
+      .cookieJar(
+        PersistentCookieJar(
+          SetCookieCache(),
+          SharedPrefsCookiePersistor(androidContext())
+        )
+      )
       .addNetworkInterceptor(StethoInterceptor())
       .addInterceptor(get<MainInterceptor>())
       .addInterceptor(provideLoggingInterceptor())

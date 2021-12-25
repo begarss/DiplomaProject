@@ -9,6 +9,7 @@ import kz.kbtu.diplomaproject.domain.services.CompanyService
 interface CompanyInteractor {
   fun getCompanies(): Async<DataResult<List<Company>?>>
   fun searchCompany(name: String?): Async<DataResult<List<Company>?>>
+  fun getCompanyDetail(id: Int): Async<DataResult<Company?>>
 }
 
 class CompanyInteractorImpl(private val companyService: CompanyService) : CompanyInteractor,
@@ -19,6 +20,10 @@ class CompanyInteractorImpl(private val companyService: CompanyService) : Compan
 
   override fun searchCompany(name: String?) = async {
     companyService.searchCompany(name)
+  }
+
+  override fun getCompanyDetail(id: Int) = async {
+    companyService.getCompanyDetail(id)
   }
 
 }

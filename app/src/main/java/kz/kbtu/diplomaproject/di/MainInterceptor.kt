@@ -17,6 +17,9 @@ class MainInterceptor(private val preferences: Preferences) : Interceptor {
       if (!tokenInfo.accessToken.isNullOrEmpty()) {
         header(Headers.AUTHORIZATION, "Token ${tokenInfo.accessToken}")
       }
+      if (!tokenInfo.sessionId.isNullOrEmpty()) {
+        header(Headers.COOKIE, "sessionid ${tokenInfo.sessionId}")
+      }
       header(
         Headers.USER_AGENT,
         "build:${BuildConfig.VERSION_CODE}; Android ${android.os.Build.VERSION.SDK_INT})"

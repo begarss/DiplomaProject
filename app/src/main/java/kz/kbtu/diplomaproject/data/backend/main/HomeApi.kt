@@ -27,4 +27,7 @@ interface HomeApi {
 
   @GET("companies/")
   suspend fun searchCompany(@Query("search") name: String?): Response<List<Company>?>
+
+  @GET("companies/{id}")
+  suspend fun getCompanyDetail(@Path("id") id: Int): Response<Company?>
 }

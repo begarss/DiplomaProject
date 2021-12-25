@@ -38,6 +38,9 @@ class HomeViewModel(private val homeInteractor: HomeInteractor) : BaseViewModel(
       .onCompletion { hideLoader() }
       .onError {
         Log.d(TAG, "getSubscribedOpperts: $it")
+      }.onResult {
+        _postState.emit(it.dataValue())
+        Log.d(TAG, "getSubscribedOpperts: $it")
       }
       .launchIn(viewModelScope)
   }
