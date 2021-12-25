@@ -1,8 +1,8 @@
 package kz.kbtu.diplomaproject.presentation.home
 
 import kz.kbtu.diplomaproject.data.backend.main.BannerDTO
-import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
-import kz.kbtu.diplomaproject.data.backend.opportunity.PostDetail
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.PostDetail
 import kz.kbtu.diplomaproject.domain.helpers.operators.Async
 import kz.kbtu.diplomaproject.domain.helpers.operators.CoroutineInteractor
 import kz.kbtu.diplomaproject.domain.model.DataResult

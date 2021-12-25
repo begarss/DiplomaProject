@@ -1,11 +1,13 @@
 package kz.kbtu.diplomaproject.data.backend.main
 
-import kz.kbtu.diplomaproject.data.backend.opportunity.Company
-import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
-import kz.kbtu.diplomaproject.data.backend.opportunity.PostDetail
+import kz.kbtu.diplomaproject.data.backend.main.fav.StatusResponse
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.PostDetail
 import kz.kbtu.diplomaproject.data.common.BaseResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -30,4 +32,10 @@ interface HomeApi {
 
   @GET("companies/{id}")
   suspend fun getCompanyDetail(@Path("id") id: Int): Response<Company?>
+
+  @GET("favourate_opportunities/")
+  suspend fun getFavourites(): Response<BaseResponse<List<OpportunityDTO>?>>
+
+  @POST("favourate_pressed/{id}/")
+  suspend fun addToFav(@Path("id") id: Int): Response<StatusResponse>
 }

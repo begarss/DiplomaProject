@@ -26,7 +26,9 @@ class ExploreFragment : BaseFragment() {
   private lateinit var binding: FragmentExploreBinding
 
   private val adapter by lazy {
-    PostAdapter(arrayListOf())
+    PostAdapter(arrayListOf(),onFavClick = {
+
+    })
   }
 
   override fun onCreateView(

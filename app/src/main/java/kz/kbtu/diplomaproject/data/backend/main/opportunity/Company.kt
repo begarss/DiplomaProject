@@ -1,4 +1,4 @@
-package kz.kbtu.diplomaproject.data.backend.opportunity
+package kz.kbtu.diplomaproject.data.backend.main.opportunity
 
 import com.google.gson.annotations.SerializedName
 

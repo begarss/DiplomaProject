@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.profile.UserInfo
 import kz.kbtu.diplomaproject.domain.helpers.operators.launchIn
 import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion

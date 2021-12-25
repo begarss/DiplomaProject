@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -150,3 +151,16 @@ fun FragmentActivity.onBackPresses(
 
 fun String.isValidEmail() =
   !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+fun View.setOnClickListenerWithDebounce(debounceTime: Long = 600L, action: () -> Unit) {
+  this.setOnClickListener(object : View.OnClickListener {
+    private var lastClickTime: Long = 0
+
+    override fun onClick(v: View) {
+      if (SystemClock.elapsedRealtime() - lastClickTime < debounceTime) return
+      else action()
+
+      lastClickTime = SystemClock.elapsedRealtime()
+    }
+  })
+}

@@ -3,7 +3,7 @@ package kz.kbtu.diplomaproject.presentation.home
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kz.kbtu.diplomaproject.data.backend.opportunity.PostDetail
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.PostDetail
 import kz.kbtu.diplomaproject.domain.helpers.operators.launchIn
 import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion
 import kz.kbtu.diplomaproject.domain.helpers.operators.onConsume
