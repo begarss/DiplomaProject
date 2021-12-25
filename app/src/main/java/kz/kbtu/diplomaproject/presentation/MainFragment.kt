@@ -22,11 +22,12 @@ import kz.kbtu.diplomaproject.presentation.base.MenuItemType.EXPLORE
 import kz.kbtu.diplomaproject.presentation.base.MenuItemType.FAV
 import kz.kbtu.diplomaproject.presentation.base.MenuItemType.HOME
 import kz.kbtu.diplomaproject.presentation.base.MenuItemType.PROFILE
+import org.koin.androidx.viewmodel.ext.android.sharedStateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : BaseFragment() {
   private lateinit var binding: FragmentMainBinding
-  override val viewModel: SharedViewModel by viewModel()
+  override val viewModel: SharedViewModel by sharedStateViewModel()
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
