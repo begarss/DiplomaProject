@@ -10,7 +10,7 @@ data class Company(
   @SerializedName("name")
   val name: String?,
   @SerializedName("picture")
-  val picture: String?,
+  var picture: String?,
   @SerializedName("read_more")
   val readMoreLink: String?
 )

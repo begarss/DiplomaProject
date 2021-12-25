@@ -26,7 +26,11 @@ class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
 
   override suspend fun getSubscribedOpports(): DataResult<List<OpportunityDTO>?> = safeCall {
     val response = homeApi.getSubscribedOppors()
-    response.body()?.data
+    val body = response.body()?.data
+    body?.forEach {
+      it.company?.picture = "http://ithunt.pythonanywhere.com/${it.company?.picture}"
+    }
+    body
   }
 
   override suspend fun getDetails(id: Int): DataResult<PostDetail?> = safeCall {
