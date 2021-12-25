@@ -140,71 +140,71 @@ class HomeFragment : BaseFragment() {
     }
   }
 
-  private fun getTestPosts(): ArrayList<OpportunityDTO> {
-    val post = OpportunityDTO(
-      Company("DAR", ""),
-      "20.12.2020",
-      0,
-      false,
-      JobCategory(0, "Android"),
-      "internship",
-      "Middle Android developer"
-    )
-    val list = arrayListOf(
-      OpportunityDTO(
-        Company("DAR", ""),
-        "20.12.2020",
-        0,
-        false,
-        JobCategory(0, "Android"),
-        "internship",
-        "Middle Android developer"
-      ), OpportunityDTO(
-        Company("KOLESA", ""),
-        "20.12.2020",
-        0,
-        false,
-        JobCategory(0, "IOS"),
-        "vacancy",
-        "Middle IOS developer"
-      ),
-      OpportunityDTO(
-        Company("OneLAb", ""),
-        "20.12.2020",
-        0,
-        false,
-        JobCategory(0, "Backend"),
-        "vacancy",
-        "Middle Backend developer"
-      ),
-      OpportunityDTO(
-        Company("KOLESA", ""),
-        "20.12.2020",
-        0,
-        false,
-        JobCategory(0, "Android"),
-        "vacancy",
-        "Senior Android developer"
-      ),
-      OpportunityDTO(
-        Company("KOLESA", ""),
-        "20.12.2020",
-        0,
-        false,
-        JobCategory(0, "IOS"),
-        "vacancy",
-        "Middle IOS developer"
-      ),
-      OpportunityDTO(
-        Company("KOLESA", ""),
-        "20.12.2020",
-        0,
-        false,
-        JobCategory(0, "IOS"),
-        "vacancy",
-        "Middle IOS developer"
-      )
-    )
-    return list
-  }
+//  private fun getTestPosts(): ArrayList<OpportunityDTO> {
+//    val post = OpportunityDTO(
+//      Company("DAR", ""),
+//      "20.12.2020",
+//      0,
+//      false,
+//      JobCategory(0, "Android"),
+//      "internship",
+//      "Middle Android developer"
+//    )
+//    val list = arrayListOf(
+//      OpportunityDTO(
+//        Company("DAR", ""),
+//        "20.12.2020",
+//        0,
+//        false,
+//        JobCategory(0, "Android"),
+//        "internship",
+//        "Middle Android developer"
+//      ), OpportunityDTO(
+//        Company("KOLESA", ""),
+//        "20.12.2020",
+//        0,
+//        false,
+//        JobCategory(0, "IOS"),
+//        "vacancy",
+//        "Middle IOS developer"
+//      ),
+//      OpportunityDTO(
+//        Company("OneLAb", ""),
+//        "20.12.2020",
+//        0,
+//        false,
+//        JobCategory(0, "Backend"),
+//        "vacancy",
+//        "Middle Backend developer"
+//      ),
+//      OpportunityDTO(
+//        Company("KOLESA", ""),
+//        "20.12.2020",
+//        0,
+//        false,
+//        JobCategory(0, "Android"),
+//        "vacancy",
+//        "Senior Android developer"
+//      ),
+//      OpportunityDTO(
+//        Company("KOLESA", ""),
+//        "20.12.2020",
+//        0,
+//        false,
+//        JobCategory(0, "IOS"),
+//        "vacancy",
+//        "Middle IOS developer"
+//      ),
+//      OpportunityDTO(
+//        Company("KOLESA", ""),
+//        "20.12.2020",
+//        0,
+//        false,
+//        JobCategory(0, "IOS"),
+//        "vacancy",
+//        "Middle IOS developer"
+//      )
+//    )
+//    return list
+//  }
 }
