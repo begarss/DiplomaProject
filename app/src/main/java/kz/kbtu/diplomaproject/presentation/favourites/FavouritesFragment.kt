@@ -1,6 +1,7 @@
 package kz.kbtu.diplomaproject.presentation.favourites
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class FavouritesFragment : BaseFragment() {
     viewModel.getFavourites()
     bindView()
     observeOpports()
+    observeFavState()
   }
 
   private fun bindView() {
@@ -75,6 +77,19 @@ class FavouritesFragment : BaseFragment() {
           }
           binding.emptyView.root.hide()
           binding.favContainer.show()
+        }
+      }
+    }
+  }
+
+
+  private fun observeFavState() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.favState.collect {
+        Log.d("TAGA", "hjghjgjhghjghj: $it")
+        if (it == true) {
+          viewModel.getFavourites()
+          viewModel.clearFavState()
         }
       }
     }
