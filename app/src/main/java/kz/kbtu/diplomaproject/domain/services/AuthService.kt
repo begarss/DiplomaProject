@@ -33,7 +33,7 @@ class AuthServiceImpl(
       if (response.isSuccessful) {
         val body = response.body()
         if (!body?.token.isNullOrEmpty()) {
-          preferences.saveTokenInfo(TokenInfo(accessToken = body?.token))
+          preferences.saveTokenInfo(TokenInfo(accessToken = body?.token,""))
           DataResult.Success(true)
         } else {
           DataResult.Success(false)
@@ -53,9 +53,16 @@ class AuthServiceImpl(
       }
       val response = authApi.login(body = jsonBody)
       if (response.isSuccessful) {
+        response.headers()["Set-Cookie"]
+        val sessionId = response.headers().values("Set-Cookie")[0].split(";")[0].split("=")[1]
         val body = response.body()
         if (body?.isError() == false) {
-          preferences.saveTokenInfo(TokenInfo(accessToken = body.data.token))
+          Log.d(
+            "TAGA", "login: $sessionId  ${
+              response.headers()["Set-Cookie"]
+            }"
+          )
+          preferences.saveTokenInfo(TokenInfo(accessToken = body.data.token, sessionId = sessionId))
           DataResult.Success(true)
         } else {
           DataResult.Error(body?.error)

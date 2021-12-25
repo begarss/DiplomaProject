@@ -6,4 +6,5 @@ object Headers {
   const val CONTENT_TYPE = "Content-Type"
   const val ACCEPT = "Accept"
   const val ACCEPT_LANGUAGE = "Accept-Language"
+  const val COOKIE = "Cookie"
 }

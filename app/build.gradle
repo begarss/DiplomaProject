@@ -32,11 +32,11 @@ android {
     productFlavors {
         prod {
             dimension "endpoint"
-            buildConfigField "String", 'BASE_URL', "\"http://ithunt.pythonanywhere.com/api/\""
+            buildConfigField "String", 'BASE_URL', "\"http://ithuntt.pythonanywhere.com/api/\""
         }
         stage {
             dimension "endpoint"
-            buildConfigField "String", 'BASE_URL', "\"http://http://ithunt.pythonanywhere.com/api/\""
+            buildConfigField "String", 'BASE_URL', "\"http://ithuntt.pythonanywhere.com/api/\""
         }
     }
     compileOptions {
@@ -82,6 +82,8 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
     implementation "com.squareup.retrofit2:adapter-rxjava3:2.9.0"
     implementation 'com.facebook.stetho:stetho-okhttp3:1.6.0'
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
     //coroutines and lifeCycle
     def lifecycle_version = "2.3.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <com.google.android.material.card.MaterialCardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      app:cardCornerRadius="8dp"
+      app:cardElevation="4dp"
+      app:cardPreventCornerOverlap="true"
+      app:cardUseCompatPadding="true"
+      >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <ImageView
+          android:id="@+id/ivCompany"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginHorizontal="32dp"
+          android:layout_marginTop="12dp"
+          android:maxHeight="75dp"
+          android:maxWidth="88dp"
+          android:src="@drawable/test_company_iv"
+          app:layout_constraintBottom_toTopOf="@id/tvTitle"
+          app:layout_constraintDimensionRatio="W,1:1"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          />
+      <TextView
+          android:id="@+id/tvTitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="16dp"
+          android:textAppearance="@style/Body1"
+          android:textStyle="bold"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/ivCompany"
+          tools:text="This is a title of new complaint"
+          />
+      <androidx.appcompat.widget.AppCompatButton
+          android:layout_width="0dp"
+          android:layout_height="28dp"
+          android:layout_marginBottom="8dp"
+          android:layout_marginHorizontal="8dp"
+          android:layout_marginTop="8dp"
+          android:text="Follow"
+          android:textSize="12sp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tvTitle"
+          style="@style/MainButtonStyle"
+          />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </com.google.android.material.card.MaterialCardView>
+</layout>

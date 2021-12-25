@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import kz.airba.infrastructure.helpers.load
 import kz.kbtu.diplomaproject.R
-import kz.kbtu.diplomaproject.data.backend.banner.BannerDTO
+import kz.kbtu.diplomaproject.data.backend.main.BannerDTO
 import kz.kbtu.diplomaproject.databinding.ItemAdBinding
 import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter.AdsViewHolder
 

@@ -2,6 +2,7 @@ package kz.kbtu.diplomaproject.presentation.home
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,8 +52,8 @@ class HomeFragment : BaseFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    viewModel.getBanners()
     viewModel.getSubscribedOpperts()
+    viewModel.getBanners()
     bindViews()
     observeBanners()
     observeOpports()
@@ -134,6 +135,7 @@ class HomeFragment : BaseFragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.postState.collect {
         if (it != null) {
+          Log.d("TAGA", "observeOpports: $it")
           postAdapter.addAll(it)
         }
       }

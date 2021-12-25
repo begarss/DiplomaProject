@@ -1,6 +1,6 @@
 package kz.kbtu.diplomaproject.presentation.home
 
-import kz.kbtu.diplomaproject.data.backend.banner.BannerDTO
+import kz.kbtu.diplomaproject.data.backend.main.BannerDTO
 import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.opportunity.PostDetail
 import kz.kbtu.diplomaproject.domain.helpers.operators.Async
@@ -12,6 +12,8 @@ interface HomeInteractor {
   fun getBanners(): Async<DataResult<List<BannerDTO>?>>
   fun getSubscribedOpports(): Async<DataResult<List<OpportunityDTO>?>>
   fun getDetails(id: Int): Async<DataResult<PostDetail?>>
+  fun getOpportunities(): Async<DataResult<List<OpportunityDTO>?>>
+
 }
 
 class HomeInteractorImpl(private val homeService: HomeService) : HomeInteractor,
@@ -26,6 +28,10 @@ class HomeInteractorImpl(private val homeService: HomeService) : HomeInteractor,
 
   override fun getDetails(id: Int) = async {
     homeService.getDetails(id)
+  }
+
+  override fun getOpportunities() = async {
+    homeService.getOpportunities()
   }
 
 }

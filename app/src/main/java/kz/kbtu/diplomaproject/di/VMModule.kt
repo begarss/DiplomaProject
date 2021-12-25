@@ -1,6 +1,8 @@
 package kz.kbtu.diplomaproject.di
 
 import kz.kbtu.diplomaproject.presentation.auth.AuthViewModel
+import kz.kbtu.diplomaproject.presentation.company.CompanyViewModel
+import kz.kbtu.diplomaproject.presentation.explore.SearchViewModel
 import kz.kbtu.diplomaproject.presentation.home.DetailVIewModel
 import kz.kbtu.diplomaproject.presentation.home.HomeViewModel
 import kz.kbtu.diplomaproject.presentation.profile.ProfileViewModel
@@ -12,4 +14,6 @@ val viewModelModule = module {
   viewModel { HomeViewModel(homeInteractor = get()) }
   viewModel { ProfileViewModel(profileInteractor = get()) }
   viewModel { DetailVIewModel(homeInteractor = get()) }
+  viewModel { SearchViewModel(homeInteractor = get()) }
+  viewModel { CompanyViewModel(companyInteractor = get()) }
 }
