@@ -24,12 +24,13 @@ import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentHomeBinding
 import kz.kbtu.diplomaproject.presentation.base.MenuItemType.EXPLORE
 import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter
+import org.koin.androidx.viewmodel.ext.android.sharedStateViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
   override val viewModel: HomeViewModel by viewModel()
-  private val sharedViewModel: SharedViewModel by sharedViewModel()
+  private val sharedViewModel: SharedViewModel by sharedStateViewModel()
   private lateinit var binding: FragmentHomeBinding
   private lateinit var promotionAdapter: PromotionAdapter
   private lateinit var viewPager2: ViewPager2
@@ -142,10 +143,12 @@ class HomeFragment : BaseFragment() {
         if (it?.isEmpty() == true) {
           binding.emptyView.root.show()
           binding.mainContainerHome.hide()
+          binding.collapsingToolbar.bannerViewPagerHome.hide()
         } else {
           it?.let {
             postAdapter.addAll(it)
           }
+          binding.collapsingToolbar.bannerViewPagerHome.show()
           binding.emptyView.root.hide()
           binding.mainContainerHome.show()
         }
