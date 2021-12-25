@@ -15,11 +15,14 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.dp
+import kz.airba.infrastructure.helpers.hide
 import kz.airba.infrastructure.helpers.initRecyclerView
+import kz.airba.infrastructure.helpers.show
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.SharedViewModel
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentHomeBinding
+import kz.kbtu.diplomaproject.presentation.base.MenuItemType.EXPLORE
 import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -80,7 +83,9 @@ class HomeFragment : BaseFragment() {
     setBanner()
     binding.mainRV.initRecyclerView()
     binding.mainRV.adapter = postAdapter
-//    postAdapter.addAll(getTestPosts())
+    binding.emptyView.btnOpenSearch.setOnClickListener {
+      sharedViewModel.selectMenuItem(EXPLORE)
+    }
   }
 
   private fun setBanner() {
@@ -134,9 +139,15 @@ class HomeFragment : BaseFragment() {
   private fun observeOpports() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.postState.collect {
-        if (it != null) {
-          Log.d("TAGA", "observeOpports: $it")
-          postAdapter.addAll(it)
+        if (it?.isEmpty() == true) {
+          binding.emptyView.root.show()
+          binding.mainContainerHome.hide()
+        } else {
+          it?.let {
+            postAdapter.addAll(it)
+          }
+          binding.emptyView.root.hide()
+          binding.mainContainerHome.show()
         }
       }
     }
