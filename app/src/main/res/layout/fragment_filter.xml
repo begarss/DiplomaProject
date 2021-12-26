@@ -30,120 +30,164 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/filter_toolbar"
         />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_title"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/labelJCategory"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Job-type"
-        android:textAppearance="@style/Caption"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Job-category"
+        android:textAppearance="@style/H6"
         android:textColor="@color/gray_mid"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filter_toolbar"
         />
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelJCategory"
+        >
+      <com.google.android.material.chip.ChipGroup
+          android:id="@+id/filter_group_job_category"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="16dp"
+          android:clipToPadding="true"
+          android:paddingEnd="16dp"
+          android:scrollbarAlwaysDrawHorizontalTrack="true"
+          app:selectionRequired="true"
+          app:singleLine="true"
+          app:singleSelection="true"
+          />
+    </HorizontalScrollView>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_type"
+    <TextView
+        android:id="@+id/labelJType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="1dp"
-        android:drawableEnd="@drawable/ic_right_chevron"
-        android:text="Not selected"
-        android:textAppearance="@style/Body1"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sort_title"
-        />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_title_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Job-category"
-        android:textAppearance="@style/Caption"
+        android:layout_marginTop="24dp"
+        android:text="Job-type"
+        android:textAppearance="@style/H6"
         android:textColor="@color/gray_mid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sort_type"
-        />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_type_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="1dp"
-        android:drawableEnd="@drawable/ic_right_chevron"
-        android:text="Not selected"
-        android:textAppearance="@style/Body1"
-        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sort_title_category"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollCategory"
         />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_title_contract"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollType"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Job-contract-type"
-        android:textAppearance="@style/Caption"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelJType"
+        >
+      <com.google.android.material.chip.ChipGroup
+          android:id="@+id/filter_group_job_type"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="16dp"
+          android:clipToPadding="true"
+          android:paddingEnd="16dp"
+          android:scrollbarAlwaysDrawHorizontalTrack="true"
+          app:selectionRequired="true"
+          app:singleLine="true"
+          app:singleSelection="true"
+          />
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/labelJContract"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Contract type"
+        android:textAppearance="@style/H6"
         android:textColor="@color/gray_mid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sort_type_category"
-        />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_type_contract"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="1dp"
-        android:drawableEnd="@drawable/ic_right_chevron"
-        android:text="Not selected"
-        android:textAppearance="@style/Body1"
-        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sort_title_contract"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollType"
         />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_title_company"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollContract"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelJContract"
+        >
+      <com.google.android.material.chip.ChipGroup
+          android:id="@+id/filter_group_job_contract"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="16dp"
+          android:clipToPadding="true"
+          android:paddingEnd="16dp"
+          android:scrollbarAlwaysDrawHorizontalTrack="true"
+          app:selectionRequired="true"
+          app:singleLine="true"
+          app:singleSelection="true"
+          />
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/labelCompany"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
         android:text="Company"
-        android:textAppearance="@style/Caption"
+        android:textAppearance="@style/H6"
         android:textColor="@color/gray_mid"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sort_type_contract"
-        />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sort_type_company"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="1dp"
-        android:drawableEnd="@drawable/ic_right_chevron"
-        android:text="Not selected"
-        android:textAppearance="@style/Body1"
-        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sort_title_company"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollContract"
         />
-
-
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollCompany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelCompany"
+        >
+      <com.google.android.material.chip.ChipGroup
+          android:id="@+id/filter_group_job_company"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="16dp"
+          android:clipToPadding="true"
+          android:paddingEnd="16dp"
+          android:scrollbarAlwaysDrawHorizontalTrack="true"
+          app:selectionRequired="true"
+          app:singleLine="true"
+          app:singleSelection="true"
+          />
+    </HorizontalScrollView>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
