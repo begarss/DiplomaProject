@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val presentationModule = module {
-  viewModel { SharedViewModel(userInteractor = get()) }
+  viewModel { SharedViewModel(userInteractor = get(), dataBaseInteractor = get()) }
 }

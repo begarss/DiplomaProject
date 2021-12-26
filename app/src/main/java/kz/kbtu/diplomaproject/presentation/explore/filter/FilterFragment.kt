@@ -13,6 +13,9 @@ import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.JobCategory
 import kz.kbtu.diplomaproject.databinding.FragmentFilterBinding
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.CompanyModel
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.ContractModel
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.JobTypeModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FilterFragment : BaseFragment() {
@@ -35,9 +38,13 @@ class FilterFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getAllCategories()
     viewModel.getCompanies()
+    viewModel.getContractTypes()
+    viewModel.getJobTypes()
     bindViews()
     observeCategories()
     observeCompanies()
+    observeContracts()
+    observeTypes()
   }
 
   private fun bindViews() {
@@ -96,6 +103,52 @@ class FilterFragment : BaseFragment() {
         }
       }
       binding.filterGroupJobCompany.addView(chipFilter)
+    }
+  }
+
+  private fun observeTypes() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.typeState.collect {
+        if (it != null) {
+          setJobTypeItems(it)
+        }
+      }
+    }
+  }
+
+  private fun setJobTypeItems(filterItems: List<JobTypeModel>) {
+    filterItems.forEach { model ->
+      val chipFilter =
+        LayoutInflater.from(context)
+          .inflate(R.layout.item_chip, binding.filterGroupJobType, false) as Chip
+      chipFilter.text = model.name
+      model.id.let {
+        chipFilter.id = it
+      }
+      binding.filterGroupJobType.addView(chipFilter)
+    }
+  }
+
+  private fun observeContracts() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.contractState.collect {
+        if (it != null) {
+          setJobContractsItems(it)
+        }
+      }
+    }
+  }
+
+  private fun setJobContractsItems(filterItems: List<ContractModel>) {
+    filterItems.forEach { model ->
+      val chipFilter =
+        LayoutInflater.from(context)
+          .inflate(R.layout.item_chip, binding.filterGroupJobContract, false) as Chip
+      chipFilter.text = model.name
+      model.id.let {
+        chipFilter.id = it
+      }
+      binding.filterGroupJobContract.addView(chipFilter)
     }
   }
 }

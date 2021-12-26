@@ -3,9 +3,8 @@ package kz.kbtu.diplomaproject.presentation.explore.filter
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
+import kotlinx.coroutines.launch
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.JobCategory
-import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.mapToModel
 import kz.kbtu.diplomaproject.domain.helpers.operators.launchIn
 import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion
@@ -14,11 +13,16 @@ import kz.kbtu.diplomaproject.domain.helpers.operators.onError
 import kz.kbtu.diplomaproject.domain.helpers.operators.onResult
 import kz.kbtu.diplomaproject.presentation.base.BaseViewModel
 import kz.kbtu.diplomaproject.presentation.company.CompanyInteractor
+import kz.kbtu.diplomaproject.presentation.explore.DataBaseInteractor
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.CompanyModel
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.ContractModel
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.JobTypeModel
 import kz.kbtu.diplomaproject.presentation.favourites.OppInteractor
 
 class FilterViewModel(
   private val oppInteractor: OppInteractor,
-  private val companyInteractor: CompanyInteractor
+  private val companyInteractor: CompanyInteractor,
+  private val dataBaseInteractor: DataBaseInteractor
 ) : BaseViewModel() {
 
   private val _categoryState = MutableStateFlow<List<JobCategory>?>(null)
@@ -26,6 +30,12 @@ class FilterViewModel(
 
   private val _companyState = MutableStateFlow<List<CompanyModel>?>(null)
   val companyState: StateFlow<List<CompanyModel>?> = _companyState
+
+  private val _typeState = MutableStateFlow<List<JobTypeModel>?>(null)
+  val typeState: StateFlow<List<JobTypeModel>?> = _typeState
+
+  private val _contractState = MutableStateFlow<List<ContractModel>?>(null)
+  val contractState: StateFlow<List<ContractModel>?> = _contractState
 
   fun getCompanies() {
     companyInteractor.getCompanies()
@@ -50,5 +60,22 @@ class FilterViewModel(
         }
       }
       .launchIn(viewModelScope)
+  }
+
+  fun getJobTypes() {
+    dataBaseInteractor.getJobTypes()
+      .onResult {
+        _typeState.emit(it)
+      }.launchIn(viewModelScope)
+
+  }
+
+  fun getContractTypes() {
+    dataBaseInteractor.getContractTypes()
+      .onResult {
+        _contractState.emit(it)
+      }
+      .launchIn(viewModelScope)
+
   }
 }

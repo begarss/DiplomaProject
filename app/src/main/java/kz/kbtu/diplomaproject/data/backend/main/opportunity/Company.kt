@@ -1,7 +1,7 @@
 package kz.kbtu.diplomaproject.data.backend.main.opportunity
 
 import com.google.gson.annotations.SerializedName
-import kz.kbtu.diplomaproject.presentation.explore.filter.CompanyModel
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.CompanyModel
 
 data class Company(
   @SerializedName("id")

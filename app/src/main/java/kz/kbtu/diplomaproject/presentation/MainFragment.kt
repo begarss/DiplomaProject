@@ -43,7 +43,7 @@ class MainFragment : BaseFragment() {
       binding.bottomNavigationView.setupWithNavController(this)
       addOnDestinationChangedListener { _, destination, _ ->
         when (destination.id) {
-          R.id.homeFragment, R.id.favouriteFragment,  R.id.profileFragment -> showBottomNavigation()
+          R.id.homeFragment, R.id.favouriteFragment, R.id.profileFragment -> showBottomNavigation()
           else -> hideBottomNavigation()
         }
       }
@@ -51,6 +51,7 @@ class MainFragment : BaseFragment() {
     binding.bottomNavigationView.itemIconTintList = null
     observeMenu()
     backPress()
+    viewModel.setMockData()
   }
 
   private fun hideBottomNavigation() {

@@ -10,6 +10,6 @@ import org.koin.dsl.module
 val baseModule = module {
   single<Preferences> { PreferencesImpl(get(), get()) }
   single { Dispatchers.IO }
-  viewModel { SharedViewModel(userInteractor = get()) }
+  viewModel { SharedViewModel(userInteractor = get(), dataBaseInteractor = get()) }
 }
 

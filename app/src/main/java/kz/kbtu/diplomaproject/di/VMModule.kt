@@ -19,5 +19,11 @@ val viewModelModule = module {
   viewModel { SearchViewModel(homeInteractor = get()) }
   viewModel { CompanyViewModel(companyInteractor = get()) }
   viewModel { FavouritesViewModel(oppInteractor = get()) }
-  viewModel { FilterViewModel(oppInteractor = get(), companyInteractor = get()) }
+  viewModel {
+    FilterViewModel(
+      oppInteractor = get(),
+      companyInteractor = get(),
+      dataBaseInteractor = get()
+    )
+  }
 }
