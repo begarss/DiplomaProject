@@ -10,5 +10,6 @@
     <color name="primary">#F8690D</color>
     <color name="gray">#BBBBBB</color>
     <color name="mid_gray">#E8E6E6</color>
+    <color name="gray_mid">#8E95A7</color>
   <color name="gray06">#E7E7ED</color>
 </resources>
