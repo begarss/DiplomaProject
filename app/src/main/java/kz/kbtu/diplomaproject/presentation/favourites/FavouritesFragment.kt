@@ -29,6 +29,8 @@ class FavouritesFragment : BaseFragment() {
   private val postAdapter by lazy {
     PostAdapter(arrayListOf(), onFavClick = {
       viewModel.addToFavorite(it)
+    },{
+
     })
   }
 

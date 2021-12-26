@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.dp
 import kz.airba.infrastructure.helpers.hide
 import kz.airba.infrastructure.helpers.initRecyclerView
+import kz.airba.infrastructure.helpers.navigateSafely
 import kz.airba.infrastructure.helpers.show
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.SharedViewModel
@@ -40,6 +41,8 @@ class HomeFragment : BaseFragment() {
   private val postAdapter by lazy {
     PostAdapter(arrayListOf(), onFavClick = {
       viewModel.addToFavorite(it)
+    }, onItemClick = {
+      navigateSafely(HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(it))
     })
   }
 

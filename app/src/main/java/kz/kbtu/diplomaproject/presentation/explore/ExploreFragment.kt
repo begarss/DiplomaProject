@@ -28,6 +28,8 @@ class ExploreFragment : BaseFragment() {
   private val adapter by lazy {
     PostAdapter(arrayListOf(),onFavClick = {
 
+    },onItemClick = {
+
     })
   }
 

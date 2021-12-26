@@ -13,11 +13,19 @@ import kz.kbtu.diplomaproject.presentation.home.PostAdapter.PostViewHolder
 
 class PostAdapter(
   private var items: ArrayList<OpportunityDTO>,
-  private val onFavClick: (item: OpportunityDTO) -> Unit
+  private val onFavClick: (item: OpportunityDTO) -> Unit,
+  private val onItemClick: (id: Int) -> Unit
 ) : RecyclerView.Adapter<PostViewHolder>() {
 
-  inner class PostViewHolder(val itemBinding: ItemPostBinding) :
+  inner class PostViewHolder(val itemBinding: ItemPostBinding, onItemClicked: (Int) -> Unit) :
     RecyclerView.ViewHolder(itemBinding.root) {
+
+    init {
+      itemView.setOnClickListener {
+        onItemClicked(adapterPosition)
+      }
+    }
+
     fun bind(item: OpportunityDTO) {
       with(itemBinding) {
         ivCompany.load(item.company?.picture, placeholder = R.drawable.test_company_iv)
@@ -49,7 +57,9 @@ class PostAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
     val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    return PostViewHolder(binding)
+    return PostViewHolder(binding) {
+      items[it].id?.let { it1 -> onItemClick(it1) }
+    }
   }
 
   override fun onBindViewHolder(holder: PostViewHolder, position: Int) {

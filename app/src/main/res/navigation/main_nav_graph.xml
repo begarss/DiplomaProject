@@ -8,7 +8,11 @@
   <fragment
       android:id="@+id/exploreFragment"
       android:name="kz.kbtu.diplomaproject.presentation.explore.ExploreFragment"
-      android:label="ExploreFragment" />
+      android:label="ExploreFragment" >
+    <action
+        android:id="@+id/action_exploreFragment_to_postDetailFragment"
+        app:destination="@id/postDetailFragment" />
+  </fragment>
   <fragment
       android:id="@+id/favouriteFragment"
       android:name="kz.kbtu.diplomaproject.presentation.favourites.FavouritesFragment"
@@ -24,7 +28,11 @@
   <fragment
       android:id="@+id/homeFragment"
       android:name="kz.kbtu.diplomaproject.presentation.home.HomeFragment"
-      android:label="HomeFragment" />
+      android:label="HomeFragment" >
+    <action
+        android:id="@+id/action_homeFragment_to_postDetailFragment"
+        app:destination="@id/postDetailFragment" />
+  </fragment>
   <fragment
       android:id="@+id/editUserFragment"
       android:name="kz.kbtu.diplomaproject.presentation.profile.userInfo.EditUserFragment"
@@ -38,4 +46,12 @@
       android:id="@+id/companyFragment"
       android:name="kz.kbtu.diplomaproject.presentation.company.CompanyFragment"
       android:label="CompanyFragment" />
+  <fragment
+      android:id="@+id/postDetailFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.home.PostDetailFragment"
+      android:label="PostDetailFragment" >
+    <argument
+        android:name="postId"
+        app:argType="integer" />
+  </fragment>
 </navigation>

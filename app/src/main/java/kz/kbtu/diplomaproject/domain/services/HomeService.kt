@@ -19,7 +19,7 @@ class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
     val response = homeApi.getBanners()
     val body = response.body()
     body?.forEach {
-      it.image = "http://ithunt.pythonanywhere.com/${it.image}"
+      it.image = "http://ithuntt.pythonanywhere.com/${it.image}"
     }
     body
   }
@@ -28,7 +28,7 @@ class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
     val response = homeApi.getSubscribedOppors()
     val body = response.body()?.data
     body?.forEach {
-      it.company?.picture = "http://ithunt.pythonanywhere.com/${it.company?.picture}"
+      it.company?.picture = "http://ithuntt.pythonanywhere.com/${it.company?.picture}"
     }
     body
   }
@@ -36,6 +36,9 @@ class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
   override suspend fun getDetails(id: Int): DataResult<PostDetail?> = safeCall {
     val response = homeApi.getOpportunityDetail(id)
     val body = response.body()
+    body?.data?.company?.apply {
+      picture = "http://ithuntt.pythonanywhere.com/${this.picture}"
+    }
     body?.data
   }
 
