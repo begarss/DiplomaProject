@@ -17,6 +17,8 @@ import kz.kbtu.diplomaproject.data.backend.main.opportunity.PostDetail
 import kz.kbtu.diplomaproject.databinding.FragmentPostDetailBinding
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.content.Intent
+import android.net.Uri
 
 class PostDetailFragment : BaseFragment() {
   override val viewModel: DetailVIewModel by viewModel()
@@ -51,7 +53,24 @@ class PostDetailFragment : BaseFragment() {
       ivBack.setOnClickListener {
         requireActivity().onBackPressed()
       }
+      btnApply.setOnClickListener {
+        apply()
+      }
+      ivShare.setOnClickListener {
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT, "Hey Check out this opportunity: ${postDetail?.applyLink}")
+        intent.type = "text/plain"
+        startActivity(Intent.createChooser(intent, "Share To:"))
+      }
     }
+  }
+
+  private fun apply() {
+    val defaultBrowser =
+      Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_BROWSER)
+    defaultBrowser.data = Uri.parse(postDetail?.applyLink)
+    startActivity(defaultBrowser)
   }
 
   private fun observePost() {
