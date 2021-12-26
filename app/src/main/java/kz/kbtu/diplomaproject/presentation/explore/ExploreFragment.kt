@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kz.airba.infrastructure.helpers.focusAndShowKeyboard
 import kz.airba.infrastructure.helpers.initRecyclerView
+import kz.airba.infrastructure.helpers.navigateSafely
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentExploreBinding
 import kz.kbtu.diplomaproject.domain.helpers.operators.debounce
@@ -58,6 +59,10 @@ class ExploreFragment : BaseFragment() {
 
       rvSearchResult.initRecyclerView()
       rvSearchResult.adapter = adapter
+
+      fabFilter.setOnClickListener {
+        navigateSafely(ExploreFragmentDirections.actionExploreFragmentToFilterFragment())
+      }
     }
   }
 
@@ -110,6 +115,7 @@ class ExploreFragment : BaseFragment() {
   private fun observeAllPosts() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.allPostState.collect {
+        Log.d("TAGA", "all observePosts: $it")
         if (it != null) {
           adapter.addAll(it)
         }

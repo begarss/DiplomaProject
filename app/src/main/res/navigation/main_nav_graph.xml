@@ -12,6 +12,9 @@
     <action
         android:id="@+id/action_exploreFragment_to_postDetailFragment"
         app:destination="@id/postDetailFragment" />
+    <action
+        android:id="@+id/action_exploreFragment_to_filterFragment"
+        app:destination="@id/filterFragment" />
   </fragment>
   <fragment
       android:id="@+id/favouriteFragment"
@@ -58,4 +61,8 @@
         android:name="postId"
         app:argType="integer" />
   </fragment>
+  <fragment
+      android:id="@+id/filterFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.explore.filter.FilterFragment"
+      android:label="FilterFragment" />
 </navigation>

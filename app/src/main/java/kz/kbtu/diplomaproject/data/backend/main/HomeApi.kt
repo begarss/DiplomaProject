@@ -2,6 +2,7 @@ package kz.kbtu.diplomaproject.data.backend.main
 
 import kz.kbtu.diplomaproject.data.backend.main.fav.StatusResponse
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.JobCategory
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.PostDetail
 import kz.kbtu.diplomaproject.data.common.BaseResponse
@@ -38,4 +39,7 @@ interface HomeApi {
 
   @POST("favourate_pressed/{id}/")
   suspend fun addToFav(@Path("id") id: Int): Response<StatusResponse>
+
+  @GET("job_categories")
+  suspend fun getAllCategories(): Response<BaseResponse<List<JobCategory>?>>
 }

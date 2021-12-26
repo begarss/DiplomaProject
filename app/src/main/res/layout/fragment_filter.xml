@@ -64,7 +64,6 @@
           android:clipToPadding="true"
           android:paddingEnd="16dp"
           android:scrollbarAlwaysDrawHorizontalTrack="true"
-          app:selectionRequired="true"
           app:singleLine="true"
           app:singleSelection="true"
           />
