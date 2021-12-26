@@ -133,7 +133,7 @@ class ProfileFragment : BaseFragment() {
         if (it != null) {
           userInfo = it
         }
-        it?.profImage = "http://ithunt.pythonanywhere.com/${it?.profImage}"
+        it?.profImage = "http://ithuntt.pythonanywhere.com/${it?.profImage}"
 
         binding.tvName.text = it?.email
         binding.ivAvatar.load(it?.profImage, placeholder = R.drawable.ava)

@@ -16,7 +16,11 @@
   <fragment
       android:id="@+id/favouriteFragment"
       android:name="kz.kbtu.diplomaproject.presentation.favourites.FavouritesFragment"
-      android:label="FavouritesFragment" />
+      android:label="FavouritesFragment" >
+    <action
+        android:id="@+id/action_favouriteFragment_to_postDetailFragment"
+        app:destination="@id/postDetailFragment" />
+  </fragment>
   <fragment
       android:id="@+id/profileFragment"
       android:name="kz.kbtu.diplomaproject.presentation.profile.ProfileFragment"

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.hide
 import kz.airba.infrastructure.helpers.initRecyclerView
+import kz.airba.infrastructure.helpers.navigateSafely
 import kz.airba.infrastructure.helpers.show
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.SharedViewModel
@@ -29,8 +30,8 @@ class FavouritesFragment : BaseFragment() {
   private val postAdapter by lazy {
     PostAdapter(arrayListOf(), onFavClick = {
       viewModel.addToFavorite(it)
-    },{
-
+    }, onItemClick = {
+      navigateSafely(FavouritesFragmentDirections.actionFavouriteFragmentToPostDetailFragment(it))
     })
   }
 
@@ -83,7 +84,6 @@ class FavouritesFragment : BaseFragment() {
       }
     }
   }
-
 
   private fun observeFavState() {
     viewLifecycleOwner.lifecycleScope.launch {

@@ -3,6 +3,7 @@ package kz.kbtu.diplomaproject.presentation.explore
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.domain.helpers.operators.launchIn
 import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion
@@ -17,6 +18,9 @@ class SearchViewModel(private val homeInteractor: HomeInteractor) : BaseViewMode
   private val _postState = MutableStateFlow<List<OpportunityDTO>?>(null)
   val postState: StateFlow<List<OpportunityDTO>?> = _postState
 
+  private val _allPostState = MutableStateFlow<List<OpportunityDTO>?>(null)
+  val allPostState: StateFlow<List<OpportunityDTO>?> = _allPostState
+
   fun getOpportunities() {
     homeInteractor.getOpportunities()
       .onConsume { showLoader() }
@@ -25,7 +29,7 @@ class SearchViewModel(private val homeInteractor: HomeInteractor) : BaseViewMode
       }
       .onResult {
         if (it.isSuccess()) {
-          _postState.emit(it.dataValue())
+          _allPostState.emit(it.dataValue())
         }
       }
       .launchIn(viewModelScope)

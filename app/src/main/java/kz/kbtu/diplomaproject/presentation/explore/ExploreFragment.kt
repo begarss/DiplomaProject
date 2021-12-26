@@ -26,9 +26,9 @@ class ExploreFragment : BaseFragment() {
   private lateinit var binding: FragmentExploreBinding
 
   private val adapter by lazy {
-    PostAdapter(arrayListOf(),onFavClick = {
+    PostAdapter(arrayListOf(), onFavClick = {
 
-    },onItemClick = {
+    }, onItemClick = {
 
     })
   }
@@ -47,7 +47,7 @@ class ExploreFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getOpportunities()
     bindViews()
-    observePosts()
+    observeAllPosts()
     setUpSearchView()
   }
 
@@ -86,7 +86,7 @@ class ExploreFragment : BaseFragment() {
         override fun onQueryTextChange(newText: String?): Boolean {
           newText?.let(onQueryChanged)
           if (query.isEmpty()) {
-            observePosts()
+            observeAllPosts()
           }
           if (query.length < 3) {
 //            viewModel.clearResults()
@@ -105,6 +105,16 @@ class ExploreFragment : BaseFragment() {
     }
 //    observeSearchResult()
 //    handleLoadStates(true)
+  }
+
+  private fun observeAllPosts() {
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+      viewModel.allPostState.collect {
+        if (it != null) {
+          adapter.addAll(it)
+        }
+      }
+    }
   }
 
   private fun observePosts() {
