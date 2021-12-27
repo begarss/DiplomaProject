@@ -11,6 +11,13 @@ interface OppInteractor {
   fun addToFav(id: Int): Async<DataResult<Boolean?>>
   fun getFavourites(): Async<DataResult<List<OpportunityDTO>?>>
   fun getCategories(): Async<DataResult<List<JobCategory>?>>
+  fun filterOpportunity(
+    category: Int?,
+    type: String?,
+    contract: String?,
+    company: Int?
+  ): Async<DataResult<List<OpportunityDTO>?>>
+
 }
 
 class OppInteractorImpl(private val oppService: OppService) : OppInteractor, CoroutineInteractor {
@@ -24,5 +31,14 @@ class OppInteractorImpl(private val oppService: OppService) : OppInteractor, Cor
 
   override fun getCategories() = async {
     oppService.getAllCategories()
+  }
+
+  override fun filterOpportunity(
+    category: Int?,
+    type: String?,
+    contract: String?,
+    company: Int?
+  ) = async {
+    oppService.filterOpportunity(category, type, contract, company)
   }
 }

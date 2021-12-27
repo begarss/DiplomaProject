@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kz.airba.infrastructure.helpers.focusAndShowKeyboard
@@ -19,18 +20,32 @@ import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentExploreBinding
 import kz.kbtu.diplomaproject.domain.helpers.operators.debounce
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
+import kz.kbtu.diplomaproject.presentation.explore.filter.FilterFragment
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.FilterInfo
 import kz.kbtu.diplomaproject.presentation.home.PostAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ExploreFragment : BaseFragment() {
   override val viewModel: SearchViewModel by viewModel()
   private lateinit var binding: FragmentExploreBinding
+  private var filterData: FilterInfo? = null
 
   private val adapter by lazy {
     PostAdapter(arrayListOf(), onFavClick = {
 
     }, onItemClick = {
 
+    })
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setFragmentResultListener(requestKey = FilterFragment.FILTER_KEY, listener = { _, bundle ->
+      filterData = bundle.getParcelable<FilterInfo>(FilterFragment.FILTER_DATA_RESULT)
+      if (filterData != null) {
+        observeFilters(filterData)
+        Log.d("TAGA", "onCreate: $filterData")
+      }
     })
   }
 
@@ -48,8 +63,10 @@ class ExploreFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getOpportunities()
     bindViews()
-    observeAllPosts()
-    setUpSearchView()
+    if (filterData == null) {
+      observeAllPosts()
+      setUpSearchView()
+    }
   }
 
   private fun bindViews() {
@@ -132,5 +149,9 @@ class ExploreFragment : BaseFragment() {
         }
       }
     }
+  }
+
+  private fun observeFilters(filterInfo: FilterInfo?) {
+    filterInfo?.let { viewModel.applyFilter(it) }
   }
 }

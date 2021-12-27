@@ -68,7 +68,15 @@
           app:singleSelection="true"
           />
     </HorizontalScrollView>
-
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#C4C4C4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollCategory"
+        />
     <TextView
         android:id="@+id/labelJType"
         android:layout_width="0dp"
@@ -103,12 +111,19 @@
           android:clipToPadding="true"
           android:paddingEnd="16dp"
           android:scrollbarAlwaysDrawHorizontalTrack="true"
-          app:selectionRequired="true"
           app:singleLine="true"
           app:singleSelection="true"
           />
     </HorizontalScrollView>
-
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#C4C4C4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollType"
+        />
     <TextView
         android:id="@+id/labelJContract"
         android:layout_width="0dp"
@@ -143,12 +158,19 @@
           android:clipToPadding="true"
           android:paddingEnd="16dp"
           android:scrollbarAlwaysDrawHorizontalTrack="true"
-          app:selectionRequired="true"
           app:singleLine="true"
           app:singleSelection="true"
           />
     </HorizontalScrollView>
-
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#C4C4C4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollContract"
+        />
     <TextView
         android:id="@+id/labelCompany"
         android:layout_width="0dp"
@@ -183,10 +205,30 @@
           android:clipToPadding="true"
           android:paddingEnd="16dp"
           android:scrollbarAlwaysDrawHorizontalTrack="true"
-          app:selectionRequired="true"
           app:singleLine="true"
           app:singleSelection="true"
           />
     </HorizontalScrollView>
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#C4C4C4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollCompany"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_apply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="apply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/MainButtonStyle"
+        />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

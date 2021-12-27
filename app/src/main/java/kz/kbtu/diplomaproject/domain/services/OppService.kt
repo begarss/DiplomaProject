@@ -10,6 +10,12 @@ interface OppService {
   suspend fun addToFav(id: Int): DataResult<Boolean?>
   suspend fun getFavourites(): DataResult<List<OpportunityDTO>?>
   suspend fun getAllCategories(): DataResult<List<JobCategory>?>
+  suspend fun filterOpportunity(
+    category: Int?,
+    type: String?,
+    contract: String?,
+    company: Int?
+  ): DataResult<List<OpportunityDTO>?>
 }
 
 class OppServiceImpl(private val homeApi: HomeApi) : OppService {
@@ -29,6 +35,27 @@ class OppServiceImpl(private val homeApi: HomeApi) : OppService {
     val response = homeApi.getAllCategories()
     val body = response.body()
     body?.data
+  }
+
+  override suspend fun filterOpportunity(
+    category: Int?,
+    type: String?,
+    contract: String?,
+    company: Int?
+  ): DataResult<List<OpportunityDTO>?> = safeCall {
+//    val option = HashMap<String, String>()
+//    category?.let {
+//      option.put("job_category", it.toString())
+//    }
+//    type?.let { option.put("job_type", it) }
+//    contract?.let { option.put("contract_type", it) }
+//    company?.let {
+//      option.put("company", company.toString())
+//    }
+
+    val response = homeApi.filterOpportunity(category, type, contract, company)
+    val body = response.body()
+    body
   }
 
 }

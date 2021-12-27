@@ -44,7 +44,7 @@ class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
 
   override suspend fun getOpportunities(): DataResult<List<OpportunityDTO>?> = safeCall {
     val response = homeApi.getOpportunities()
-    response.body()?.data
+    response.body()
   }
 
 }

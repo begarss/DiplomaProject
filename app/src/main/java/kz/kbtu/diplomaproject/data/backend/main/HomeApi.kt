@@ -11,6 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface HomeApi {
   @GET("addbanner/adds/")
@@ -23,7 +24,7 @@ interface HomeApi {
   suspend fun getOpportunityDetail(@Path("id") id: Int): Response<BaseResponse<PostDetail>>
 
   @GET("opportunities")
-  suspend fun getOpportunities(): Response<BaseResponse<List<OpportunityDTO>>>
+  suspend fun getOpportunities(): Response<List<OpportunityDTO>?>
 
   @GET("companies")
   suspend fun getAllCompanies(): Response<List<Company>?>
@@ -42,4 +43,17 @@ interface HomeApi {
 
   @GET("job_categories")
   suspend fun getAllCategories(): Response<BaseResponse<List<JobCategory>?>>
+
+    @GET("opportunities/")
+  suspend fun filterOpportunity(
+    @Query("job_category") category: Int? = null,
+    @Query("job_type") type: String? = null,
+    @Query("contract_type") contract: String? = null,
+    @Query("company") company: Int? = null,
+  ): Response<List<OpportunityDTO>?>
+
+//  @GET("opportunities/")
+//  suspend fun filterOpportunity(
+//    @QueryMap options: Map<String, String>
+//  ): Response<List<OpportunityDTO>?>
 }

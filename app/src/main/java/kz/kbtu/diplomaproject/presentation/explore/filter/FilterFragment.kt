@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.core.view.children
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.collect
@@ -15,6 +18,7 @@ import kz.kbtu.diplomaproject.databinding.FragmentFilterBinding
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.filter.vo.CompanyModel
 import kz.kbtu.diplomaproject.presentation.explore.filter.vo.ContractModel
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.FilterInfo
 import kz.kbtu.diplomaproject.presentation.explore.filter.vo.JobTypeModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -49,7 +53,41 @@ class FilterFragment : BaseFragment() {
 
   private fun bindViews() {
     with(binding) {
-      filterGroupJobCategory.setOnCheckedChangeListener { group, checkedId ->
+      btnApply.setOnClickListener {
+        val typeId = filterGroupJobType.checkedChipId
+        val categoryId = filterGroupJobCategory.checkedChipId
+        val contractId = filterGroupJobContract.checkedChipId
+        val companyId = filterGroupJobCompany.checkedChipId
+        var jobCategoryChip: Chip? = null
+        var contractChip: Chip? = null
+        if (typeId > -1) {
+          jobCategoryChip =
+            (filterGroupJobType.getChildAt(typeId) as Chip)
+        }
+        if (contractId > -1) {
+          contractChip = (filterGroupJobContract.getChildAt(contractId) as Chip)
+        }
+
+        Log.d("TAGA", "bindViews: ${jobCategoryChip?.text}")
+        Log.d("TAGA", "bindViews: cat $categoryId")
+        val filterInfo = FilterInfo(
+          jobCategory = categoryId.takeIf {
+            it > -1
+          },
+          jobType = jobCategoryChip?.text?.toString(),
+          contractType = contractChip?.text?.toString(),
+          companyId.takeIf {
+            it > -1
+          })
+
+        setFragmentResult(
+          requestKey = FILTER_KEY,
+          result = bundleOf(
+            FILTER_DATA_RESULT to
+                filterInfo
+          )
+        )
+        requireActivity().onBackPressed()
       }
     }
   }
@@ -150,5 +188,11 @@ class FilterFragment : BaseFragment() {
       }
       binding.filterGroupJobContract.addView(chipFilter)
     }
+  }
+
+  companion object {
+    const val FILTER_KEY = "filter_key"
+    const val FILTER_DATA_RESULT = "filter_data"
+
   }
 }
