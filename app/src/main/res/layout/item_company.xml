@@ -47,6 +47,7 @@
           tools:text="This is a title of new complaint"
           />
       <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/btnFollow"
           android:layout_width="0dp"
           android:layout_height="28dp"
           android:layout_marginBottom="8dp"

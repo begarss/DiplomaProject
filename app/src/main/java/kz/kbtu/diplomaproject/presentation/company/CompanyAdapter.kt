@@ -8,7 +8,11 @@ import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
 import kz.kbtu.diplomaproject.databinding.ItemCompanyBinding
 import kz.kbtu.diplomaproject.presentation.company.CompanyAdapter.CompanyViewHolder
 
-class CompanyAdapter : RecyclerView.Adapter<CompanyViewHolder>() {
+class CompanyAdapter(
+  private val onFollowClick: (id: Int) -> Unit,
+  private val onItemClick: (id: Int) -> Unit
+) :
+  RecyclerView.Adapter<CompanyViewHolder>() {
   private val items: ArrayList<Company> = arrayListOf()
 
   fun addAll(newItems: List<Company>?) {
@@ -26,6 +30,12 @@ class CompanyAdapter : RecyclerView.Adapter<CompanyViewHolder>() {
       with(binding) {
         tvTitle.text = item.name
         ivCompany.load(item.picture)
+        btnFollow.setOnClickListener {
+          item.id?.let { it1 -> onFollowClick.invoke(it1) }
+        }
+        itemView.setOnClickListener {
+          item.id?.let(onItemClick)
+        }
       }
     }
   }

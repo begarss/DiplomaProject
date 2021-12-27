@@ -1,7 +1,6 @@
 package kz.kbtu.diplomaproject.data.backend.main
 
 import kz.kbtu.diplomaproject.data.backend.main.fav.StatusResponse
-import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.JobCategory
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.PostDetail
@@ -11,7 +10,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 
 interface HomeApi {
   @GET("addbanner/adds/")
@@ -25,15 +23,6 @@ interface HomeApi {
 
   @GET("opportunities")
   suspend fun getOpportunities(): Response<List<OpportunityDTO>?>
-
-  @GET("companies")
-  suspend fun getAllCompanies(): Response<List<Company>?>
-
-  @GET("companies/")
-  suspend fun searchCompany(@Query("search") name: String?): Response<List<Company>?>
-
-  @GET("companies/{id}")
-  suspend fun getCompanyDetail(@Path("id") id: Int): Response<Company?>
 
   @GET("favourate_opportunities/")
   suspend fun getFavourites(): Response<BaseResponse<List<OpportunityDTO>?>>

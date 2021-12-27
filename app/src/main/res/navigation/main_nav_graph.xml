@@ -52,7 +52,11 @@
   <fragment
       android:id="@+id/companyFragment"
       android:name="kz.kbtu.diplomaproject.presentation.company.CompanyFragment"
-      android:label="CompanyFragment" />
+      android:label="CompanyFragment" >
+    <action
+        android:id="@+id/action_companyFragment_to_companyDetail"
+        app:destination="@id/companyDetail" />
+  </fragment>
   <fragment
       android:id="@+id/postDetailFragment"
       android:name="kz.kbtu.diplomaproject.presentation.home.PostDetailFragment"
@@ -65,4 +69,12 @@
       android:id="@+id/filterFragment"
       android:name="kz.kbtu.diplomaproject.presentation.explore.filter.FilterFragment"
       android:label="FilterFragment" />
+  <fragment
+      android:id="@+id/companyDetail"
+      android:name="kz.kbtu.diplomaproject.presentation.company.CompanyDetail"
+      android:label="CompanyDetail" >
+    <argument
+        android:name="companyId"
+        app:argType="integer" />
+  </fragment>
 </navigation>

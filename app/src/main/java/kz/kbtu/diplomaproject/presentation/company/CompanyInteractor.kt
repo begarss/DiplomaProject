@@ -10,6 +10,7 @@ interface CompanyInteractor {
   fun getCompanies(): Async<DataResult<List<Company>?>>
   fun searchCompany(name: String?): Async<DataResult<List<Company>?>>
   fun getCompanyDetail(id: Int): Async<DataResult<Company?>>
+  fun makeSubscribe(id: Int): Async<DataResult<Boolean?>>
 }
 
 class CompanyInteractorImpl(private val companyService: CompanyService) : CompanyInteractor,
@@ -24,6 +25,10 @@ class CompanyInteractorImpl(private val companyService: CompanyService) : Compan
 
   override fun getCompanyDetail(id: Int) = async {
     companyService.getCompanyDetail(id)
+  }
+
+  override fun makeSubscribe(id: Int) = async {
+    companyService.makeSubscribe(id)
   }
 
 }
