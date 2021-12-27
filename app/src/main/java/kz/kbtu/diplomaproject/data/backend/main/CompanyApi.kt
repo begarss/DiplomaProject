@@ -1,6 +1,7 @@
 package kz.kbtu.diplomaproject.data.backend.main
 
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.common.BaseResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -20,4 +21,7 @@ interface CompanyApi {
 
   @POST("subscribed_pressed/{id}")
   suspend fun makeSubscribe(@Path("id") id: Int): Response<Boolean>
+
+  @GET("companies/{id}/opportunities")
+  suspend fun getOppByCompany(@Path("id") id: Int): Response<List<OpportunityDTO>?>
 }

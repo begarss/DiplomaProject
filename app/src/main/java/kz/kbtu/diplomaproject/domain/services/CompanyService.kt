@@ -3,6 +3,7 @@ package kz.kbtu.diplomaproject.domain.services
 import kz.kbtu.diplomaproject.data.backend.main.CompanyApi
 import kz.kbtu.diplomaproject.data.backend.main.HomeApi
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.domain.helpers.operators.safeCall
 import kz.kbtu.diplomaproject.domain.model.DataResult
 
@@ -11,6 +12,7 @@ interface CompanyService {
   suspend fun searchCompany(name: String?): DataResult<List<Company>?>
   suspend fun getCompanyDetail(id: Int): DataResult<Company?>
   suspend fun makeSubscribe(id: Int): DataResult<Boolean?>
+  suspend fun getOppByCompany(id: Int): DataResult<List<OpportunityDTO>?>
 }
 
 class CompanyServiceImpl(private val companyApi: CompanyApi) : CompanyService {
@@ -34,6 +36,12 @@ class CompanyServiceImpl(private val companyApi: CompanyApi) : CompanyService {
 
   override suspend fun makeSubscribe(id: Int): DataResult<Boolean?> = safeCall {
     val response = companyApi.makeSubscribe(id)
+    val body = response.body()
+    body
+  }
+
+  override suspend fun getOppByCompany(id: Int): DataResult<List<OpportunityDTO>?> = safeCall {
+    val response = companyApi.getOppByCompany(id)
     val body = response.body()
     body
   }
