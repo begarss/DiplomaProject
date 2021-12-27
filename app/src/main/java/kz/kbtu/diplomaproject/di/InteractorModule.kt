@@ -6,6 +6,10 @@ import kz.kbtu.diplomaproject.presentation.base.UserInteractor
 import kz.kbtu.diplomaproject.presentation.base.UserInteractorImpl
 import kz.kbtu.diplomaproject.presentation.company.CompanyInteractor
 import kz.kbtu.diplomaproject.presentation.company.CompanyInteractorImpl
+import kz.kbtu.diplomaproject.presentation.explore.DataBaseInteractor
+import kz.kbtu.diplomaproject.presentation.explore.DataBaseInteractorImpl
+import kz.kbtu.diplomaproject.presentation.favourites.OppInteractor
+import kz.kbtu.diplomaproject.presentation.favourites.OppInteractorImpl
 import kz.kbtu.diplomaproject.presentation.home.HomeInteractor
 import kz.kbtu.diplomaproject.presentation.home.HomeInteractorImpl
 import kz.kbtu.diplomaproject.presentation.profile.ProfileInteractor
@@ -18,5 +22,6 @@ val interactorModule = module {
   single<HomeInteractor> { HomeInteractorImpl(homeService = get()) }
   single<ProfileInteractor> { ProfileInteractorImpl(profileService = get()) }
   single<CompanyInteractor> { CompanyInteractorImpl(companyService = get()) }
-
+  single<OppInteractor> { OppInteractorImpl(oppService = get()) }
+  single<DataBaseInteractor> { DataBaseInteractorImpl(dataBaseService = get()) }
 }

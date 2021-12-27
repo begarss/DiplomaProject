@@ -1,6 +1,6 @@
 package kz.kbtu.diplomaproject.presentation.company
 
-import kz.kbtu.diplomaproject.data.backend.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
 import kz.kbtu.diplomaproject.domain.helpers.operators.Async
 import kz.kbtu.diplomaproject.domain.helpers.operators.CoroutineInteractor
 import kz.kbtu.diplomaproject.domain.model.DataResult

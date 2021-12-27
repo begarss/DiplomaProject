@@ -4,8 +4,12 @@ import kz.kbtu.diplomaproject.domain.services.AuthService
 import kz.kbtu.diplomaproject.domain.services.AuthServiceImpl
 import kz.kbtu.diplomaproject.domain.services.CompanyService
 import kz.kbtu.diplomaproject.domain.services.CompanyServiceImpl
+import kz.kbtu.diplomaproject.domain.services.DataBaseService
+import kz.kbtu.diplomaproject.domain.services.DataBaseServiceImpl
 import kz.kbtu.diplomaproject.domain.services.HomeService
 import kz.kbtu.diplomaproject.domain.services.HomeServiceImpl
+import kz.kbtu.diplomaproject.domain.services.OppService
+import kz.kbtu.diplomaproject.domain.services.OppServiceImpl
 import kz.kbtu.diplomaproject.domain.services.ProfileService
 import kz.kbtu.diplomaproject.domain.services.ProfileServiceImpl
 import kz.kbtu.diplomaproject.domain.services.UserService
@@ -18,4 +22,6 @@ val serviceModule = module {
   single<HomeService> { HomeServiceImpl(homeApi = get()) }
   single<ProfileService> { ProfileServiceImpl(profileApi = get()) }
   single<CompanyService> { CompanyServiceImpl(homeApi = get()) }
+  single<OppService> { OppServiceImpl(homeApi = get()) }
+  single<DataBaseService> { DataBaseServiceImpl(jobTypeDao = get(), contractDao = get()) }
 }

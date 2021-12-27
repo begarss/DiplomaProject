@@ -37,4 +37,18 @@
     <item name="colorPrimary">@color/primary</item>
     <item name="colorOnPrimary">@color/white</item>
   </style>
+
+  <style name="FilterChip" parent="Widget.MaterialComponents.Chip.Choice">
+    <item name="chipCornerRadius">8dp</item>
+    <item name="android:layout_height">40dp</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textAppearance">@style/Body1</item>
+    <item name="chipMinTouchTargetSize">0dp</item>
+    <item name="chipStrokeWidth">1dp</item>
+    <item name="chipStrokeColor">@color/chip_stroke_color_selector</item>
+    <item name="chipBackgroundColor">@drawable/background_bordered_chip</item>
+    <item name="android:textColor">@drawable/chip_text_color_selector</item>
+  </style>
+
+
 </resources>

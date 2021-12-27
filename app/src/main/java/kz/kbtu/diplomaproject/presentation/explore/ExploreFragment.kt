@@ -10,23 +10,43 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kz.airba.infrastructure.helpers.focusAndShowKeyboard
 import kz.airba.infrastructure.helpers.initRecyclerView
+import kz.airba.infrastructure.helpers.navigateSafely
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentExploreBinding
 import kz.kbtu.diplomaproject.domain.helpers.operators.debounce
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
+import kz.kbtu.diplomaproject.presentation.explore.filter.FilterFragment
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.FilterInfo
 import kz.kbtu.diplomaproject.presentation.home.PostAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ExploreFragment : BaseFragment() {
   override val viewModel: SearchViewModel by viewModel()
   private lateinit var binding: FragmentExploreBinding
+  private var filterData: FilterInfo? = null
 
   private val adapter by lazy {
-    PostAdapter(arrayListOf())
+    PostAdapter(arrayListOf(), onFavClick = {
+
+    }, onItemClick = {
+
+    })
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setFragmentResultListener(requestKey = FilterFragment.FILTER_KEY, listener = { _, bundle ->
+      filterData = bundle.getParcelable<FilterInfo>(FilterFragment.FILTER_DATA_RESULT)
+      if (filterData != null) {
+        observeFilters(filterData)
+        Log.d("TAGA", "onCreate: $filterData")
+      }
+    })
   }
 
   override fun onCreateView(
@@ -43,8 +63,10 @@ class ExploreFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getOpportunities()
     bindViews()
-    observePosts()
-    setUpSearchView()
+    if (filterData == null) {
+      observeAllPosts()
+      setUpSearchView()
+    }
   }
 
   private fun bindViews() {
@@ -54,6 +76,10 @@ class ExploreFragment : BaseFragment() {
 
       rvSearchResult.initRecyclerView()
       rvSearchResult.adapter = adapter
+
+      fabFilter.setOnClickListener {
+        navigateSafely(ExploreFragmentDirections.actionExploreFragmentToFilterFragment())
+      }
     }
   }
 
@@ -82,7 +108,7 @@ class ExploreFragment : BaseFragment() {
         override fun onQueryTextChange(newText: String?): Boolean {
           newText?.let(onQueryChanged)
           if (query.isEmpty()) {
-            observePosts()
+            observeAllPosts()
           }
           if (query.length < 3) {
 //            viewModel.clearResults()
@@ -103,6 +129,17 @@ class ExploreFragment : BaseFragment() {
 //    handleLoadStates(true)
   }
 
+  private fun observeAllPosts() {
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+      viewModel.allPostState.collect {
+        Log.d("TAGA", "all observePosts: $it")
+        if (it != null) {
+          adapter.addAll(it)
+        }
+      }
+    }
+  }
+
   private fun observePosts() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.postState.collect {
@@ -112,5 +149,9 @@ class ExploreFragment : BaseFragment() {
         }
       }
     }
+  }
+
+  private fun observeFilters(filterInfo: FilterInfo?) {
+    filterInfo?.let { viewModel.applyFilter(it) }
   }
 }

@@ -15,21 +15,23 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.dp
+import kz.airba.infrastructure.helpers.hide
 import kz.airba.infrastructure.helpers.initRecyclerView
+import kz.airba.infrastructure.helpers.navigateSafely
+import kz.airba.infrastructure.helpers.show
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.SharedViewModel
 import kz.kbtu.diplomaproject.R
-import kz.kbtu.diplomaproject.data.backend.opportunity.Company
-import kz.kbtu.diplomaproject.data.backend.opportunity.JobCategory
-import kz.kbtu.diplomaproject.data.backend.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.databinding.FragmentHomeBinding
+import kz.kbtu.diplomaproject.presentation.base.MenuItemType.EXPLORE
 import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter
+import org.koin.androidx.viewmodel.ext.android.sharedStateViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
   override val viewModel: HomeViewModel by viewModel()
-  private val sharedViewModel: SharedViewModel by sharedViewModel()
+  private val sharedViewModel: SharedViewModel by sharedStateViewModel()
   private lateinit var binding: FragmentHomeBinding
   private lateinit var promotionAdapter: PromotionAdapter
   private lateinit var viewPager2: ViewPager2
@@ -37,7 +39,11 @@ class HomeFragment : BaseFragment() {
   private val sliderHandler: Handler = Handler()
   private val sliderRunnable = Runnable { viewPager2.currentItem += 1 }
   private val postAdapter by lazy {
-    PostAdapter(arrayListOf())
+    PostAdapter(arrayListOf(), onFavClick = {
+      viewModel.addToFavorite(it)
+    }, onItemClick = {
+      navigateSafely(HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(it))
+    })
   }
 
   override fun onCreateView(
@@ -57,6 +63,7 @@ class HomeFragment : BaseFragment() {
     bindViews()
     observeBanners()
     observeOpports()
+    observeFavState()
   }
 
   override fun onPause() {
@@ -80,7 +87,9 @@ class HomeFragment : BaseFragment() {
     setBanner()
     binding.mainRV.initRecyclerView()
     binding.mainRV.adapter = postAdapter
-//    postAdapter.addAll(getTestPosts())
+    binding.emptyView.btnOpenSearch.setOnClickListener {
+      sharedViewModel.selectMenuItem(EXPLORE)
+    }
   }
 
   private fun setBanner() {
@@ -134,79 +143,31 @@ class HomeFragment : BaseFragment() {
   private fun observeOpports() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.postState.collect {
-        if (it != null) {
-          Log.d("TAGA", "observeOpports: $it")
-          postAdapter.addAll(it)
+        if (it?.isEmpty() == true) {
+          binding.emptyView.root.show()
+          binding.mainContainerHome.hide()
+          binding.collapsingToolbar.bannerViewPagerHome.hide()
+        } else {
+          it?.let {
+            postAdapter.addAll(it)
+          }
+          binding.collapsingToolbar.bannerViewPagerHome.show()
+          binding.emptyView.root.hide()
+          binding.mainContainerHome.show()
         }
       }
     }
   }
 
-//  private fun getTestPosts(): ArrayList<OpportunityDTO> {
-//    val post = OpportunityDTO(
-//      Company("DAR", ""),
-//      "20.12.2020",
-//      0,
-//      false,
-//      JobCategory(0, "Android"),
-//      "internship",
-//      "Middle Android developer"
-//    )
-//    val list = arrayListOf(
-//      OpportunityDTO(
-//        Company("DAR", ""),
-//        "20.12.2020",
-//        0,
-//        false,
-//        JobCategory(0, "Android"),
-//        "internship",
-//        "Middle Android developer"
-//      ), OpportunityDTO(
-//        Company("KOLESA", ""),
-//        "20.12.2020",
-//        0,
-//        false,
-//        JobCategory(0, "IOS"),
-//        "vacancy",
-//        "Middle IOS developer"
-//      ),
-//      OpportunityDTO(
-//        Company("OneLAb", ""),
-//        "20.12.2020",
-//        0,
-//        false,
-//        JobCategory(0, "Backend"),
-//        "vacancy",
-//        "Middle Backend developer"
-//      ),
-//      OpportunityDTO(
-//        Company("KOLESA", ""),
-//        "20.12.2020",
-//        0,
-//        false,
-//        JobCategory(0, "Android"),
-//        "vacancy",
-//        "Senior Android developer"
-//      ),
-//      OpportunityDTO(
-//        Company("KOLESA", ""),
-//        "20.12.2020",
-//        0,
-//        false,
-//        JobCategory(0, "IOS"),
-//        "vacancy",
-//        "Middle IOS developer"
-//      ),
-//      OpportunityDTO(
-//        Company("KOLESA", ""),
-//        "20.12.2020",
-//        0,
-//        false,
-//        JobCategory(0, "IOS"),
-//        "vacancy",
-//        "Middle IOS developer"
-//      )
-//    )
-//    return list
-//  }
+  private fun observeFavState() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.favState.collect {
+        Log.d("TAGA", "hjghjgjhghjghj: $it")
+        if (it == true) {
+          viewModel.getSubscribedOpperts()
+          viewModel.clearFavState()
+        }
+      }
+    }
+  }
 }

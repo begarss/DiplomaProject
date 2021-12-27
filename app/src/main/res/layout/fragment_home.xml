@@ -7,6 +7,7 @@
       android:id="@+id/coordinatorHome"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="#F5F5F5"
       android:clickable="true"
       android:focusable="true"
       tools:context=".presentation.home.HomeFragment"
@@ -37,6 +38,17 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           >
+        <TextView
+            android:id="@+id/labelSubscribedOpps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:text="Subscribed opportunities"
+            android:textAppearance="@style/H6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRV"
@@ -44,26 +56,17 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/btnGoToCatalog"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelSubscribedOpps"
             tools:listitem="@layout/item_post"
             />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnGoToCatalog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Перейти в поиск"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mainRV"
-            app:layout_constraintVertical_bias="1"
-            style="@style/MainButtonStyle"
-            />
       </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
-
-
+    <include
+        layout="@layout/empty_subscribed_post"
+        android:id="@+id/emptyView"
+        android:visibility="gone"
+        />
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

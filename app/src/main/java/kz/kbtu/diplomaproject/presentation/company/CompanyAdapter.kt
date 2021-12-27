@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.airba.infrastructure.helpers.load
-import kz.kbtu.diplomaproject.data.backend.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
 import kz.kbtu.diplomaproject.databinding.ItemCompanyBinding
 import kz.kbtu.diplomaproject.presentation.company.CompanyAdapter.CompanyViewHolder
 
