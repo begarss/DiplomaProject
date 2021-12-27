@@ -71,7 +71,7 @@
       android:label="FilterFragment" />
   <fragment
       android:id="@+id/companyDetail"
-      android:name="kz.kbtu.diplomaproject.presentation.company.CompanyDetail"
+      android:name="kz.kbtu.diplomaproject.presentation.company.CompanyDetailFragment"
       android:label="CompanyDetail" >
     <argument
         android:name="companyId"
