@@ -19,7 +19,10 @@ class CompanyServiceImpl(private val companyApi: CompanyApi) : CompanyService {
   override suspend fun getCompanies(): DataResult<List<Company>?> = safeCall {
     val response = companyApi.getAllCompanies()
     val body = response.body()
-    body
+    body?.data?.forEach {
+      it.picture = "http://ithuntt.pythonanywhere.com/${it.picture}"
+    }
+    body?.data
   }
 
   override suspend fun searchCompany(name: String?): DataResult<List<Company>?> = safeCall {

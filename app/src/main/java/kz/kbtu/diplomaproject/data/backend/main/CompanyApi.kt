@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface CompanyApi {
   @GET("companies")
-  suspend fun getAllCompanies(): Response<List<Company>?>
+  suspend fun getAllCompanies(): Response<BaseResponse<List<Company>>>
 
   @GET("companies/")
   suspend fun searchCompany(@Query("search") name: String?): Response<List<Company>?>
