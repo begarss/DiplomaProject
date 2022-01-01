@@ -13,7 +13,7 @@ interface CompanyApi {
   @GET("companies")
   suspend fun getAllCompanies(): Response<BaseResponse<List<Company>>>
 
-  @GET("companies/")
+  @GET("companies_search/")
   suspend fun searchCompany(@Query("search") name: String?): Response<List<Company>?>
 
   @GET("companies/{id}")
