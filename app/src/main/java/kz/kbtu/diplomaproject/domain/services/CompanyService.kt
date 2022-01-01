@@ -40,7 +40,7 @@ class CompanyServiceImpl(private val companyApi: CompanyApi) : CompanyService {
   override suspend fun makeSubscribe(id: Int): DataResult<Boolean?> = safeCall {
     val response = companyApi.makeSubscribe(id)
     val body = response.body()
-    body
+    body?.status == "success"
   }
 
   override suspend fun getOppByCompany(id: Int): DataResult<List<OpportunityDTO>?> = safeCall {

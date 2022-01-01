@@ -1,5 +1,6 @@
 package kz.kbtu.diplomaproject.data.backend.main
 
+import kz.kbtu.diplomaproject.data.backend.main.fav.StatusResponse
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.common.BaseResponse
@@ -19,8 +20,8 @@ interface CompanyApi {
   @GET("companies/{id}")
   suspend fun getCompanyDetail(@Path("id") id: Int): Response<Company?>
 
-  @POST("subscribed_pressed/{id}")
-  suspend fun makeSubscribe(@Path("id") id: Int): Response<Boolean>
+  @POST("subscribe_pressed/{id}/")
+  suspend fun makeSubscribe(@Path("id") id: Int): Response<StatusResponse>
 
   @GET("companies/{id}/opportunities")
   suspend fun getOppByCompany(@Path("id") id: Int): Response<List<OpportunityDTO>?>

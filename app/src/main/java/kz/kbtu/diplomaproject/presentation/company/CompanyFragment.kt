@@ -48,6 +48,7 @@ class CompanyFragment : BaseFragment() {
     bindViews()
     setUpSearchView()
     observeAllCompanies()
+    observeFollowState()
   }
 
   private fun bindViews() {
@@ -127,11 +128,12 @@ class CompanyFragment : BaseFragment() {
     }
   }
 
-  private fun observeFollowState(){
+  private fun observeFollowState() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.followState.collect {
-        if (it==true){
-
+        if (it == true) {
+          viewModel.getCompanies()
+          viewModel.clearFollowState()
         }
       }
     }
