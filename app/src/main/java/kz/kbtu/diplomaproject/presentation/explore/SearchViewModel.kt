@@ -47,10 +47,11 @@ class SearchViewModel(
       category = filterInfo.jobCategory,
       type = filterInfo.jobType,
       contract = filterInfo.contractType,
-      company = filterInfo.company
+      company = filterInfo.company,
+      title = filterInfo.title
     ).onResult {
       if (it.isSuccess()) {
-        _allPostState.emit(it.dataValue())
+        _postState.emit(it.dataValue())
       }
     }.launchIn(viewModelScope)
   }

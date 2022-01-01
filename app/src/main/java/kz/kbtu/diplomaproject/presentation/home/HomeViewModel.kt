@@ -55,7 +55,7 @@ class HomeViewModel(
 
   fun addToFavorite(item: OpportunityDTO?) {
     item?.id?.let {
-      oppInteractor.addToFav(it)
+      oppInteractor.addToFav(it, item)
         .onError { Log.d("TAGA", "addToFavorite: $it") }
         .onResult { result ->
           Log.d("TAGA", "addToFavorite: $it")
@@ -73,5 +73,10 @@ class HomeViewModel(
     viewModelScope.launch {
       _favState.emit(null)
     }
+  }
+
+  fun getFavourites() {
+    oppInteractor.getFavourites()
+      .launchIn(viewModelScope)
   }
 }

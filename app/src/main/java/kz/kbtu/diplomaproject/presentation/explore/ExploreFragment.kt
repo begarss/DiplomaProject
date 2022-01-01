@@ -61,12 +61,12 @@ class ExploreFragment : BaseFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    viewModel.getOpportunities()
     bindViews()
     if (filterData == null) {
+      viewModel.getOpportunities()
       observeAllPosts()
-      setUpSearchView()
     }
+    setUpSearchView()
   }
 
   private fun bindViews() {
@@ -86,7 +86,18 @@ class ExploreFragment : BaseFragment() {
   private fun setUpSearchView() {
     val onQueryChanged = lifecycleScope.debounce<String> {
       if (it.length >= 3) {
-//        viewModel.setQuery(it)
+        filterData?.let { filterInfo ->
+          filterInfo.title = it
+          viewModel.applyFilter(filterInfo)
+        } ?: viewModel.applyFilter(
+          FilterInfo(
+            title = it,
+            null,
+            null,
+            null,
+            null
+          )
+        )
       }
     }
 
@@ -110,9 +121,6 @@ class ExploreFragment : BaseFragment() {
           if (query.isEmpty()) {
             observeAllPosts()
           }
-          if (query.length < 3) {
-//            viewModel.clearResults()
-          }
           return false
         }
       })
@@ -125,8 +133,7 @@ class ExploreFragment : BaseFragment() {
       }
       requestFocus()
     }
-//    observeSearchResult()
-//    handleLoadStates(true)
+    observePosts()
   }
 
   private fun observeAllPosts() {

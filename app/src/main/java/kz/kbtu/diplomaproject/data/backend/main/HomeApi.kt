@@ -22,19 +22,22 @@ interface HomeApi {
   suspend fun getOpportunityDetail(@Path("id") id: Int): Response<BaseResponse<PostDetail>>
 
   @GET("opportunities")
-  suspend fun getOpportunities(): Response<List<OpportunityDTO>?>
+  suspend fun getOpportunities(): Response<BaseResponse<List<OpportunityDTO>?>>
 
   @GET("favourate_opportunities/")
   suspend fun getFavourites(): Response<BaseResponse<List<OpportunityDTO>?>>
 
   @POST("favourate_pressed/{id}/")
-  suspend fun addToFav(@Path("id") id: Int): Response<StatusResponse>
+  suspend fun addToFav(
+    @Path("id") id: Int
+  ): Response<StatusResponse>
 
   @GET("job_categories")
   suspend fun getAllCategories(): Response<BaseResponse<List<JobCategory>?>>
 
-    @GET("opportunities/")
+  @GET("opportunities_company/")
   suspend fun filterOpportunity(
+    @Query("title") title: String? = null,
     @Query("job_category") category: Int? = null,
     @Query("job_type") type: String? = null,
     @Query("contract_type") contract: String? = null,

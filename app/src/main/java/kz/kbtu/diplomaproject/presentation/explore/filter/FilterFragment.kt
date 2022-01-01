@@ -71,6 +71,7 @@ class FilterFragment : BaseFragment() {
         Log.d("TAGA", "bindViews: ${jobCategoryChip?.text}")
         Log.d("TAGA", "bindViews: cat $categoryId")
         val filterInfo = FilterInfo(
+          title = null,
           jobCategory = categoryId.takeIf {
             it > -1
           },

@@ -8,21 +8,22 @@ import kz.kbtu.diplomaproject.domain.model.DataResult
 import kz.kbtu.diplomaproject.domain.services.OppService
 
 interface OppInteractor {
-  fun addToFav(id: Int): Async<DataResult<Boolean?>>
+  fun addToFav(id: Int, opportunityDTO: OpportunityDTO): Async<DataResult<Boolean?>>
   fun getFavourites(): Async<DataResult<List<OpportunityDTO>?>>
   fun getCategories(): Async<DataResult<List<JobCategory>?>>
   fun filterOpportunity(
     category: Int?,
     type: String?,
     contract: String?,
-    company: Int?
+    company: Int?,
+    title: String?
   ): Async<DataResult<List<OpportunityDTO>?>>
 
 }
 
 class OppInteractorImpl(private val oppService: OppService) : OppInteractor, CoroutineInteractor {
-  override fun addToFav(id: Int) = async {
-    oppService.addToFav(id)
+  override fun addToFav(id: Int, opportunityDTO: OpportunityDTO) = async {
+    oppService.addToFav(id, opportunityDTO)
   }
 
   override fun getFavourites() = async {
@@ -37,8 +38,15 @@ class OppInteractorImpl(private val oppService: OppService) : OppInteractor, Cor
     category: Int?,
     type: String?,
     contract: String?,
-    company: Int?
+    company: Int?,
+    title: String?
   ) = async {
-    oppService.filterOpportunity(category, type, contract, company)
+    oppService.filterOpportunity(
+      title = title,
+      category = category,
+      type = type,
+      contract = contract,
+      company = company
+    )
   }
 }

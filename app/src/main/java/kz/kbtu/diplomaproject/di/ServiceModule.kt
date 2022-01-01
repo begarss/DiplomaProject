@@ -22,6 +22,6 @@ val serviceModule = module {
   single<HomeService> { HomeServiceImpl(homeApi = get()) }
   single<ProfileService> { ProfileServiceImpl(profileApi = get()) }
   single<CompanyService> { CompanyServiceImpl(companyApi = get()) }
-  single<OppService> { OppServiceImpl(homeApi = get()) }
+  single<OppService> { OppServiceImpl(homeApi = get(), favDao = get()) }
   single<DataBaseService> { DataBaseServiceImpl(jobTypeDao = get(), contractDao = get()) }
 }
