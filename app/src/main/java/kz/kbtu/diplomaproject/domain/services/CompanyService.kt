@@ -1,5 +1,6 @@
 package kz.kbtu.diplomaproject.domain.services
 
+import kz.airba.infrastructure.helpers.setImageUrl
 import kz.kbtu.diplomaproject.data.backend.main.CompanyApi
 import kz.kbtu.diplomaproject.data.backend.main.HomeApi
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
@@ -46,6 +47,9 @@ class CompanyServiceImpl(private val companyApi: CompanyApi) : CompanyService {
   override suspend fun getOppByCompany(id: Int): DataResult<List<OpportunityDTO>?> = safeCall {
     val response = companyApi.getOppByCompany(id)
     val body = response.body()
+    body?.forEach {
+      setImageUrl(it)
+    }
     body
   }
 

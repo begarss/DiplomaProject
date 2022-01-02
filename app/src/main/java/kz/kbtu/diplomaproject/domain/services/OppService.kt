@@ -1,5 +1,6 @@
 package kz.kbtu.diplomaproject.domain.services
 
+import kz.airba.infrastructure.helpers.setImageUrl
 import kz.kbtu.diplomaproject.data.backend.main.HomeApi
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.JobCategory
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
@@ -70,6 +71,7 @@ class OppServiceImpl(private val homeApi: HomeApi, private val favDao: FavDao) :
       if (favId.contains(it.id)) {
         it.isFavourate = true
       }
+      setImageUrl(it)
     }
     body
   }
