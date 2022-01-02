@@ -33,6 +33,7 @@ class PostAdapter(
         tvCategory.text = item.jobCategory?.title
         tvCompanyName.text = item.company?.name
         tvJobType.text = item.jobType
+        tvDeadline.text = item.deadline
 
         if (item.isFavourate == true) {
           ivBookmark.setBackgroundResource(R.drawable.ic_bookmark_fill)

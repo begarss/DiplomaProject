@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.focusAndShowKeyboard
 import kz.airba.infrastructure.helpers.initRecyclerView
 import kz.airba.infrastructure.helpers.navigateSafely
@@ -22,6 +23,7 @@ import kz.kbtu.diplomaproject.domain.helpers.operators.debounce
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.filter.FilterFragment
 import kz.kbtu.diplomaproject.presentation.explore.filter.vo.FilterInfo
+import kz.kbtu.diplomaproject.presentation.home.HomeFragmentDirections
 import kz.kbtu.diplomaproject.presentation.home.PostAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,8 +34,10 @@ class ExploreFragment : BaseFragment() {
 
   private val adapter by lazy {
     PostAdapter(arrayListOf(), onFavClick = {
+      viewModel.addToFavorite(it)
 
     }, onItemClick = {
+      navigateSafely(ExploreFragmentDirections.actionExploreFragmentToPostDetailFragment(it))
 
     })
   }
@@ -67,6 +71,7 @@ class ExploreFragment : BaseFragment() {
       observeAllPosts()
     }
     setUpSearchView()
+    observeFavState()
   }
 
   private fun bindViews() {
@@ -83,21 +88,25 @@ class ExploreFragment : BaseFragment() {
     }
   }
 
+  private fun setNewFilterDataWithTitle(title: String) {
+    filterData =
+      FilterInfo(
+        title = title,
+        null,
+        null,
+        null,
+        null
+      )
+    viewModel.applyFilter(filterData!!)
+  }
+
   private fun setUpSearchView() {
     val onQueryChanged = lifecycleScope.debounce<String> {
       if (it.length >= 3) {
         filterData?.let { filterInfo ->
           filterInfo.title = it
           viewModel.applyFilter(filterInfo)
-        } ?: viewModel.applyFilter(
-          FilterInfo(
-            title = it,
-            null,
-            null,
-            null,
-            null
-          )
-        )
+        } ?: setNewFilterDataWithTitle(it)
       }
     }
 
@@ -160,5 +169,20 @@ class ExploreFragment : BaseFragment() {
 
   private fun observeFilters(filterInfo: FilterInfo?) {
     filterInfo?.let { viewModel.applyFilter(it) }
+  }
+
+  private fun observeFavState() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.favState.collect {
+        Log.d("TAGA", "hjghjgjhghjghj: $it")
+        if (it == true) {
+          filterData?.let {
+            viewModel.applyFilter(it)
+            viewModel.getOpportunities()
+          } ?: viewModel.getOpportunities()
+          viewModel.clearFavState()
+        }
+      }
+    }
   }
 }
