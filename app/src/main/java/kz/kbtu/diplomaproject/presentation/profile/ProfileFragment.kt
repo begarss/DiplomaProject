@@ -4,14 +4,13 @@ import android.Manifest
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.Settings.System.DATE_FORMAT
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -19,14 +18,18 @@ import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageView.CropShape.OVAL
 import com.canhub.cropper.options
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.load
 import kz.airba.infrastructure.helpers.navigateSafely
 import kz.airba.infrastructure.helpers.setOnClickListenerWithDebounce
+import kz.kbtu.diplomaproject.MainActivity
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.data.backend.profile.UserInfo
 import kz.kbtu.diplomaproject.databinding.FragmentProfileBinding
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
+import kz.kbtu.diplomaproject.presentation.profile.changePassword.ChangePasswordFragment
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -114,6 +117,7 @@ class ProfileFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getUserInfo()
     observeUser()
+    observeLogout()
     bindViews()
   }
 
@@ -122,18 +126,34 @@ class ProfileFragment : BaseFragment() {
       toolbar.toolbar.navigationIcon = null
 
       cardChangePassword.setOnClickListenerWithDebounce {
-        navigateSafely(ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment())
+        val bundle = bundleOf(ChangePasswordFragment.EMAIL to userInfo.email)
+        navigateSafely(R.id.action_profileFragment_to_changePasswordFragment, bundle)
       }
-    }
-    binding.cardProfile.setOnClickListener {
-      Log.d("TAGQ", "onViewCreated: $userInfo")
-      navigateSafely(ProfileFragmentDirections.actionProfileFragmentToEditUserFragment(userInfo))
-    }
-    binding.btnSetAva.setOnClickListener {
-      if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-        // explain to the user why the permission is needed
-      } else {
-        permission.launch(Manifest.permission.CAMERA)
+      cardProfile.setOnClickListener {
+        Log.d("TAGQ", "onViewCreated: $userInfo")
+        navigateSafely(ProfileFragmentDirections.actionProfileFragmentToEditUserFragment(userInfo))
+      }
+
+      btnSetAva.setOnClickListener {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+          // explain to the user why the permission is needed
+        } else {
+          permission.launch(Manifest.permission.CAMERA)
+        }
+      }
+
+      btnLogout.setOnClickListener {
+        MaterialAlertDialogBuilder(requireContext())
+          .setTitle(resources.getString(R.string.dialog_logout_title))
+          .setMessage(resources.getString(R.string.dialog_logout_message))
+          .setPositiveButton(resources.getString(R.string.dialog_yes)) { _, _ ->
+            // Respond to positive button press
+            viewModel.logout()
+          }
+          .setNegativeButton(resources.getString(R.string.dialog_no)) { dialog, which ->
+            dialog.dismiss()
+          }
+          .show()
       }
     }
   }
@@ -167,6 +187,26 @@ class ProfileFragment : BaseFragment() {
       FILE_FORMAT,
       storageDir
     )
+  }
+
+  private fun observeLogout() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.logoutState.collect {
+        when (it) {
+          true -> {
+            openAuthContainer()
+          }
+          false -> {
+          }
+          null -> {
+          }
+        }
+      }
+    }
+  }
+
+  private fun openAuthContainer() {
+    (activity as? MainActivity)?.openAuthorizationContainer()
   }
 
   companion object {

@@ -12,9 +12,13 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.getText
+import kz.airba.infrastructure.helpers.hide
 import kz.airba.infrastructure.helpers.hideKeyboard
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentChangePasswordBinding
+import kz.kbtu.diplomaproject.presentation.auth.AuthState
+import kz.kbtu.diplomaproject.presentation.auth.AuthState.USER_EXIST
+import kz.kbtu.diplomaproject.presentation.auth.AuthState.USER_NOT_EXIST
 import kz.kbtu.diplomaproject.presentation.auth.ChangeState.EMPTY
 import kz.kbtu.diplomaproject.presentation.auth.ChangeState.INVALID
 import kz.kbtu.diplomaproject.presentation.auth.ChangeState.VALID
@@ -26,6 +30,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ChangePasswordFragment : BaseFragment() {
   override val viewModel: ProfileViewModel by viewModel()
   private lateinit var binding: FragmentChangePasswordBinding
+
+  private val email by lazy {
+    requireArguments().getString(EMAIL)
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -41,6 +49,7 @@ class ChangePasswordFragment : BaseFragment() {
     bindViews()
     listenEditTextChange()
     observeChangeState()
+    observeSignUp()
   }
 
   private fun bindViews() {
@@ -80,6 +89,27 @@ class ChangePasswordFragment : BaseFragment() {
 
           }
           VALID -> {
+            email?.let { it1 -> viewModel.login(it1, binding.tilNewPassword.getText()) }
+          }
+          WRONG_PASSWORD -> {
+            binding.tilOldPassword.error = "Please, check your current password"
+            viewModel.clearState()
+          }
+          INVALID -> {
+            viewModel.clearState()
+          }
+        }
+      }
+    }
+  }
+
+  private fun observeSignUp() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.authState.collect {
+        when (it) {
+          AuthState.EMPTY -> {
+          }
+          AuthState.VALID -> {
             Snackbar.make(
               binding.btnChange,
               getString(R.string.snack_sucess_edited),
@@ -93,15 +123,25 @@ class ChangePasswordFragment : BaseFragment() {
             }
             viewModel.clearState()
           }
-          WRONG_PASSWORD -> {
-            binding.tilOldPassword.error = "Please, check your current password"
+          AuthState.INVALID -> {
+            Toast.makeText(
+              requireContext(),
+              "Please check your email or password",
+              Toast.LENGTH_SHORT
+            ).show()
             viewModel.clearState()
           }
-          INVALID -> {
-            viewModel.clearState()
+          USER_EXIST -> {
+          }
+          USER_NOT_EXIST -> {
+            Toast.makeText(requireContext(), "User not registered yet!", Toast.LENGTH_SHORT).show()
           }
         }
       }
     }
+  }
+
+  companion object {
+    const val EMAIL = "email"
   }
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import kz.kbtu.diplomaproject.data.common.BaseResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
@@ -16,4 +17,7 @@ interface AuthApi {
 
   @PUT("accounts/change-password/")
   suspend fun changePassword(@Body body: JsonObject): Response<BaseResponse<String>>
+
+  @GET("accounts/logout/")
+  suspend fun logout(): Response<BaseResponse<String>>
 }

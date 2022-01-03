@@ -11,6 +11,7 @@ import kz.kbtu.diplomaproject.data.backend.auth.RegistrationBody
 import kz.kbtu.diplomaproject.data.backend.auth.RegistrationResponse
 import kz.kbtu.diplomaproject.data.common.TokenInfo
 import kz.kbtu.diplomaproject.data.storage.Preferences
+import kz.kbtu.diplomaproject.data.storage.db.dao.FavDao
 import kz.kbtu.diplomaproject.domain.helpers.operators.safeCall
 import kz.kbtu.diplomaproject.domain.model.DataResult
 import org.json.JSONException
@@ -21,11 +22,14 @@ interface AuthService {
   suspend fun register(request: RegistrationBody): DataResult<Boolean>
   suspend fun login(email: String, password: String): DataResult<Boolean>
   suspend fun changePassword(oldPassword: String, newPassword: String): DataResult<Boolean>
+  suspend fun logout(): DataResult<Boolean>
+  fun clearUserData()
 }
 
 class AuthServiceImpl(
   private val authApi: AuthApi,
-  private val preferences: Preferences
+  private val preferences: Preferences,
+  private val favDao: FavDao
 ) : AuthService {
   override suspend fun register(request: RegistrationBody): DataResult<Boolean> =
     try {
@@ -103,5 +107,29 @@ class AuthServiceImpl(
     } catch (e: Throwable) {
       DataResult.Error(e.localizedMessage)
     }
+
+  override suspend fun logout(): DataResult<Boolean> =
+    try {
+      val response = authApi.logout()
+      if (response.isSuccessful) {
+        val body = response.body()
+        if (body?.isError() == false) {
+          clearUserData()
+          DataResult.Success(true)
+        } else {
+          DataResult.Error(body?.error)
+        }
+      } else {
+        DataResult.Error(response.message())
+      }
+
+    } catch (e: Throwable) {
+      DataResult.Error(e.localizedMessage)
+    }
+
+  override fun clearUserData() {
+    preferences.clearToken()
+    favDao.removeAll()
+  }
 
 }

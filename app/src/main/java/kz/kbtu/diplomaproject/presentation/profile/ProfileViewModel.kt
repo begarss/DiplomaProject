@@ -3,6 +3,7 @@ package kz.kbtu.diplomaproject.presentation.profile
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kz.kbtu.diplomaproject.data.backend.profile.UserInfo
@@ -13,6 +14,7 @@ import kz.kbtu.diplomaproject.domain.helpers.operators.onError
 import kz.kbtu.diplomaproject.domain.helpers.operators.onResult
 import kz.kbtu.diplomaproject.domain.model.ErrorCode
 import kz.kbtu.diplomaproject.presentation.auth.AuthInteractor
+import kz.kbtu.diplomaproject.presentation.auth.AuthState
 import kz.kbtu.diplomaproject.presentation.auth.ChangeState
 import kz.kbtu.diplomaproject.presentation.auth.ChangeState.EMPTY
 import kz.kbtu.diplomaproject.presentation.auth.ChangeState.INVALID
@@ -38,6 +40,13 @@ class ProfileViewModel(
 
   private val _changePswState = MutableStateFlow<ChangeState?>(value = EMPTY)
   val changePswState: StateFlow<ChangeState?> = _changePswState
+
+  private val _logoutState = MutableStateFlow<Boolean?>(null)
+  val logoutState: StateFlow<Boolean?> = _logoutState
+
+  private val _authState = MutableStateFlow(AuthState.EMPTY)
+  val authState: SharedFlow<AuthState>
+    get() = _authState
 
   fun getUserInfo() {
     profileInteractor.getUserInfo()
@@ -114,6 +123,44 @@ class ProfileViewModel(
       .onError {
       }
       .launchIn(viewModelScope)
+  }
+
+  fun logout() {
+    authInteractor.logout()
+      .onConsume { showLoader() }
+      .onCompletion { hideLoader() }
+      .onResult {
+        if (it.isSuccess()) {
+          if (it.dataValue() == true) {
+            _logoutState.emit(true)
+          } else {
+            _logoutState.emit(false)
+          }
+        }
+      }.launchIn(viewModelScope)
+  }
+
+  fun login(email: String, password: String) {
+    authInteractor.login(email = email, password = password)
+      .onResult {
+        Log.d("TAGA", "login: $it")
+        if (it.isSuccess()) {
+          if (it.dataValue() == true)
+            _authState.emit(AuthState.VALID)
+          else {
+            _authState.emit(AuthState.INVALID)
+          }
+        } else {
+          if (it.errorValue() == ErrorCode.USER_NOT_FOUND.code) {
+            _authState.emit(AuthState.USER_NOT_EXIST)
+          }
+          _authState.emit(AuthState.INVALID)
+        }
+      }
+      .onError {
+        Log.d("TAGA", "login: $it")
+        _authState.emit(AuthState.INVALID)
+      }.launchIn(viewModelScope)
   }
 
   fun clearState() {

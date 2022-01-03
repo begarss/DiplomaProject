@@ -11,6 +11,7 @@ interface AuthInteractor {
   fun createUser(body: RegistrationBody): Async<DataResult<Boolean>>
   fun login(email: String, password: String): Async<DataResult<Boolean>>
   fun changePassword(oldPassword: String, newPassword: String): Async<DataResult<Boolean>>
+  fun logout(): Async<DataResult<Boolean>>
 }
 
 class AuthInteractorImpl(
@@ -28,4 +29,8 @@ class AuthInteractorImpl(
     oldPassword: String,
     newPassword: String
   ) = async { authService.changePassword(oldPassword, newPassword) }
+
+  override fun logout() = async {
+    authService.logout()
+  }
 }

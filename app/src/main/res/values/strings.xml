@@ -8,5 +8,10 @@
   <string name="snack_sucess_edited">Изменения успешно сохранены</string>
   <string name="btn_unfollow">Unfollow</string>
   <string name="btn_follow">Follow</string>
+  <string name="dialog_logout_title">Вы уверены?</string>
+  <string name="dialog_logout_message">Вы уверены что хотите выйти из аккаунта?</string>
+  <string name="dialog_yes">Да</string>
+  <string name="dialog_no">Нет</string>
+
 
 </resources>
