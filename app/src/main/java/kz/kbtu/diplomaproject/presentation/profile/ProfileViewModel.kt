@@ -11,6 +11,13 @@ import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion
 import kz.kbtu.diplomaproject.domain.helpers.operators.onConsume
 import kz.kbtu.diplomaproject.domain.helpers.operators.onError
 import kz.kbtu.diplomaproject.domain.helpers.operators.onResult
+import kz.kbtu.diplomaproject.domain.model.ErrorCode
+import kz.kbtu.diplomaproject.presentation.auth.AuthInteractor
+import kz.kbtu.diplomaproject.presentation.auth.ChangeState
+import kz.kbtu.diplomaproject.presentation.auth.ChangeState.EMPTY
+import kz.kbtu.diplomaproject.presentation.auth.ChangeState.INVALID
+import kz.kbtu.diplomaproject.presentation.auth.ChangeState.VALID
+import kz.kbtu.diplomaproject.presentation.auth.ChangeState.WRONG_PASSWORD
 import kz.kbtu.diplomaproject.presentation.base.BaseViewModel
 import kz.kbtu.diplomaproject.presentation.profile.userInfo.EditUserFragment.Companion.BIRTH_PATTERN
 import kz.kbtu.diplomaproject.presentation.profile.userInfo.EditUserFragment.Companion.REQUEST_BIRTH_PATTERN
@@ -19,12 +26,18 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class ProfileViewModel(private val profileInteractor: ProfileInteractor) : BaseViewModel() {
+class ProfileViewModel(
+  private val profileInteractor: ProfileInteractor,
+  private val authInteractor: AuthInteractor
+) : BaseViewModel() {
   private val _profileState = MutableStateFlow<UserInfo?>(null)
   val profileState: StateFlow<UserInfo?> = _profileState
 
   private val _editState = MutableStateFlow(value = false)
   val editState: StateFlow<Boolean> = _editState
+
+  private val _changePswState = MutableStateFlow<ChangeState?>(value = EMPTY)
+  val changePswState: StateFlow<ChangeState?> = _changePswState
 
   fun getUserInfo() {
     profileInteractor.getUserInfo()
@@ -78,9 +91,35 @@ class ProfileViewModel(private val profileInteractor: ProfileInteractor) : BaseV
       }.launchIn(viewModelScope)
   }
 
+  fun changePassword(oldPassword: String, newPassword: String) {
+    authInteractor.changePassword(oldPassword, newPassword)
+      .onConsume { showLoader() }
+      .onCompletion { hideLoader() }
+      .onResult {
+        Log.d("TAGA", "changePassword: $it")
+        if (it.isSuccess()) {
+          if (it.dataValue() == true) {
+            _changePswState.emit(VALID)
+          } else {
+            _changePswState.emit(INVALID)
+          }
+        } else {
+          if (it.errorValue() == ErrorCode.WRONG_EMAIL.code) {
+            _changePswState.emit(WRONG_PASSWORD)
+          } else {
+            _changePswState.emit(INVALID)
+          }
+        }
+      }
+      .onError {
+      }
+      .launchIn(viewModelScope)
+  }
+
   fun clearState() {
     viewModelScope.launch {
       _editState.emit(false)
+      _changePswState.emit(EMPTY)
     }
   }
 }

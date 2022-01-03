@@ -20,6 +20,7 @@ import retrofit2.HttpException
 interface AuthService {
   suspend fun register(request: RegistrationBody): DataResult<Boolean>
   suspend fun login(email: String, password: String): DataResult<Boolean>
+  suspend fun changePassword(oldPassword: String, newPassword: String): DataResult<Boolean>
 }
 
 class AuthServiceImpl(
@@ -33,7 +34,7 @@ class AuthServiceImpl(
       if (response.isSuccessful) {
         val body = response.body()
         if (!body?.token.isNullOrEmpty()) {
-          preferences.saveTokenInfo(TokenInfo(accessToken = body?.token,""))
+          preferences.saveTokenInfo(TokenInfo(accessToken = body?.token, ""))
           DataResult.Success(true)
         } else {
           DataResult.Success(false)
@@ -72,6 +73,33 @@ class AuthServiceImpl(
 //        DataResult.Error(jsonObj.getString("error"))
         DataResult.Error(response.body()?.error)
       }
+    } catch (e: Throwable) {
+      DataResult.Error(e.localizedMessage)
+    }
+
+  override suspend fun changePassword(
+    oldPassword: String,
+    newPassword: String
+  ): DataResult<Boolean> =
+    try {
+      val bodyObject = JsonObject().apply {
+        addProperty("oldPassword", oldPassword)
+        addProperty("newPassword", newPassword)
+      }
+      val response = authApi.changePassword(body = bodyObject)
+
+      if (response.isSuccessful) {
+        val body = response.body()
+        if (body?.isError() == false) {
+          DataResult.Success(true)
+        } else {
+          DataResult.Error(body?.error)
+        }
+
+      } else {
+        DataResult.Error(response.message())
+      }
+
     } catch (e: Throwable) {
       DataResult.Error(e.localizedMessage)
     }

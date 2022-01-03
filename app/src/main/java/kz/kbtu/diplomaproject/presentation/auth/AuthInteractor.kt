@@ -10,6 +10,7 @@ import kz.kbtu.diplomaproject.domain.services.AuthService
 interface AuthInteractor {
   fun createUser(body: RegistrationBody): Async<DataResult<Boolean>>
   fun login(email: String, password: String): Async<DataResult<Boolean>>
+  fun changePassword(oldPassword: String, newPassword: String): Async<DataResult<Boolean>>
 }
 
 class AuthInteractorImpl(
@@ -22,4 +23,9 @@ class AuthInteractorImpl(
   override fun login(email: String, password: String) = async {
     authService.login(email = email, password = password)
   }
+
+  override fun changePassword(
+    oldPassword: String,
+    newPassword: String
+  ) = async { authService.changePassword(oldPassword, newPassword) }
 }

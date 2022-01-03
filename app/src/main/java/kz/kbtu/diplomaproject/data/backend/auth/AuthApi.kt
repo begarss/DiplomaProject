@@ -5,6 +5,7 @@ import kz.kbtu.diplomaproject.data.common.BaseResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface AuthApi {
   @POST("accounts/register/")
@@ -12,4 +13,7 @@ interface AuthApi {
 
   @POST("accounts/login/")
   suspend fun login(@Body body: JsonObject): Response<BaseResponse<LoginResponse>>
+
+  @PUT("accounts/change-password/")
+  suspend fun changePassword(@Body body: JsonObject): Response<BaseResponse<String>>
 }

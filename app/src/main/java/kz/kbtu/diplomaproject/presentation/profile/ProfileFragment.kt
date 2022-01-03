@@ -22,6 +22,7 @@ import com.canhub.cropper.options
 import kotlinx.coroutines.flow.collect
 import kz.airba.infrastructure.helpers.load
 import kz.airba.infrastructure.helpers.navigateSafely
+import kz.airba.infrastructure.helpers.setOnClickListenerWithDebounce
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.data.backend.profile.UserInfo
 import kz.kbtu.diplomaproject.databinding.FragmentProfileBinding
@@ -119,6 +120,10 @@ class ProfileFragment : BaseFragment() {
   private fun bindViews() {
     with(binding) {
       toolbar.toolbar.navigationIcon = null
+
+      cardChangePassword.setOnClickListenerWithDebounce {
+        navigateSafely(ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment())
+      }
     }
     binding.cardProfile.setOnClickListener {
       Log.d("TAGQ", "onViewCreated: $userInfo")

@@ -14,7 +14,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
   viewModel { AuthViewModel(authInteractor = get()) }
   viewModel { HomeViewModel(homeInteractor = get(), oppInteractor = get()) }
-  viewModel { ProfileViewModel(profileInteractor = get()) }
+  viewModel { ProfileViewModel(profileInteractor = get(), authInteractor = get()) }
   viewModel { DetailVIewModel(homeInteractor = get(), oppInteractor = get()) }
   viewModel { SearchViewModel(homeInteractor = get(), oppInteractor = get()) }
   viewModel { CompanyViewModel(companyInteractor = get()) }

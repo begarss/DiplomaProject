@@ -31,6 +31,9 @@
     <action
         android:id="@+id/action_profileFragment_to_editUserFragment"
         app:destination="@id/editUserFragment" />
+    <action
+        android:id="@+id/action_profileFragment_to_changePasswordFragment"
+        app:destination="@id/changePasswordFragment" />
   </fragment>
   <fragment
       android:id="@+id/homeFragment"
@@ -77,4 +80,8 @@
         android:name="companyId"
         app:argType="integer" />
   </fragment>
+  <fragment
+      android:id="@+id/changePasswordFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.profile.changePassword.ChangePasswordFragment"
+      android:label="ChangePasswordFragment" />
 </navigation>
