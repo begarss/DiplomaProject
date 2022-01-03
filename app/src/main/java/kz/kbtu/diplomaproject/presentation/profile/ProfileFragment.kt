@@ -113,7 +113,13 @@ class ProfileFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getUserInfo()
     observeUser()
+    bindViews()
+  }
 
+  private fun bindViews() {
+    with(binding) {
+      toolbar.toolbar.navigationIcon = null
+    }
     binding.cardProfile.setOnClickListener {
       Log.d("TAGQ", "onViewCreated: $userInfo")
       navigateSafely(ProfileFragmentDirections.actionProfileFragmentToEditUserFragment(userInfo))
