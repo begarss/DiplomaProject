@@ -34,7 +34,7 @@ class FavouritesViewModel(private val oppInteractor: OppInteractor) : BaseViewMo
 
   fun addToFavorite(item: OpportunityDTO?) {
     item?.id?.let {
-      oppInteractor.addToFav(it)
+      oppInteractor.addToFav(it, item)
         .onError { Log.d("TAGA", "addToFavorite: $it") }
         .onResult { result ->
           Log.d("TAGA", "addToFavorite: $it")

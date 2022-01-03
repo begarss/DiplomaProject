@@ -42,7 +42,19 @@ class DetailVIewModel(
 
   fun addToFavorite(item: PostDetail?) {
     item?.id?.let {
-      oppInteractor.addToFav(it)
+      oppInteractor.addToFav(
+        it,
+        opportunityDTO = OpportunityDTO(
+          id = item.id,
+          title = item.title,
+          jobType = item.jobType,
+          description = item.description,
+          company = item.company,
+          deadline = item.deadline,
+          isFavourate = item.isFavourate,
+          jobCategory = item.jobCategory
+        )
+      )
         .onError { Log.d("TAGA", "addToFavorite: $it") }
         .onResult { result ->
           Log.d("TAGA", "addToFavorite: $it")

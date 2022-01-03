@@ -215,6 +215,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/labelRequirements"
             />
+        <TextView
+            android:id="@+id/labelBenefits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Key benefits:"
+            android:textAppearance="@style/Body1"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/ivDeadline"
+            app:layout_constraintTop_toBottomOf="@id/tvRequirements"
+            />
+        <TextView
+            android:id="@+id/tvBenefits"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelBenefits"
+            />
       </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <View

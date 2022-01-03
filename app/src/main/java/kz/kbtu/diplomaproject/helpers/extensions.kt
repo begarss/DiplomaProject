@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import kz.kbtu.diplomaproject.R
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import java.util.Locale
 
 fun Fragment.navigateSafely(resId: Int, bundle: Bundle? = null) {
@@ -163,4 +164,8 @@ fun View.setOnClickListenerWithDebounce(debounceTime: Long = 600L, action: () ->
       lastClickTime = SystemClock.elapsedRealtime()
     }
   })
+}
+
+fun setImageUrl(it: OpportunityDTO) {
+  it.company?.picture = "http://ithuntt.pythonanywhere.com/${it.company?.picture}"
 }

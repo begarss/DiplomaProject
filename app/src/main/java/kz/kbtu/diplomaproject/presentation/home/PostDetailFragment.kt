@@ -59,7 +59,10 @@ class PostDetailFragment : BaseFragment() {
       ivShare.setOnClickListener {
         val intent = Intent()
         intent.action = Intent.ACTION_SEND
-        intent.putExtra(Intent.EXTRA_TEXT, "Hey Check out this opportunity: ${postDetail?.applyLink}")
+        intent.putExtra(
+          Intent.EXTRA_TEXT,
+          "Hey Check out this opportunity: ${postDetail?.applyLink}"
+        )
         intent.type = "text/plain"
         startActivity(Intent.createChooser(intent, "Share To:"))
       }
@@ -91,6 +94,7 @@ class PostDetailFragment : BaseFragment() {
           tvDeadline.text = it?.deadline
           tvDescription.text = it?.description
           tvRequirements.text = it?.requirements
+          tvBenefits.text = it?.keyBenefits
         }
       }
     }

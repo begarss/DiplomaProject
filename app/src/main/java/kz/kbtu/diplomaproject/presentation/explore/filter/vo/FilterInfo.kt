@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FilterInfo(
+  var title: String?,
   val jobCategory: Int?,
   val jobType: String?,
   val contractType: String?,

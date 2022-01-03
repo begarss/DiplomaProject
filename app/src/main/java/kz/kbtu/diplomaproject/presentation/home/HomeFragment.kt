@@ -60,6 +60,7 @@ class HomeFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getSubscribedOpperts()
     viewModel.getBanners()
+    viewModel.getFavourites()
     bindViews()
     observeBanners()
     observeOpports()

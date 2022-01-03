@@ -1,6 +1,7 @@
 package kz.kbtu.diplomaproject.presentation.company
 
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.domain.helpers.operators.Async
 import kz.kbtu.diplomaproject.domain.helpers.operators.CoroutineInteractor
 import kz.kbtu.diplomaproject.domain.model.DataResult
@@ -10,6 +11,8 @@ interface CompanyInteractor {
   fun getCompanies(): Async<DataResult<List<Company>?>>
   fun searchCompany(name: String?): Async<DataResult<List<Company>?>>
   fun getCompanyDetail(id: Int): Async<DataResult<Company?>>
+  fun makeSubscribe(id: Int): Async<DataResult<Boolean?>>
+  fun getOppByCompany(id: Int): Async<DataResult<List<OpportunityDTO>?>>
 }
 
 class CompanyInteractorImpl(private val companyService: CompanyService) : CompanyInteractor,
@@ -24,6 +27,14 @@ class CompanyInteractorImpl(private val companyService: CompanyService) : Compan
 
   override fun getCompanyDetail(id: Int) = async {
     companyService.getCompanyDetail(id)
+  }
+
+  override fun makeSubscribe(id: Int) = async {
+    companyService.makeSubscribe(id)
+  }
+
+  override fun getOppByCompany(id: Int) = async {
+    companyService.getOppByCompany(id)
   }
 
 }

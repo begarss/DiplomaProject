@@ -13,7 +13,9 @@ data class Company(
   @SerializedName("picture")
   var picture: String?,
   @SerializedName("read_more")
-  val readMoreLink: String?
+  val readMoreLink: String?,
+  @SerializedName("is_subscribed")
+  val isSubscribed: Boolean?
 ) {
   fun toModel(): CompanyModel {
     return CompanyModel(id, name)

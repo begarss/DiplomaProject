@@ -47,12 +47,12 @@
           tools:text="This is a title of new complaint"
           />
       <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/btnFollow"
           android:layout_width="0dp"
           android:layout_height="28dp"
           android:layout_marginBottom="8dp"
           android:layout_marginHorizontal="8dp"
           android:layout_marginTop="8dp"
-          android:text="Follow"
           android:textSize="12sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"

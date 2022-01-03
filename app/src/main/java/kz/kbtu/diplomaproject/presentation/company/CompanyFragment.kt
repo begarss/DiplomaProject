@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kz.airba.infrastructure.helpers.focusAndShowKeyboard
+import kz.airba.infrastructure.helpers.navigateSafely
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentCompanyBinding
 import kz.kbtu.diplomaproject.domain.helpers.operators.debounce
@@ -24,7 +25,11 @@ class CompanyFragment : BaseFragment() {
   private lateinit var binding: FragmentCompanyBinding
 
   private val adapter by lazy {
-    CompanyAdapter()
+    CompanyAdapter(onItemClick = {
+      navigateSafely(CompanyFragmentDirections.actionCompanyFragmentToCompanyDetail(it))
+    }, onFollowClick = {
+      viewModel.makeSubscribe(it)
+    })
   }
 
   override fun onCreateView(
@@ -43,6 +48,7 @@ class CompanyFragment : BaseFragment() {
     bindViews()
     setUpSearchView()
     observeAllCompanies()
+    observeFollowState()
   }
 
   private fun bindViews() {
@@ -110,12 +116,24 @@ class CompanyFragment : BaseFragment() {
       }
     }
   }
+
   private fun observeSearchCompanies() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.companyState.collect {
         Log.d("TAGA", "observePosts: $it")
         if (it != null) {
           adapter.addAll(it)
+        }
+      }
+    }
+  }
+
+  private fun observeFollowState() {
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+      viewModel.followState.collect {
+        if (it == true) {
+          viewModel.getCompanies()
+          viewModel.clearFollowState()
         }
       }
     }
