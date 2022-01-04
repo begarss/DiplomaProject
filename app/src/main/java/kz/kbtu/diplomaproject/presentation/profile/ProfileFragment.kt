@@ -134,6 +134,10 @@ class ProfileFragment : BaseFragment() {
         navigateSafely(ProfileFragmentDirections.actionProfileFragmentToEditUserFragment(userInfo))
       }
 
+      cardSupport.setOnClickListener {
+        navigateSafely(ProfileFragmentDirections.actionGlobalSupportFragment())
+      }
+
       btnSetAva.setOnClickListener {
         if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
           // explain to the user why the permission is needed

@@ -84,4 +84,11 @@
       android:id="@+id/changePasswordFragment"
       android:name="kz.kbtu.diplomaproject.presentation.profile.changePassword.ChangePasswordFragment"
       android:label="ChangePasswordFragment" />
+  <dialog
+      android:id="@+id/supportFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.support.SupportFragment"
+      android:label="SupportFragment" />
+  <action
+      android:id="@+id/action_global_supportFragment"
+      app:destination="@id/supportFragment" />
 </navigation>
