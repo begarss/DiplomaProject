@@ -87,8 +87,16 @@
   <dialog
       android:id="@+id/supportFragment"
       android:name="kz.kbtu.diplomaproject.presentation.support.SupportFragment"
-      android:label="SupportFragment" />
+      android:label="SupportFragment" >
+    <action
+        android:id="@+id/action_supportFragment_to_webViewFragment"
+        app:destination="@id/webViewFragment" />
+  </dialog>
   <action
       android:id="@+id/action_global_supportFragment"
       app:destination="@id/supportFragment" />
+  <fragment
+      android:id="@+id/webViewFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.support.WebViewFragment"
+      android:label="WebViewFragment" />
 </navigation>
