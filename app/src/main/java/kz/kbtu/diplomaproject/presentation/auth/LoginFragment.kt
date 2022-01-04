@@ -41,6 +41,13 @@ class LoginFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     bindViews()
     observeSignUp()
+
+  }
+
+  private fun bindViews() {
+    binding.btnSave.setOnClickListener {
+      createUser()
+    }
     binding.tvNoAccount.makeLinks(
       Pair(
         getString(R.string.login_link_sign_up),
@@ -48,12 +55,9 @@ class LoginFragment : BaseFragment() {
           navigateSafely(LoginFragmentDirections.actionLoginFragment2ToRegistrationFragment())
         })
     )
-  }
-
-  private fun bindViews() {
-    binding.btnSave.setOnClickListener {
-      createUser()
-    }
+    binding.tvForgotPsw.makeLinks(Pair(getString(R.string.forgot_password), View.OnClickListener {
+      navigateSafely(LoginFragmentDirections.actionLoginFragment2ToEmailVerifyFragment())
+    }))
   }
 
   private fun createUser() {
@@ -87,7 +91,11 @@ class LoginFragment : BaseFragment() {
             openMainContainer()
           }
           INVALID -> {
-            Toast.makeText(requireContext(), "Please check your email or password", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+              requireContext(),
+              "Please check your email or password",
+              Toast.LENGTH_SHORT
+            ).show()
             viewModel.clearState()
           }
           USER_EXIST -> {

@@ -89,7 +89,12 @@ class ChangePasswordFragment : BaseFragment() {
 
           }
           VALID -> {
-            email?.let { it1 -> viewModel.login(it1, binding.tilNewPassword.getText()) }
+            Snackbar.make(
+              binding.btnChange,
+              getString(R.string.snack_sucess_edited),
+              Snackbar.LENGTH_LONG
+            ).show()
+//            email?.let { it1 -> viewModel.login(it1, binding.tilNewPassword.getText()) }
           }
           WRONG_PASSWORD -> {
             binding.tilOldPassword.error = "Please, check your current password"

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kz.kbtu.diplomaproject.data.backend.auth.RegistrationBody
 import kz.kbtu.diplomaproject.domain.helpers.operators.launchIn
 import kz.kbtu.diplomaproject.domain.helpers.operators.onCompletion
@@ -18,6 +19,10 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
   private val _authState = MutableStateFlow(AuthState.EMPTY)
   val authState: SharedFlow<AuthState>
     get() = _authState
+
+  private val _sendState = MutableStateFlow<Boolean?>(null)
+  val sendState: StateFlow<Boolean?>
+    get() = _sendState
 
   fun createUser(email: String, password: String, password2: String) {
     authInteractor.createUser(
@@ -58,6 +63,37 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
       .onError {
         Log.d("TAGA", "login: $it")
         _authState.emit(AuthState.INVALID)
+      }.launchIn(viewModelScope)
+  }
+
+  fun sendOtp(email: String) {
+    authInteractor.sendOtp(email)
+      .onConsume { showLoader() }
+      .onCompletion { hideLoader() }
+      .onResult {
+        if (it.isSuccess()) {
+          if (it.dataValue() == true) {
+            _sendState.emit(true)
+          } else {
+            _sendState.emit(false)
+          }
+        }
+      }.launchIn(viewModelScope)
+  }
+
+  fun verifyOtp(email: String, otp: String) {
+    authInteractor.verifyOtp(email, otp)
+      .onConsume { showLoader() }
+      .onCompletion { hideLoader() }
+      .onResult {
+        Log.d("TAGA", "verifyOtp: $it")
+        if (it.isSuccess()) {
+          if (it.dataValue() == true) {
+            _sendState.emit(true)
+          } else {
+            _sendState.emit(false)
+          }
+        }
       }.launchIn(viewModelScope)
   }
 

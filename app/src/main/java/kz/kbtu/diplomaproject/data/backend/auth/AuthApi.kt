@@ -7,17 +7,28 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface AuthApi {
-  @POST("accounts/register/")
+  @POST("api/accounts/register/")
   suspend fun register(@Body body: RegistrationBody): Response<RegistrationResponse?>
 
-  @POST("accounts/login/")
+  @POST("api/accounts/login/")
   suspend fun login(@Body body: JsonObject): Response<BaseResponse<LoginResponse>>
 
-  @PUT("accounts/change-password/")
+  @PUT("api/accounts/change-password/")
   suspend fun changePassword(@Body body: JsonObject): Response<BaseResponse<String>>
 
-  @GET("accounts/logout/")
+  @GET("api/accounts/logout/")
   suspend fun logout(): Response<BaseResponse<String>>
+
+  @GET("verify/{email}/")
+  suspend fun sendOtp(@Path("email") email: String): Response<JsonObject>
+
+  @POST("verify/{email}/")
+  suspend fun verifyOtp(
+    @Path("email") email: String,
+    @Body otpBody: JsonObject
+  ): Response<VerifyResponse>
+
 }

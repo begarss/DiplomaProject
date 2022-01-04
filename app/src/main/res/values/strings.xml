@@ -12,6 +12,7 @@
   <string name="dialog_logout_message">Вы уверены что хотите выйти из аккаунта?</string>
   <string name="dialog_yes">Да</string>
   <string name="dialog_no">Нет</string>
+  <string name="forgot_password">Forgot password ?</string>
 
 
 </resources>

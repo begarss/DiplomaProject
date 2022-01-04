@@ -11,14 +11,14 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ProfileApi {
-  @GET("accounts/users/current/")
+  @GET("api/accounts/users/current/")
   suspend fun getUserInfo(): Response<UserInfo>
 
   @Multipart
-  @PUT("accounts/users/current/profile_edit")
+  @PUT("api/accounts/users/current/profile_edit")
   suspend fun setAvatar(@Part filePart: MultipartBody.Part): Response<UserInfo>
 
-  @PUT("accounts/users/current/profile_edit")
+  @PUT("api/accounts/users/current/profile_edit")
   suspend fun setUserInfo(@Body userInfo: JsonObject): Response<UserInfo>
 
 }

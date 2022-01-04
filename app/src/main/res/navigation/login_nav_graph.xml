@@ -11,6 +11,9 @@
     <action
         android:id="@+id/action_loginFragment2_to_registrationFragment"
         app:destination="@id/registrationFragment" />
+    <action
+        android:id="@+id/action_loginFragment2_to_emailVerifyFragment"
+        app:destination="@id/emailVerifyFragment" />
   </fragment>
   <fragment
       android:id="@+id/registrationFragment"
@@ -23,4 +26,16 @@
         app:popUpTo="@id/loginFragment2"
         app:popUpToInclusive="true" />
   </fragment>
+  <fragment
+      android:id="@+id/emailVerifyFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.auth.EmailVerifyFragment"
+      android:label="EmailVerifyFragment" >
+    <action
+        android:id="@+id/action_emailVerifyFragment_to_otpVerifyFragment"
+        app:destination="@id/otpVerifyFragment" />
+  </fragment>
+  <fragment
+      android:id="@+id/otpVerifyFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.auth.OtpVerifyFragment"
+      android:label="OtpVerifyFragment" />
 </navigation>

@@ -1,6 +1,5 @@
 package kz.kbtu.diplomaproject.presentation.auth
 
-import kz.kbtu.diplomaproject.data.backend.auth.AuthApi
 import kz.kbtu.diplomaproject.data.backend.auth.RegistrationBody
 import kz.kbtu.diplomaproject.domain.helpers.operators.Async
 import kz.kbtu.diplomaproject.domain.helpers.operators.CoroutineInteractor
@@ -12,6 +11,8 @@ interface AuthInteractor {
   fun login(email: String, password: String): Async<DataResult<Boolean>>
   fun changePassword(oldPassword: String, newPassword: String): Async<DataResult<Boolean>>
   fun logout(): Async<DataResult<Boolean>>
+  fun sendOtp(email: String): Async<DataResult<Boolean>>
+  fun verifyOtp(email: String, otp: String): Async<DataResult<Boolean>>
 }
 
 class AuthInteractorImpl(
@@ -32,5 +33,13 @@ class AuthInteractorImpl(
 
   override fun logout() = async {
     authService.logout()
+  }
+
+  override fun sendOtp(email: String) = async {
+    authService.sendOtp(email)
+  }
+
+  override fun verifyOtp(email: String, otp: String) = async {
+    authService.verifyOtp(email = email, otp = otp)
   }
 }

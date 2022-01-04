@@ -11,18 +11,18 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CompanyApi {
-  @GET("companies")
+  @GET("api/companies")
   suspend fun getAllCompanies(): Response<BaseResponse<List<Company>>>
 
-  @GET("companies_search/")
+  @GET("api/companies_search/")
   suspend fun searchCompany(@Query("search") name: String?): Response<List<Company>?>
 
-  @GET("companies/{id}")
+  @GET("api/companies/{id}")
   suspend fun getCompanyDetail(@Path("id") id: Int): Response<Company?>
 
-  @POST("subscribe_pressed/{id}/")
+  @POST("api/subscribe_pressed/{id}/")
   suspend fun makeSubscribe(@Path("id") id: Int): Response<StatusResponse>
 
-  @GET("companies/{id}/opportunities")
+  @GET("api/companies/{id}/opportunities")
   suspend fun getOppByCompany(@Path("id") id: Int): Response<List<OpportunityDTO>?>
 }

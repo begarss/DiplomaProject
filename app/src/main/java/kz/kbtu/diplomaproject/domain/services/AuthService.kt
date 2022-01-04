@@ -1,22 +1,14 @@
 package kz.kbtu.diplomaproject.domain.services
 
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.google.gson.reflect.TypeToken
 import kz.kbtu.diplomaproject.data.backend.auth.AuthApi
 import kz.kbtu.diplomaproject.data.backend.auth.RegistrationBody
-import kz.kbtu.diplomaproject.data.backend.auth.RegistrationResponse
 import kz.kbtu.diplomaproject.data.common.TokenInfo
 import kz.kbtu.diplomaproject.data.storage.Preferences
 import kz.kbtu.diplomaproject.data.storage.db.dao.FavDao
 import kz.kbtu.diplomaproject.domain.helpers.operators.safeCall
 import kz.kbtu.diplomaproject.domain.model.DataResult
-import org.json.JSONException
-import org.json.JSONObject
-import retrofit2.HttpException
 
 interface AuthService {
   suspend fun register(request: RegistrationBody): DataResult<Boolean>
@@ -24,6 +16,8 @@ interface AuthService {
   suspend fun changePassword(oldPassword: String, newPassword: String): DataResult<Boolean>
   suspend fun logout(): DataResult<Boolean>
   fun clearUserData()
+  suspend fun sendOtp(email: String): DataResult<Boolean>
+  suspend fun verifyOtp(email: String, otp: String): DataResult<Boolean>
 }
 
 class AuthServiceImpl(
@@ -67,7 +61,7 @@ class AuthServiceImpl(
               response.headers()["Set-Cookie"]
             }"
           )
-          preferences.saveTokenInfo(TokenInfo(accessToken = body.data.token, sessionId = sessionId))
+          preferences.saveTokenInfo(TokenInfo(accessToken = body.data.token, sessionId = null))
           DataResult.Success(true)
         } else {
           DataResult.Error(body?.error)
@@ -130,6 +124,25 @@ class AuthServiceImpl(
   override fun clearUserData() {
     preferences.clearToken()
     favDao.removeAll()
+  }
+
+  override suspend fun sendOtp(email: String): DataResult<Boolean> = safeCall {
+    val response = authApi.sendOtp(email)
+    val body = response.body()
+//    val res = body?.get("OTP")
+    body?.isJsonNull != true
+  }
+
+  override suspend fun verifyOtp(email: String, otp: String): DataResult<Boolean> = safeCall {
+    val otpBody = JsonObject().apply {
+      addProperty("otp", otp)
+    }
+    val response = authApi.verifyOtp(email = email, otpBody = otpBody)
+    val body = response.body()
+    if (body != null) {
+      preferences.saveTokenInfo(TokenInfo(accessToken = body.token, null))
+    }
+    return@safeCall body != null
   }
 
 }

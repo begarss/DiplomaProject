@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.airba.infrastructure.helpers.load
 import kz.airba.infrastructure.helpers.setOnClickListenerWithDebounce
 import kz.kbtu.diplomaproject.R
+import kz.kbtu.diplomaproject.data.backend.main.opportunity.JobCategory
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.databinding.ItemPostBinding
 import kz.kbtu.diplomaproject.presentation.home.PostAdapter.PostViewHolder
