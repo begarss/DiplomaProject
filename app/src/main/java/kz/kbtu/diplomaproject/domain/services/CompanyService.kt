@@ -14,6 +14,7 @@ interface CompanyService {
   suspend fun getCompanyDetail(id: Int): DataResult<Company?>
   suspend fun makeSubscribe(id: Int): DataResult<Boolean?>
   suspend fun getOppByCompany(id: Int): DataResult<List<OpportunityDTO>?>
+  suspend fun getSubscribedCompanies(): DataResult<List<Company>?>
 }
 
 class CompanyServiceImpl(private val companyApi: CompanyApi) : CompanyService {
@@ -51,6 +52,15 @@ class CompanyServiceImpl(private val companyApi: CompanyApi) : CompanyService {
       setImageUrl(it)
     }
     body
+  }
+
+  override suspend fun getSubscribedCompanies(): DataResult<List<Company>?> = safeCall {
+    val response = companyApi.getSubscribedCompanies()
+    val body = response.body()
+    body?.data?.forEach {
+      it.picture = "http://ithuntt.pythonanywhere.com/${it.picture}"
+    }
+    body?.data
   }
 
 }

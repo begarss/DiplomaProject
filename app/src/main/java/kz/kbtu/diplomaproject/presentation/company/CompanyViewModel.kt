@@ -94,4 +94,18 @@ class CompanyViewModel(private val companyInteractor: CompanyInteractor) : BaseV
         }
       }.launchIn(viewModelScope)
   }
+
+  fun getSubscribedCompany() {
+    companyInteractor.getSubscribedCompanies()
+      .onConsume { showLoader() }
+      .onCompletion { hideLoader() }
+      .onError {
+      }
+      .onResult {
+        if (it.isSuccess()) {
+          _companyState.emit(it.dataValue())
+        }
+      }
+      .launchIn(viewModelScope)
+  }
 }

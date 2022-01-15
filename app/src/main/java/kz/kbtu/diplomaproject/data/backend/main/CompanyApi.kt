@@ -25,4 +25,7 @@ interface CompanyApi {
 
   @GET("api/companies/{id}/opportunities")
   suspend fun getOppByCompany(@Path("id") id: Int): Response<List<OpportunityDTO>?>
+
+  @GET("api/subscribed_companies")
+  suspend fun getSubscribedCompanies(): Response<BaseResponse<List<Company>>>
 }

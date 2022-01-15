@@ -13,6 +13,7 @@ interface CompanyInteractor {
   fun getCompanyDetail(id: Int): Async<DataResult<Company?>>
   fun makeSubscribe(id: Int): Async<DataResult<Boolean?>>
   fun getOppByCompany(id: Int): Async<DataResult<List<OpportunityDTO>?>>
+  fun getSubscribedCompanies(): Async<DataResult<List<Company>?>>
 }
 
 class CompanyInteractorImpl(private val companyService: CompanyService) : CompanyInteractor,
@@ -36,5 +37,7 @@ class CompanyInteractorImpl(private val companyService: CompanyService) : Compan
   override fun getOppByCompany(id: Int) = async {
     companyService.getOppByCompany(id)
   }
+
+  override fun getSubscribedCompanies() = async { companyService.getSubscribedCompanies() }
 
 }

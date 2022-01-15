@@ -34,6 +34,9 @@
     <action
         android:id="@+id/action_profileFragment_to_changePasswordFragment"
         app:destination="@id/changePasswordFragment" />
+    <action
+        android:id="@+id/action_profileFragment_to_followedCompaniesFragment"
+        app:destination="@id/followedCompaniesFragment" />
   </fragment>
   <fragment
       android:id="@+id/homeFragment"
@@ -99,4 +102,12 @@
       android:id="@+id/webViewFragment"
       android:name="kz.kbtu.diplomaproject.presentation.support.WebViewFragment"
       android:label="WebViewFragment" />
+  <fragment
+      android:id="@+id/followedCompaniesFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.profile.FollowedCompaniesFragment"
+      android:label="FollowedCompaniesFragment" >
+    <action
+        android:id="@+id/action_followedCompaniesFragment_to_companyDetail"
+        app:destination="@id/companyDetail" />
+  </fragment>
 </navigation>

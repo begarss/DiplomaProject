@@ -134,6 +134,10 @@ class ProfileFragment : BaseFragment() {
         navigateSafely(ProfileFragmentDirections.actionProfileFragmentToEditUserFragment(userInfo))
       }
 
+      cardFollowedCompanies.setOnClickListener {
+        navigateSafely(ProfileFragmentDirections.actionProfileFragmentToFollowedCompaniesFragment())
+      }
+
       cardSupport.setOnClickListener {
         navigateSafely(ProfileFragmentDirections.actionGlobalSupportFragment())
       }
