@@ -82,6 +82,10 @@
     <argument
         android:name="companyId"
         app:argType="integer" />
+    <argument
+        android:name="isFollowed"
+        app:argType="boolean"
+        android:defaultValue="false" />
   </fragment>
   <fragment
       android:id="@+id/changePasswordFragment"

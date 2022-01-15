@@ -17,7 +17,7 @@ import kz.kbtu.diplomaproject.presentation.company.CompanyHolder.REGULAR
 class CompanyAdapter(
   private val type: CompanyHolder,
   private val onFollowClick: (id: Int) -> Unit,
-  private val onItemClick: (id: Int) -> Unit
+  private val onItemClick: (id: Int, isFollowed: Boolean) -> Unit
 ) :
   RecyclerView.Adapter<ViewHolder>() {
   private var items: ArrayList<Company> = arrayListOf()
@@ -40,7 +40,7 @@ class CompanyAdapter(
           item.id?.let { it1 -> onFollowClick.invoke(it1) }
         }
         itemView.setOnClickListener {
-          item.id?.let(onItemClick)
+          item.id?.let { it1 -> item.isSubscribed?.let { it2 -> onItemClick(it1, it2) } }
         }
         if (item.isSubscribed == true) {
           btnFollow.apply {
@@ -65,7 +65,7 @@ class CompanyAdapter(
         tvCompanyName.text = item.name
         ivCompany.load(item.picture)
         itemView.setOnClickListener {
-          item.id?.let(onItemClick)
+          item.id?.let { it1 -> item.isSubscribed?.let { it2 -> onItemClick(it1, it2) } }
         }
         tvAboutCompany.text = item.aboutCompany
       }

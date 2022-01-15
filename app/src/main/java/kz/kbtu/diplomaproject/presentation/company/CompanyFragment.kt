@@ -25,8 +25,10 @@ class CompanyFragment : BaseFragment() {
   private lateinit var binding: FragmentCompanyBinding
 
   private val adapter by lazy {
-    CompanyAdapter(type = CompanyHolder.REGULAR, onItemClick = {
-      navigateSafely(CompanyFragmentDirections.actionCompanyFragmentToCompanyDetail(it))
+    CompanyAdapter(type = CompanyHolder.REGULAR, onItemClick = { id, isFollowed ->
+      navigateSafely(
+        CompanyFragmentDirections.actionCompanyFragmentToCompanyDetail(id).setIsFollowed(isFollowed)
+      )
     }, onFollowClick = {
       viewModel.makeSubscribe(it)
     })
