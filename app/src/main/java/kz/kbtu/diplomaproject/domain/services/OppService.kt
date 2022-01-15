@@ -44,6 +44,9 @@ class OppServiceImpl(private val homeApi: HomeApi, private val favDao: FavDao) :
     if (body?.isSuccessful() == true) {
       favDao.removeAll()
       body.data?.mapToEntity()?.let { favDao.insertFavList(it) }
+      body.data?.forEach {
+        it.company?.picture = "http://ithuntt.pythonanywhere.com/${it.company?.picture}"
+      }
     }
     body?.data
   }
@@ -71,7 +74,7 @@ class OppServiceImpl(private val homeApi: HomeApi, private val favDao: FavDao) :
       if (favId.contains(it.id)) {
         it.isFavourate = true
       }
-      setImageUrl(it)
+//      setImageUrl(it)
     }
     body
   }

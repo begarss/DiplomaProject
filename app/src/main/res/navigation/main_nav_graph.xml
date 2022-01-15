@@ -86,6 +86,9 @@
         android:name="isFollowed"
         app:argType="boolean"
         android:defaultValue="false" />
+    <action
+        android:id="@+id/action_companyDetail_to_postDetailFragment"
+        app:destination="@id/postDetailFragment" />
   </fragment>
   <fragment
       android:id="@+id/changePasswordFragment"

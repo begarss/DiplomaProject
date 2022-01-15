@@ -17,7 +17,7 @@ val viewModelModule = module {
   viewModel { ProfileViewModel(profileInteractor = get(), authInteractor = get()) }
   viewModel { DetailVIewModel(homeInteractor = get(), oppInteractor = get()) }
   viewModel { SearchViewModel(homeInteractor = get(), oppInteractor = get()) }
-  viewModel { CompanyViewModel(companyInteractor = get()) }
+  viewModel { CompanyViewModel(companyInteractor = get(), oppInteractor = get()) }
   viewModel { FavouritesViewModel(oppInteractor = get()) }
   viewModel {
     FilterViewModel(

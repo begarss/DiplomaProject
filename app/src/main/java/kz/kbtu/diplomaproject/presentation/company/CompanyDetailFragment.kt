@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.initRecyclerView
 import kz.airba.infrastructure.helpers.load
+import kz.airba.infrastructure.helpers.navigateSafely
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.R.string
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
@@ -28,9 +29,10 @@ class CompanyDetailFragment : BaseFragment() {
   private var company: Company? = null
 
   private val postAdapter by lazy {
-    PostAdapter(arrayListOf(), onItemClick = {}, onFavClick = {})
+    PostAdapter(arrayListOf(), onItemClick = {
+      navigateSafely(CompanyDetailFragmentDirections.actionCompanyDetailToPostDetailFragment(it))
+    }, onFavClick = { viewModel.addToFavorite(it) })
   }
-
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -49,6 +51,7 @@ class CompanyDetailFragment : BaseFragment() {
     observeCompany()
     observeOpps()
     observeFollowState()
+    observeFavState()
   }
 
   private fun bindViews() {
@@ -136,6 +139,18 @@ class CompanyDetailFragment : BaseFragment() {
             }
           }
           viewModel.clearFollowState()
+        }
+      }
+    }
+  }
+
+  private fun observeFavState() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.favState.collect {
+        Log.d("TAGA", "hjghjgjhghjghj: $it")
+        if (it == true) {
+          viewModel.getOppByCategory(args.companyId)
+          viewModel.clearFavState()
         }
       }
     }
