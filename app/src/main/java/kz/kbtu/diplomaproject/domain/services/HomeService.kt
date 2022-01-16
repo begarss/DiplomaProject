@@ -4,6 +4,7 @@ import kz.kbtu.diplomaproject.data.backend.main.HomeApi
 import kz.kbtu.diplomaproject.data.backend.main.BannerDTO
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.PostDetail
+import kz.kbtu.diplomaproject.data.storage.db.dao.FavDao
 import kz.kbtu.diplomaproject.domain.helpers.operators.safeCall
 import kz.kbtu.diplomaproject.domain.model.DataResult
 
@@ -14,7 +15,7 @@ interface HomeService {
   suspend fun getOpportunities(): DataResult<List<OpportunityDTO>?>
 }
 
-class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
+class HomeServiceImpl(private val homeApi: HomeApi, private val favDao: FavDao) : HomeService {
   override suspend fun getBanners(): DataResult<List<BannerDTO>?> = safeCall {
     val response = homeApi.getBanners()
     val body = response.body()
@@ -50,6 +51,16 @@ class HomeServiceImpl(private val homeApi: HomeApi) : HomeService {
     val response = homeApi.getOpportunities()
     response.body()?.data?.forEach {
       setImageUrl(it)
+    }
+    val favs = favDao.getAllFavs()
+    val favId = favs.map {
+      it.id
+    }
+    response.body()?.data?.forEach {
+      if (favId.contains(it.id)) {
+        it.isFavourate = true
+      }
+//      setImageUrl(it)
     }
     response.body()?.data
   }

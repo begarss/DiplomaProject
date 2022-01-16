@@ -88,7 +88,7 @@ class RegistrationFragment : BaseFragment() {
           }
           VALID -> {
             viewModel.clearState()
-            navigateSafely(RegistrationFragmentDirections.actionRegistrationFragmentToLoginFragment2())
+            openMainContainer()
           }
           INVALID -> {
             viewModel.clearState()

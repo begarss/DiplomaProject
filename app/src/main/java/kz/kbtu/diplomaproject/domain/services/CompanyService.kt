@@ -28,9 +28,17 @@ class CompanyServiceImpl(
   override suspend fun getCompanies(): DataResult<List<Company>?> = safeCall {
     val response = companyApi.getAllCompanies()
     val body = response.body()
+    val followedCompanyIds = followedCompanyDao.getAllFollowed()
+    val followedId = followedCompanyIds.map {
+      it.id
+    }
     body?.data?.forEach {
       it.picture = "http://ithuntt.pythonanywhere.com/${it.picture}"
+      if (followedId.contains(it.id)) {
+        it.isSubscribed = true
+      }
     }
+
     body?.data
   }
 
