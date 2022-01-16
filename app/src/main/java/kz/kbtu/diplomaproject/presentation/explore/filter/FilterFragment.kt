@@ -118,6 +118,13 @@ class FilterFragment : BaseFragment() {
       storedFilterChips?.let {
         setChipsSelected()
       }
+
+      clear.setOnClickListener {
+        filterGroupJobCompany.clearCheck()
+        filterGroupJobType.clearCheck()
+        filterGroupJobContract.clearCheck()
+        filterGroupJobCategory.clearCheck()
+      }
     }
   }
 
