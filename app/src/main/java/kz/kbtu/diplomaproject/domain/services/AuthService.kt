@@ -1,5 +1,6 @@
 package kz.kbtu.diplomaproject.domain.services
 
+import android.content.res.Resources.NotFoundException
 import android.util.Log
 import com.google.gson.JsonObject
 import kz.kbtu.diplomaproject.data.backend.auth.AuthApi
@@ -9,6 +10,9 @@ import kz.kbtu.diplomaproject.data.storage.Preferences
 import kz.kbtu.diplomaproject.data.storage.db.dao.FavDao
 import kz.kbtu.diplomaproject.domain.helpers.operators.safeCall
 import kz.kbtu.diplomaproject.domain.model.DataResult
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.HttpException
 
 interface AuthService {
   suspend fun register(request: RegistrationBody): DataResult<Boolean>
@@ -29,6 +33,9 @@ class AuthServiceImpl(
     try {
       val response = authApi.register(body = request)
       Log.d("TAGA", "register: ${response.code()}")
+      if (response.code() == 400) {
+        throw JSONException("PASSWORD")
+      }
       if (response.isSuccessful) {
         val body = response.body()
         if (!body?.token.isNullOrEmpty()) {
@@ -38,10 +45,19 @@ class AuthServiceImpl(
           DataResult.Success(false)
         }
       } else {
+        val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+        Log.d("TAGA", "register error : $jsonObj ")
+//        DataResult.Error(jsonObj.getString("error"))
         DataResult.Error("Server error")
       }
+    } catch (json: JSONException) {
+      Log.d("TAGA", "register excep : ${json}  ")
+      json.message
+      DataResult.Error("PASSWORD")
     } catch (e: Throwable) {
-      DataResult.Error(e.localizedMessage)
+      e.printStackTrace()
+      Log.d("TAGA", "register excep thor:  ")
+      DataResult.Error("User already exists")
     }
 
   override suspend fun login(email: String, password: String): DataResult<Boolean> =
@@ -52,15 +68,8 @@ class AuthServiceImpl(
       }
       val response = authApi.login(body = jsonBody)
       if (response.isSuccessful) {
-        response.headers()["Set-Cookie"]
-        val sessionId = response.headers().values("Set-Cookie")[0].split(";")[0].split("=")[1]
         val body = response.body()
         if (body?.isError() == false) {
-          Log.d(
-            "TAGA", "login: $sessionId  ${
-              response.headers()["Set-Cookie"]
-            }"
-          )
           preferences.saveTokenInfo(TokenInfo(accessToken = body.data.token, sessionId = null))
           DataResult.Success(true)
         } else {

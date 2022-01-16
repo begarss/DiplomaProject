@@ -5,7 +5,8 @@ enum class AuthState {
   VALID,
   INVALID,
   USER_EXIST,
-  USER_NOT_EXIST
+  USER_NOT_EXIST,
+  PASSWORD
 }
 
 enum class ChangeState {

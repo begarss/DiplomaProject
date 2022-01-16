@@ -6,9 +6,11 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.hide
@@ -20,6 +22,9 @@ import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentSignUpBinding
 import kz.kbtu.diplomaproject.presentation.auth.AuthState.EMPTY
 import kz.kbtu.diplomaproject.presentation.auth.AuthState.INVALID
+import kz.kbtu.diplomaproject.presentation.auth.AuthState.PASSWORD
+import kz.kbtu.diplomaproject.presentation.auth.AuthState.USER_EXIST
+import kz.kbtu.diplomaproject.presentation.auth.AuthState.USER_NOT_EXIST
 import kz.kbtu.diplomaproject.presentation.auth.AuthState.VALID
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -91,6 +96,18 @@ class RegistrationFragment : BaseFragment() {
             openMainContainer()
           }
           INVALID -> {
+            viewModel.clearState()
+          }
+          USER_EXIST -> {
+            Toasty.error(requireContext(), "User already registered !", Toast.LENGTH_SHORT, true)
+              .show()
+            viewModel.clearState()
+          }
+          USER_NOT_EXIST -> {
+          }
+          PASSWORD -> {
+            Toasty.error(requireContext(), "Passwords must be same", Toast.LENGTH_SHORT, true)
+              .show()
             viewModel.clearState()
           }
         }

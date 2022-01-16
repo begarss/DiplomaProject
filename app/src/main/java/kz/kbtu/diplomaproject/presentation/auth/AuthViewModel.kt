@@ -36,7 +36,14 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
       if (it.isSuccess()) {
         _authState.emit(AuthState.VALID)
       } else {
-        _authState.emit(AuthState.INVALID)
+        if (it.errorValue() == ErrorCode.ALREADY_EXIST.code) {
+          _authState.emit(AuthState.USER_EXIST)
+        } else if (it.errorValue() == ErrorCode.PASSWORDS_NOT_SAME.code) {
+          _authState.emit(AuthState.PASSWORD)
+        } else {
+          _authState.emit(AuthState.INVALID)
+        }
+
       }
     }.onError {
       _authState.emit(AuthState.INVALID)
@@ -46,7 +53,6 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
   fun login(email: String, password: String) {
     authInteractor.login(email = email, password = password)
       .onResult {
-        Log.d("TAGA", "login: $it")
         if (it.isSuccess()) {
           if (it.dataValue() == true)
             _authState.emit(AuthState.VALID)
@@ -54,10 +60,12 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
             _authState.emit(AuthState.INVALID)
           }
         } else {
+          Log.d("TAGA", "login: ${it.errorValue()} ${ErrorCode.USER_NOT_FOUND.code}")
           if (it.errorValue() == ErrorCode.USER_NOT_FOUND.code) {
             _authState.emit(AuthState.USER_NOT_EXIST)
+          } else {
+            _authState.emit(AuthState.INVALID)
           }
-          _authState.emit(AuthState.INVALID)
         }
       }
       .onError {

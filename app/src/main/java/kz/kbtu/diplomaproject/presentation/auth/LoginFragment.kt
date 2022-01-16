@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.hide
@@ -91,17 +92,26 @@ class LoginFragment : BaseFragment() {
             openMainContainer()
           }
           INVALID -> {
-            Toast.makeText(
+//            Toast.makeText(
+//              requireContext(),
+//              "Please check your email or password",
+//              Toast.LENGTH_SHORT
+//            ).show()
+            Toasty.info(
               requireContext(),
               "Please check your email or password",
-              Toast.LENGTH_SHORT
-            ).show()
+              Toast.LENGTH_SHORT,
+              true
+            ).show();
+
             viewModel.clearState()
           }
           USER_EXIST -> {
           }
           USER_NOT_EXIST -> {
-            Toast.makeText(requireContext(), "User not registered yet!", Toast.LENGTH_SHORT).show()
+            Toasty.error(requireContext(), "User not registered yet!", Toast.LENGTH_SHORT, true)
+              .show();
+//            Toast.makeText(requireContext(), "User not registered yet!", Toast.LENGTH_SHORT).show()
           }
         }
       }
