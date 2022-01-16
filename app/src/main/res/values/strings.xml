@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DiplomaProject</string>
+  <string name="app_name">DiplomaProject</string>
   <string name="login_no_account">Don\'t have an account? Sign up</string>
   <string name="login_link_sign_up">Sign up</string>
   <string name="login_have_account">Already have account? Sign in</string>
@@ -13,6 +13,5 @@
   <string name="dialog_yes">Да</string>
   <string name="dialog_no">Нет</string>
   <string name="forgot_password">Forgot password ?</string>
-
-
+  <string name="readMore">Read more</string>
 </resources>

@@ -45,6 +45,9 @@
     <action
         android:id="@+id/action_homeFragment_to_postDetailFragment"
         app:destination="@id/postDetailFragment" />
+    <action
+        android:id="@+id/action_homeFragment_to_promoBottomSheet"
+        app:destination="@id/promoBottomSheet" />
   </fragment>
   <fragment
       android:id="@+id/editUserFragment"
@@ -117,4 +120,12 @@
         android:id="@+id/action_followedCompaniesFragment_to_companyDetail"
         app:destination="@id/companyDetail" />
   </fragment>
+  <dialog
+      android:id="@+id/promoBottomSheet"
+      android:name="kz.kbtu.diplomaproject.presentation.home.promotion.PromoBottomSheet"
+      android:label="PromoBottomSheet" >
+    <action
+        android:id="@+id/action_promoBottomSheet_to_webViewFragment"
+        app:destination="@id/webViewFragment" />
+  </dialog>
 </navigation>

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -24,6 +25,7 @@ import kz.kbtu.diplomaproject.presentation.explore.SharedViewModel
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentHomeBinding
 import kz.kbtu.diplomaproject.presentation.base.MenuItemType.EXPLORE
+import kz.kbtu.diplomaproject.presentation.home.promotion.PromoBottomSheet
 import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedStateViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -81,6 +83,9 @@ class HomeFragment : BaseFragment() {
     promotionAdapter = PromotionAdapter(
       arrayListOf(),
       onBannerClick = {
+        val bundle =
+          bundleOf(PromoBottomSheet.PROMO_DATA to it)
+        navigateSafely(R.id.action_homeFragment_to_promoBottomSheet, bundle)
 
       },
       viewPager2
