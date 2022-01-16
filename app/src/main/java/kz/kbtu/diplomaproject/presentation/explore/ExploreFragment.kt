@@ -9,23 +9,28 @@ import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.focusAndShowKeyboard
+import kz.airba.infrastructure.helpers.hide
 import kz.airba.infrastructure.helpers.initRecyclerView
 import kz.airba.infrastructure.helpers.navigateSafely
+import kz.airba.infrastructure.helpers.show
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentExploreBinding
 import kz.kbtu.diplomaproject.domain.helpers.operators.debounce
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
 import kz.kbtu.diplomaproject.presentation.explore.filter.FilterFragment
+import kz.kbtu.diplomaproject.presentation.explore.filter.vo.ChipIds
 import kz.kbtu.diplomaproject.presentation.explore.filter.vo.FilterInfo
 import kz.kbtu.diplomaproject.presentation.home.HomeFragmentDirections
 import kz.kbtu.diplomaproject.presentation.home.PostAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.Arrays
 
 class ExploreFragment : BaseFragment() {
   override val viewModel: SearchViewModel by viewModel()
@@ -83,7 +88,18 @@ class ExploreFragment : BaseFragment() {
       rvSearchResult.adapter = adapter
 
       fabFilter.setOnClickListener {
-        navigateSafely(ExploreFragmentDirections.actionExploreFragmentToFilterFragment())
+        Log.d("TAGA", "explore to bindViews: ${filterData?.savedChips}")
+        val bundle = Bundle().apply {
+          filterData?.savedChips?.let {
+
+            putParcelableArrayList(FilterFragment.STORED_CHIPS, it)
+          }
+        }
+
+        navigateSafely(
+          R.id.action_exploreFragment_to_filterFragment,
+          bundle
+        )
       }
     }
   }
@@ -92,6 +108,7 @@ class ExploreFragment : BaseFragment() {
     filterData =
       FilterInfo(
         title = title,
+        null,
         null,
         null,
         null,
@@ -159,9 +176,15 @@ class ExploreFragment : BaseFragment() {
   private fun observePosts() {
     viewLifecycleOwner.lifecycleScope.launchWhenCreated {
       viewModel.postState.collect {
-        Log.d("TAGA", "observePosts: $it")
-        if (it != null) {
-          adapter.addAll(it)
+        if (it?.isEmpty() == true) {
+          binding.noSearchResultView.show()
+          binding.rvSearchResult.hide()
+        } else {
+          it?.let {
+            adapter.addAll(it)
+          }
+          binding.noSearchResultView.hide()
+          binding.rvSearchResult.show()
         }
       }
     }
@@ -184,5 +207,12 @@ class ExploreFragment : BaseFragment() {
         }
       }
     }
+  }
+
+  companion object {
+    const val CATEGORY_ID = "categoryId"
+    const val FILTER_KEY = "filter_key"
+    const val FILTER_DATA_RESULT = "filter_data"
+    const val STORED_FILTER_DATA = "stored_filter_data"
   }
 }
