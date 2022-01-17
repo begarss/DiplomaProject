@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.getText
+import kz.airba.infrastructure.helpers.isValidEmail
 import kz.airba.infrastructure.helpers.navigateSafely
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.databinding.FragmentEmailVerifyBinding
@@ -46,7 +47,12 @@ class EmailVerifyFragment : BaseFragment() {
 
       btnSendCode.setOnClickListener {
         val email = tilEmail.getText()
-        viewModel.sendOtp(email)
+        if (email.isValidEmail()) {
+          binding.loadingBtnProgress.visibility = View.VISIBLE
+          viewModel.sendOtp(email)
+        } else {
+          binding.tilEmail.error = "Please enter correct email"
+        }
       }
     }
   }
@@ -59,6 +65,7 @@ class EmailVerifyFragment : BaseFragment() {
             R.id.action_emailVerifyFragment_to_otpVerifyFragment,
             bundleOf(OtpVerifyFragment.EMAIL_VERIFY to binding.tilEmail.getText())
           )
+          viewModel.clearState()
         }
       }
     }

@@ -151,7 +151,7 @@ class AuthServiceImpl(
     if (body != null) {
       preferences.saveTokenInfo(TokenInfo(accessToken = body.token, null))
     }
-    return@safeCall body != null
+    return@safeCall body?.token != null
   }
 
 }

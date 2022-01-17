@@ -107,5 +107,6 @@ class AuthViewModel(private val authInteractor: AuthInteractor) : BaseViewModel(
 
   fun clearState() {
     _authState.value = AuthState.EMPTY
+    _sendState.value = null
   }
 }

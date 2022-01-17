@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.getText
+import kz.airba.infrastructure.helpers.onBackPresses
 import kz.kbtu.diplomaproject.MainActivity
 import kz.kbtu.diplomaproject.databinding.FragmentOtpVerifyBinding
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
@@ -44,6 +46,7 @@ class OtpVerifyFragment : BaseFragment() {
       tvVerifyInfo.append(email)
       tilCode.editText?.doOnTextChanged { text, start, before, count ->
         btnVerify.isEnabled = !text.isNullOrEmpty() && text.isNotBlank()
+        tilCode.error = null
       }
 
       btnVerify.setOnClickListener {
@@ -57,7 +60,9 @@ class OtpVerifyFragment : BaseFragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.sendState.collect {
         if (it == true) {
-          openMainContainer()
+          openMainContainer()//todo verify check
+        } else if (it == false) {
+          binding.tilCode.error = "Incorrect code"
         }
       }
     }
