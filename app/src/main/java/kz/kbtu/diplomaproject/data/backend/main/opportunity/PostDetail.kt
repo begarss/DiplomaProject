@@ -17,7 +17,7 @@ data class PostDetail(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("is_favourate")
-    val isFavourate: Boolean?,
+    var isFavourate: Boolean?,
     @SerializedName("job_category")
     val jobCategory: JobCategory?,
     @SerializedName("job_type")

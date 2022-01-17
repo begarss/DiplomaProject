@@ -44,6 +44,15 @@ class HomeServiceImpl(private val homeApi: HomeApi, private val favDao: FavDao) 
     body?.data?.company?.apply {
       picture = "http://ithuntt.pythonanywhere.com/${this.picture}"
     }
+    val favs = favDao.getAllFavs()
+    val favId = favs.map {
+      it.id
+    }
+    response.body()?.data?.let {
+      if (favId.contains(it.id)) {
+        it.isFavourate = true
+      }
+    }
     body?.data
   }
 
