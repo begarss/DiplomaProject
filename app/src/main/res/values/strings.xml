@@ -5,13 +5,13 @@
   <string name="login_have_account">Already have account? Sign in</string>
   <string name="login_link_sign_in">Sign in</string>
   <string name="date_pciker_title">выберите дату</string>
-  <string name="snack_sucess_edited">Изменения успешно сохранены</string>
+  <string name="snack_sucess_edited">Changes saved successfully</string>
   <string name="btn_unfollow">Unfollow</string>
   <string name="btn_follow">Follow</string>
-  <string name="dialog_logout_title">Вы уверены?</string>
-  <string name="dialog_logout_message">Вы уверены что хотите выйти из аккаунта?</string>
-  <string name="dialog_yes">Да</string>
-  <string name="dialog_no">Нет</string>
+  <string name="dialog_logout_title">Are you sure?</string>
+  <string name="dialog_logout_message">Are you sure you want to log out of your account?</string>
+  <string name="dialog_yes">Yes</string>
+  <string name="dialog_no">No</string>
   <string name="forgot_password">Forgot password ?</string>
   <string name="readMore">Read more</string>
 </resources>
