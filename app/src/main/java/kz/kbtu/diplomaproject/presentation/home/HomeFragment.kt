@@ -110,7 +110,7 @@ class HomeFragment : BaseFragment() {
 
       //increase this offset to increase distance between 2 items
       val pageMarginPx =
-        16.dp
+        8.dp
       val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
         if (currentItem == 0) {
           setPadding(16.dp, 0, offsetPx, 0)
