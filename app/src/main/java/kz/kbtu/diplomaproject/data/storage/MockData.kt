@@ -9,6 +9,9 @@ object MockData {
     val jobTypes = arrayListOf<JobTypeModel>()
     jobTypes.add(JobTypeModel(0, "Vacancy"))
     jobTypes.add(JobTypeModel(1, "Internship"))
+    jobTypes.add(JobTypeModel(2, "Conference"))
+    jobTypes.add(JobTypeModel(3, "Scholarship"))
+    jobTypes.add(JobTypeModel(4, "Hackathon"))
     return jobTypes
   }
 
@@ -17,7 +20,6 @@ object MockData {
     contracts.add(ContractModel(0, "full-time"))
     contracts.add(ContractModel(1, "part-time"))
     contracts.add(ContractModel(2, "project-time"))
-    contracts.add(ContractModel(3, "online"))
     return contracts
   }
 }
