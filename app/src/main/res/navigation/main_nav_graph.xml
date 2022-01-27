@@ -31,6 +31,12 @@
     <action
         android:id="@+id/action_profileFragment_to_editUserFragment"
         app:destination="@id/editUserFragment" />
+    <action
+        android:id="@+id/action_profileFragment_to_changePasswordFragment"
+        app:destination="@id/changePasswordFragment" />
+    <action
+        android:id="@+id/action_profileFragment_to_followedCompaniesFragment"
+        app:destination="@id/followedCompaniesFragment" />
   </fragment>
   <fragment
       android:id="@+id/homeFragment"
@@ -39,6 +45,9 @@
     <action
         android:id="@+id/action_homeFragment_to_postDetailFragment"
         app:destination="@id/postDetailFragment" />
+    <action
+        android:id="@+id/action_homeFragment_to_promoBottomSheet"
+        app:destination="@id/promoBottomSheet" />
   </fragment>
   <fragment
       android:id="@+id/editUserFragment"
@@ -76,5 +85,47 @@
     <argument
         android:name="companyId"
         app:argType="integer" />
+    <argument
+        android:name="isFollowed"
+        app:argType="boolean"
+        android:defaultValue="false" />
+    <action
+        android:id="@+id/action_companyDetail_to_postDetailFragment"
+        app:destination="@id/postDetailFragment" />
   </fragment>
+  <fragment
+      android:id="@+id/changePasswordFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.profile.changePassword.ChangePasswordFragment"
+      android:label="ChangePasswordFragment" />
+  <dialog
+      android:id="@+id/supportFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.support.SupportFragment"
+      android:label="SupportFragment" >
+    <action
+        android:id="@+id/action_supportFragment_to_webViewFragment"
+        app:destination="@id/webViewFragment" />
+  </dialog>
+  <action
+      android:id="@+id/action_global_supportFragment"
+      app:destination="@id/supportFragment" />
+  <fragment
+      android:id="@+id/webViewFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.support.WebViewFragment"
+      android:label="WebViewFragment" />
+  <fragment
+      android:id="@+id/followedCompaniesFragment"
+      android:name="kz.kbtu.diplomaproject.presentation.profile.FollowedCompaniesFragment"
+      android:label="FollowedCompaniesFragment" >
+    <action
+        android:id="@+id/action_followedCompaniesFragment_to_companyDetail"
+        app:destination="@id/companyDetail" />
+  </fragment>
+  <dialog
+      android:id="@+id/promoBottomSheet"
+      android:name="kz.kbtu.diplomaproject.presentation.home.promotion.PromoBottomSheet"
+      android:label="PromoBottomSheet" >
+    <action
+        android:id="@+id/action_promoBottomSheet_to_webViewFragment"
+        app:destination="@id/webViewFragment" />
+  </dialog>
 </navigation>

@@ -17,11 +17,17 @@ import kz.kbtu.diplomaproject.domain.services.UserServiceImpl
 import org.koin.dsl.module
 
 val serviceModule = module {
-  single<AuthService> { AuthServiceImpl(authApi = get(), preferences = get()) }
+  single<AuthService> { AuthServiceImpl(authApi = get(), preferences = get(), favDao = get()) }
   single<UserService> { UserServiceImpl(preferences = get()) }
-  single<HomeService> { HomeServiceImpl(homeApi = get()) }
+  single<HomeService> { HomeServiceImpl(homeApi = get(), favDao = get()) }
   single<ProfileService> { ProfileServiceImpl(profileApi = get()) }
-  single<CompanyService> { CompanyServiceImpl(companyApi = get()) }
+  single<CompanyService> {
+    CompanyServiceImpl(
+      companyApi = get(),
+      favDao = get(),
+      followedCompanyDao = get()
+    )
+  }
   single<OppService> { OppServiceImpl(homeApi = get(), favDao = get()) }
   single<DataBaseService> { DataBaseServiceImpl(jobTypeDao = get(), contractDao = get()) }
 }

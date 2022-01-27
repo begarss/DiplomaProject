@@ -4,20 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kz.airba.infrastructure.helpers.load
 import kz.kbtu.diplomaproject.R
 import kz.kbtu.diplomaproject.R.string
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
-import kz.kbtu.diplomaproject.data.backend.main.opportunity.OpportunityDTO
 import kz.kbtu.diplomaproject.databinding.ItemCompanyBinding
-import kz.kbtu.diplomaproject.presentation.company.CompanyAdapter.CompanyViewHolder
-import kz.kbtu.diplomaproject.presentation.home.OpportunityDiffCallback
+import kz.kbtu.diplomaproject.databinding.ItemFollowedCompanyBinding
+import kz.kbtu.diplomaproject.presentation.company.CompanyHolder.FOLLOWED
+import kz.kbtu.diplomaproject.presentation.company.CompanyHolder.REGULAR
 
 class CompanyAdapter(
+  private val type: CompanyHolder,
   private val onFollowClick: (id: Int) -> Unit,
-  private val onItemClick: (id: Int) -> Unit
+  private val onItemClick: (id: Int, isFollowed: Boolean) -> Unit
 ) :
-  RecyclerView.Adapter<CompanyViewHolder>() {
+  RecyclerView.Adapter<ViewHolder>() {
   private var items: ArrayList<Company> = arrayListOf()
 
   fun addAll(newItems: List<Company>?) {
@@ -38,7 +40,7 @@ class CompanyAdapter(
           item.id?.let { it1 -> onFollowClick.invoke(it1) }
         }
         itemView.setOnClickListener {
-          item.id?.let(onItemClick)
+          item.id?.let { it1 -> item.isSubscribed?.let { it2 -> onItemClick(it1, it2) } }
         }
         if (item.isSubscribed == true) {
           btnFollow.apply {
@@ -55,16 +57,63 @@ class CompanyAdapter(
     }
   }
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompanyViewHolder {
-    val binding = ItemCompanyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    return CompanyViewHolder(binding)
+  inner class FollowedCompanyViewHolder(val binding: ItemFollowedCompanyBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(item: Company) {
+      with(binding) {
+        tvCompanyName.text = item.name
+        ivCompany.load(item.picture)
+        itemView.setOnClickListener {
+          item.id?.let { it1 -> item.isSubscribed?.let { it2 -> onItemClick(it1, it2) } }
+        }
+        tvAboutCompany.text = item.aboutCompany
+      }
+    }
   }
 
-  override fun onBindViewHolder(holder: CompanyViewHolder, position: Int) {
-    holder.bind(item = items[position])
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    return when (viewType) {
+      REGULAR_VIEW -> {
+        val binding = ItemCompanyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        CompanyViewHolder(binding)
+      }
+      FOLLOWED_VIEW -> {
+        val binding =
+          ItemFollowedCompanyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FollowedCompanyViewHolder(binding)
+      }
+      else -> {
+        val binding = ItemCompanyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        CompanyViewHolder(binding)
+      }
+    }
+  }
+
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    when (holder) {
+      is CompanyViewHolder -> {
+        holder.bind(item = items[position])
+      }
+      is FollowedCompanyViewHolder -> {
+        holder.bind(item = items[position])
+      }
+    }
   }
 
   override fun getItemCount() = items.size
+
+  override fun getItemViewType(position: Int): Int {
+    return when (type) {
+      REGULAR -> REGULAR_VIEW
+      FOLLOWED -> FOLLOWED_VIEW
+    }
+  }
+
+  companion object {
+    private const val REGULAR_VIEW = 1
+    private const val FOLLOWED_VIEW = 2
+  }
 }
 
 class CompanyDiffCallback(
@@ -86,5 +135,9 @@ class CompanyDiffCallback(
     val newCompany = newList[newItemPosition]
     return oldCompany == newCompany
   }
+}
 
+enum class CompanyHolder {
+  REGULAR,
+  FOLLOWED
 }

@@ -1,0 +1,56 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/noSearchResultView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNotFoundTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="16dp"
+        android:text="You have not subscribed to companies yet !"
+        android:textAlignment="center"
+        android:textAppearance="@style/H6"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tvNotFoundSuggestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        />
+    <TextView
+        android:id="@+id/tvNotFoundSuggestion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Companies you follow will be displayed here"
+        android:textAlignment="center"
+        android:textAppearance="@style/Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tvNotFoundTitle"
+        app:layout_constraintStart_toStartOf="@id/tvNotFoundTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvNotFoundTitle"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnOpenCompany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:enabled="true"
+        android:text="Go to companies"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1"
+        style="@style/MainButtonStyle"
+        />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

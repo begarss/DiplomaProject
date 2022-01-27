@@ -15,7 +15,7 @@ data class Company(
   @SerializedName("read_more")
   val readMoreLink: String?,
   @SerializedName("is_subscribed")
-  val isSubscribed: Boolean?
+  var isSubscribed: Boolean?
 ) {
   fun toModel(): CompanyModel {
     return CompanyModel(id, name)

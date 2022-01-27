@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.hide
@@ -41,6 +42,13 @@ class LoginFragment : BaseFragment() {
     super.onViewCreated(view, savedInstanceState)
     bindViews()
     observeSignUp()
+
+  }
+
+  private fun bindViews() {
+    binding.btnSave.setOnClickListener {
+      createUser()
+    }
     binding.tvNoAccount.makeLinks(
       Pair(
         getString(R.string.login_link_sign_up),
@@ -48,12 +56,9 @@ class LoginFragment : BaseFragment() {
           navigateSafely(LoginFragmentDirections.actionLoginFragment2ToRegistrationFragment())
         })
     )
-  }
-
-  private fun bindViews() {
-    binding.btnSave.setOnClickListener {
-      createUser()
-    }
+    binding.tvForgotPsw.makeLinks(Pair(getString(R.string.forgot_password), View.OnClickListener {
+      navigateSafely(LoginFragmentDirections.actionLoginFragment2ToEmailVerifyFragment())
+    }))
   }
 
   private fun createUser() {
@@ -87,13 +92,26 @@ class LoginFragment : BaseFragment() {
             openMainContainer()
           }
           INVALID -> {
-            Toast.makeText(requireContext(), "Please check your email or password", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(
+//              requireContext(),
+//              "Please check your email or password",
+//              Toast.LENGTH_SHORT
+//            ).show()
+            Toasty.info(
+              requireContext(),
+              "Please check your email or password",
+              Toast.LENGTH_SHORT,
+              true
+            ).show();
+
             viewModel.clearState()
           }
           USER_EXIST -> {
           }
           USER_NOT_EXIST -> {
-            Toast.makeText(requireContext(), "User not registered yet!", Toast.LENGTH_SHORT).show()
+            Toasty.error(requireContext(), "User not registered yet!", Toast.LENGTH_SHORT, true)
+              .show();
+//            Toast.makeText(requireContext(), "User not registered yet!", Toast.LENGTH_SHORT).show()
           }
         }
       }

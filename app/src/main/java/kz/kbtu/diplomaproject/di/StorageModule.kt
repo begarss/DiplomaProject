@@ -4,6 +4,7 @@ import android.content.Context
 import kz.kbtu.diplomaproject.data.storage.AppDatabase
 import kz.kbtu.diplomaproject.data.storage.db.dao.ContractDao
 import kz.kbtu.diplomaproject.data.storage.db.dao.FavDao
+import kz.kbtu.diplomaproject.data.storage.db.dao.FollowedCompanyDao
 import kz.kbtu.diplomaproject.data.storage.db.dao.JobTypeDao
 import org.koin.dsl.module
 
@@ -12,6 +13,7 @@ val storageModule = module {
   single { provideContractDao(appDatabase = get()) }
   single { provideJobTypeDao(appDatabase = get()) }
   single { provideFavDao(appDatabase = get()) }
+  single { provideFollowedDao(appDatabase = get()) }
 }
 
 fun provideDatabase(context: Context): AppDatabase {
@@ -28,4 +30,8 @@ fun provideContractDao(appDatabase: AppDatabase): ContractDao {
 
 fun provideFavDao(appDatabase: AppDatabase): FavDao {
   return appDatabase.getFavDao()
+}
+
+fun provideFollowedDao(appDatabase: AppDatabase): FollowedCompanyDao {
+  return appDatabase.getFollowedDao()
 }

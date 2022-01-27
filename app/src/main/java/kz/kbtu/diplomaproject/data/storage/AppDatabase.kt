@@ -6,18 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import kz.kbtu.diplomaproject.data.storage.db.dao.ContractDao
 import kz.kbtu.diplomaproject.data.storage.db.dao.FavDao
+import kz.kbtu.diplomaproject.data.storage.db.dao.FollowedCompanyDao
 import kz.kbtu.diplomaproject.data.storage.db.dao.JobTypeDao
 import kz.kbtu.diplomaproject.data.storage.db.entity.ContractTypeEntity
 import kz.kbtu.diplomaproject.data.storage.db.entity.FavouriteOpportunitiesEntity
+import kz.kbtu.diplomaproject.data.storage.db.entity.FollowedCompanyIdEntity
 import kz.kbtu.diplomaproject.data.storage.db.entity.JobTypeEntity
 
 @Database(
   entities = [
     JobTypeEntity::class,
     ContractTypeEntity::class,
-    FavouriteOpportunitiesEntity::class
+    FavouriteOpportunitiesEntity::class,
+    FollowedCompanyIdEntity::class
   ],
-  version = 2,
+  version = 3,
   exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -35,4 +38,5 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun getJobTypeDao(): JobTypeDao
   abstract fun getContractTypeDao(): ContractDao
   abstract fun getFavDao(): FavDao
+  abstract fun getFollowedDao(): FollowedCompanyDao
 }

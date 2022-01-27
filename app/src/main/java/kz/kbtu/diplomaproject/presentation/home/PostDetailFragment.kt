@@ -32,12 +32,12 @@ class PostDetailFragment : BaseFragment() {
     savedInstanceState: Bundle?
   ): View {
     binding = FragmentPostDetailBinding.inflate(inflater, container, false)
-    viewModel.getDetails(args.postId)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    viewModel.getDetails(args.postId)
     observePost()
     bindViews()
     observeFavState()
@@ -95,6 +95,7 @@ class PostDetailFragment : BaseFragment() {
           tvDescription.text = it?.description
           tvRequirements.text = it?.requirements
           tvBenefits.text = it?.keyBenefits
+          tvCompanyLocation.text = it?.location
         }
       }
     }

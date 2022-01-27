@@ -65,7 +65,7 @@ class EditUserFragment : BaseFragment() {
     if (!args.userInfo?.birthday.isNullOrEmpty())
       binding.tilDate.editText?.setText(formatRestDate(args.userInfo?.birthday))
 
-    disableDateEditor()
+//    disableDateEditor()
 
     val datePicker =
       MaterialDatePicker.Builder.datePicker()
@@ -169,7 +169,7 @@ class EditUserFragment : BaseFragment() {
             Snackbar.LENGTH_LONG
           )
             .show()
-          disableDateEditor()
+//          disableDateEditor()
           viewModel.clearState()
           binding.btnSave.hide()
         }

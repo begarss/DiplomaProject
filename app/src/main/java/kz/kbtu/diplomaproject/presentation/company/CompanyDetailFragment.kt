@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kz.airba.infrastructure.helpers.initRecyclerView
 import kz.airba.infrastructure.helpers.load
+import kz.airba.infrastructure.helpers.navigateSafely
+import kz.kbtu.diplomaproject.R
+import kz.kbtu.diplomaproject.R.string
 import kz.kbtu.diplomaproject.data.backend.main.opportunity.Company
 import kz.kbtu.diplomaproject.databinding.FragmentCompanyDetailBinding
 import kz.kbtu.diplomaproject.presentation.base.BaseFragment
@@ -26,7 +29,9 @@ class CompanyDetailFragment : BaseFragment() {
   private var company: Company? = null
 
   private val postAdapter by lazy {
-    PostAdapter(arrayListOf(), onItemClick = {}, onFavClick = {})
+    PostAdapter(arrayListOf(), onItemClick = {
+      navigateSafely(CompanyDetailFragmentDirections.actionCompanyDetailToPostDetailFragment(it))
+    }, onFavClick = { viewModel.addToFavorite(it) })
   }
 
   override fun onCreateView(
@@ -45,6 +50,8 @@ class CompanyDetailFragment : BaseFragment() {
     bindViews()
     observeCompany()
     observeOpps()
+    observeFollowState()
+    observeFavState()
   }
 
   private fun bindViews() {
@@ -71,6 +78,10 @@ class CompanyDetailFragment : BaseFragment() {
         defaultBrowser.data = Uri.parse(company?.readMoreLink)
         startActivity(defaultBrowser)
       }
+
+      btnFollow.setOnClickListener {
+        viewModel.makeSubscribe(args.companyId)
+      }
     }
   }
 
@@ -82,6 +93,18 @@ class CompanyDetailFragment : BaseFragment() {
           ivCompany.load(it?.picture)
           tvCompanyName.text = it?.name
           tvAboutCompany.text = it?.aboutCompany
+
+          if (args.isFollowed) {
+            btnFollow.apply {
+              text = context.getString(string.btn_unfollow)
+              setBackgroundResource(R.drawable.button_background_colored_disabled)
+            }
+          } else {
+            btnFollow.apply {
+              text = context.getString(string.btn_follow)
+              setBackgroundResource(R.drawable.button_background_default)
+            }
+          }
         }
       }
     }
@@ -98,4 +121,42 @@ class CompanyDetailFragment : BaseFragment() {
     }
   }
 
+  private fun observeFollowState() {
+    viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+      viewModel.followState.collect {
+        if (it == true) {
+          with(binding) {
+            if (!args.isFollowed) {
+              btnFollow.apply {
+                text = context.getString(string.btn_unfollow)
+                setBackgroundResource(R.drawable.button_background_colored_disabled)
+              }
+            } else {
+              btnFollow.apply {
+                text = context.getString(string.btn_follow)
+                setBackgroundResource(R.drawable.button_background_default)
+              }
+            }
+          }
+          viewModel.clearFollowState()
+        }
+      }
+    }
+  }
+
+  private fun observeFavState() {
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.favState.collect {
+        Log.d("TAGA", "hjghjgjhghjghj: $it")
+        if (it == true) {
+          viewModel.getOppByCategory(args.companyId)
+          viewModel.clearFavState()
+        }
+      }
+    }
+  }
+
+  companion object {
+    const val IS_FOLLOWED = "is_follwed"
+  }
 }

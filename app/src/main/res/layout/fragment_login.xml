@@ -92,19 +92,31 @@
             android:textSize="16sp"
             />
       </com.google.android.material.textfield.TextInputLayout>
+      <TextView
+          android:id="@+id/tvForgotPsw"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="24dp"
+          android:layout_marginTop="16dp"
+          android:text="@string/forgot_password"
+          android:textAppearance="@style/Body2"
+          android:textColor="@color/primary"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tilPassword"
+          />
       <androidx.appcompat.widget.AppCompatButton
           android:id="@+id/btnSave"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="16dp"
           android:layout_marginHorizontal="24dp"
-          android:layout_marginTop="16dp"
           android:text="Sign in"
           android:textAllCaps="false"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tilPassword"
+          app:layout_constraintTop_toBottomOf="@+id/tvForgotPsw"
           app:layout_constraintVertical_bias=".2"
           style="@style/MainButtonStyle"
           />
@@ -112,8 +124,8 @@
           android:id="@+id/loadingBtnProgress"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:visibility="invisible"
           android:layout_marginTop="30dp"
+          android:visibility="invisible"
           app:layout_constraintEnd_toEndOf="@+id/btnSave"
           app:layout_constraintStart_toStartOf="@+id/btnSave"
           app:layout_constraintTop_toBottomOf="@+id/btnSave"
@@ -121,7 +133,8 @@
           app:zee_distanceMultiplier="4"
           app:zee_dotsRadius="8dp"
           app:zee_firstDotsColor="@color/primary"
-          app:zee_secondDotsColor="#72FF9800" />
+          app:zee_secondDotsColor="#72FF9800"
+          />
 
       <TextView
           android:id="@+id/tvNoAccount"
@@ -132,6 +145,7 @@
           android:textAlignment="center"
           android:textAppearance="@style/Body1"
           android:textColor="@color/black"
+          app:layout_goneMarginBottom="16dp"
           app:layout_constraintBottom_toTopOf="@id/tvSkip"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
@@ -147,6 +161,7 @@
           android:layout_marginHorizontal="24dp"
           android:layout_marginTop="12dp"
           android:text="Skip now"
+          android:visibility="gone"
           android:textAlignment="center"
           android:textAppearance="@style/Body1"
           android:textColor="@color/black"

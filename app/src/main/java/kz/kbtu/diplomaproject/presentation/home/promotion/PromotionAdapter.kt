@@ -13,7 +13,7 @@ import kz.kbtu.diplomaproject.presentation.home.promotion.PromotionAdapter.AdsVi
 
 class PromotionAdapter(
   private val items: ArrayList<BannerDTO>,
-  private val onBannerClick: (image: String?) -> Unit,
+  private val onBannerClick: (banner: BannerDTO?) -> Unit,
   private val viewPager2: ViewPager2
 
 ) : RecyclerView.Adapter<AdsViewHolder>() {
@@ -48,7 +48,7 @@ class PromotionAdapter(
       }
       binding.promotionImage.load(item.image, placeholder = R.drawable.test_ad)
       itemView.setOnClickListener {
-        onBannerClick.invoke(item.image)
+        onBannerClick.invoke(item)
       }
     }
   }
